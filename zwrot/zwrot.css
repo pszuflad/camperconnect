@@ -1,0 +1,54 @@
+/* Lokalne style obszaru „zwrot” (M2, M3) — agent 5. Wspólne klasy: assets/style.css */
+
+/* M2 — karty ujęć przed/po */
+.ujecie { padding: 12px; }
+.ujecie .karta-naglowek { margin-bottom: 8px; }
+.ujecie .przed-po { align-items: start; }
+.ujecie .cc-zdjecie-stopka { font-size: .75rem; }
+.ujecie-zmiana { border-color: var(--blad); box-shadow: 0 0 0 1px var(--blad); }
+.zrodlo-zdjec { font-size: .8rem; }
+
+/* wpis nowego uszkodzenia */
+.uszkodzenie { display: grid; grid-template-columns: 72px 1fr; gap: 10px; align-items: start; margin-top: 10px;
+  padding: 10px; border-radius: var(--promien-maly); background: var(--blad-jasny); color: #8a2318; font-size: .9rem; }
+.uszkodzenie img { width: 72px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; border: 1px solid #f0b9b7; }
+.uszkodzenie b { display: block; }
+
+/* M2 — wyposażenie wydane / zwrócone */
+.tabela-zwrot th, .tabela-zwrot td { padding: 8px 10px; }
+.tabela-zwrot td.ilosc, .tabela-zwrot th.ilosc { text-align: center; width: 64px; }
+.tabela-zwrot input[type=number] { width: 56px; padding: 4px 6px; text-align: center; min-height: 0; }
+.tabela-zwrot tr.brak td { background: var(--blad-jasny); }
+.tabela-zwrot tr.brak input { border-color: var(--blad); color: var(--blad); font-weight: 700; }
+.tabela-zwrot .uwaga { display: block; font-size: .78rem; color: var(--blad); font-weight: 600; }
+
+/* M2 — kontrola według cennika */
+.kontrola { border: 1px solid var(--ramka); border-radius: var(--promien); background: var(--powierzchnia); }
+.kontrola-wiersz { padding: 12px 14px; border-top: 1px solid var(--ramka); }
+.kontrola-wiersz:first-child { border-top: 0; }
+.kontrola-wiersz .rzad-rozsuniety { align-items: flex-start; }
+.kontrola-wiersz .przelaczniki label { padding: 5px 10px; font-size: .85rem; }
+.kontrola-wiersz .gdyby { font-size: .8rem; color: var(--tekst-2); margin-top: 4px; }
+.kontrola-wiersz .gdyby b { color: var(--tekst); }
+
+/* skala paliwa 1/8 … 8/8 */
+.paliwo-skala { display: flex; width: 100%; }
+.paliwo-skala label { flex: 1; text-align: center; padding: 8px 0; font-size: .85rem; }
+
+/* M2 / M3 — kwoty */
+.kwota-duza { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dane .kwota { text-align: right; }
+.dane-kwoty { grid-template-columns: 1fr max-content; }
+.dane-kwoty dd { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dane-kwoty .razem { border-top: 1px solid var(--ramka); padding-top: 8px; font-weight: 700; color: var(--tekst); }
+.do-wyceny { color: var(--ostrzezenie); font-weight: 600; white-space: nowrap; }
+
+/* M3 — tabela potrąceń ze zdjęciami */
+.tabela-rozliczenie td { vertical-align: top; }
+.tabela-rozliczenie .przed-po { width: 260px; }
+.tabela-rozliczenie .pole { margin: 10px 0 0; }
+.tabela-rozliczenie .pole input { max-width: 340px; }
+.wiadomosc { white-space: pre-line; font-size: .9rem; background: var(--powierzchnia-2); border-radius: var(--promien-maly); padding: 12px 14px; }
+@media (max-width: 760px) {
+  .tabela-rozliczenie .przed-po { width: 200px; }
+}

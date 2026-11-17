@@ -7,6 +7,7 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <link rel="stylesheet" href="zwrot.css">
 </head>
 <body class="uklad-mobile">
   <header data-cc-naglowek="mobile" data-cc-menu="rezerwacje"></header>
@@ -16,13 +17,383 @@
       <div>
         <h1>Protokół zwrotu</h1>
         <p class="podtytul">R-2027-014 · Ducato alkowa · NGI 4K27</p>
+        <p class="maly drugi-plan" style="margin:2px 0 0">Anna Kowalska · zwrot 21.07.2027, 16:00</p>
       </div>
+      <span data-cc-znaczek="wydana"></span>
     </div>
 
-    <!-- Treść ekranu M2 — buduje agent 5. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>M2</b> — ekran w budowie (agent 5)</p>
+    <div data-cc-kreator id="protokol">
+
+      <!-- 1. Zdjęcia przed / po -->
+      <section data-krok="Zdjęcia przed / po">
+        <div class="stos" data-cc-zdjecia data-wymagaj id="zdjecia-zwrot">
+          <p class="drugi-plan">Zrób zdjęcia tych samych ujęć co przy wydaniu. Obok każdego widzisz zdjęcie z protokołu wydania.</p>
+          <div class="rzad-rozsuniety">
+            <b>Zdjęcia: <span data-cc-licznik></span></b>
+            <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij id="wypelnij-zdjecia">Wypełnij przykładowymi zdjęciami</button>
+          </div>
+          <p class="zrodlo-zdjec drugi-plan" id="zrodlo-zdjec">Zdjęcia z wydania: przykładowe.</p>
+          <div class="karta karta-plaska ujecie">
+            <div class="karta-naglowek"><h3>Przód</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="przod" src="../assets/img/protokol-przod.svg" alt="Przód — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="przod" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-przod.svg"></div>
+            </div>
+            <button type="button" class="btn btn-tekst btn-maly" style="margin-top:6px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+          <div class="karta karta-plaska ujecie">
+            <div class="karta-naglowek"><h3>Lewy bok</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="lewy-bok" src="../assets/img/protokol-lewy-bok.svg" alt="Lewy bok — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="lewy-bok" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-lewy-bok.svg"></div>
+            </div>
+            <button type="button" class="btn btn-tekst btn-maly" style="margin-top:6px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+          <div class="karta karta-plaska ujecie">
+            <div class="karta-naglowek"><h3>Tył</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="tyl" src="../assets/img/protokol-tyl.svg" alt="Tył — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="tyl" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-tyl.svg"></div>
+            </div>
+            <button type="button" class="btn btn-tekst btn-maly" style="margin-top:6px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+          <div class="karta karta-plaska ujecie" id="ujecie-prawy-bok">
+            <div class="karta-naglowek"><h3>Prawy bok</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="prawy-bok" src="../assets/img/protokol-prawy-bok.svg" alt="Prawy bok — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="prawy-bok" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-prawy-bok-rysa.svg"></div>
+            </div>
+            <div class="uszkodzenie" id="uszkodzenie-wpis" hidden>
+              <img src="../assets/img/protokol-prawy-bok-rysa.svg" alt="" id="uszkodzenie-miniatura">
+              <div><b>Nowe uszkodzenie · prawy bok</b><span id="uszkodzenie-opis">Rysa na prawym boku, ok. 30 cm, do podkładu, wysokość drzwi</span><br><span class="maly">Do wyceny — Cennik poz. 21</span></div>
+            </div>
+            <button type="button" class="btn btn-niebezpieczny btn-maly btn-blok" style="margin-top:10px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+          <div class="karta karta-plaska ujecie">
+            <div class="karta-naglowek"><h3>Dach</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="dach" src="../assets/img/protokol-dach.svg" alt="Dach — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="dach" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-dach.svg"></div>
+            </div>
+            <button type="button" class="btn btn-tekst btn-maly" style="margin-top:6px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+          <div class="karta karta-plaska ujecie">
+            <div class="karta-naglowek"><h3>Wnętrze</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="wnetrze" src="../assets/img/protokol-wnetrze.svg" alt="Wnętrze — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="wnetrze" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-wnetrze.svg"></div>
+            </div>
+            <button type="button" class="btn btn-tekst btn-maly" style="margin-top:6px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+          <div class="karta karta-plaska ujecie">
+            <div class="karta-naglowek"><h3>Licznik</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="licznik" src="../assets/img/protokol-licznik.svg" alt="Licznik — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="licznik" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-licznik-zwrot.svg"></div>
+            </div>
+            <button type="button" class="btn btn-tekst btn-maly" style="margin-top:6px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+          <div class="karta karta-plaska ujecie">
+            <div class="karta-naglowek"><h3>Paliwo</h3><span class="maly drugi-plan">wydanie / zwrot</span></div>
+            <div class="przed-po">
+              <figure><img class="miniatura" data-wydanie="paliwo" src="../assets/img/protokol-paliwo.svg" alt="Paliwo — wydanie"><figcaption>Wydanie 11.07</figcaption></figure>
+              <div data-cc-zdjecie="paliwo" data-etykieta="Zwrot" data-przyklad="../assets/img/protokol-paliwo-zwrot.svg"></div>
+            </div>
+            <button type="button" class="btn btn-tekst btn-maly" style="margin-top:6px" data-cc-modal="uszkodzenie">+ Nowe uszkodzenie</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Wyposażenie -->
+      <section data-krok="Wyposażenie">
+        <div class="stos">
+          <p class="drugi-plan">Lista z protokołu wydania. Wpisz, ile sztuk wróciło.</p>
+          <div class="komunikat komunikat-blad"><b>Brak:</b> 1 komplet kluczyków do pojazdu (wydano 2, zwrócono 1) — Cennik poz. 24, 300 zł.</div>
+          <div class="karta karta-plaska stos-maly" style="padding:12px">
+            <h3>Klucze i dokumenty</h3>
+            <div class="tabela-ramka"><table class="tabela tabela-zwrot">
+              <thead><tr><th>Pozycja</th><th class="ilosc">Wyd.</th><th class="ilosc">Zwr.</th></tr></thead>
+              <tbody>
+                <tr class="brak"><td>Kluczyk do pojazdu (komplet)<span class="uwaga">Brak 1 kompletu · Cennik poz. 24 — 300 zł</span></td><td class="ilosc">2</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Kluczyk do pojazdu (komplet)"></td></tr>
+                <tr><td>Klucz do schowków</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Klucz do schowków"></td></tr>
+                <tr><td>Dowód rejestracyjny</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Dowód rejestracyjny"></td></tr>
+                <tr><td>Potwierdzenie ubezpieczenia OC/AC z OWU</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Potwierdzenie ubezpieczenia OC/AC z OWU"></td></tr>
+                <tr><td>Zielona karta</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Zielona karta"></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="karta karta-plaska stos-maly" style="padding:12px">
+            <h3>Na zewnątrz</h3>
+            <div class="tabela-ramka"><table class="tabela tabela-zwrot">
+              <thead><tr><th>Pozycja</th><th class="ilosc">Wyd.</th><th class="ilosc">Zwr.</th></tr></thead>
+              <tbody>
+                <tr><td>Stopień wejściowy</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Stopień wejściowy"></td></tr>
+                <tr><td>Kabel zasilający 230 V</td><td class="ilosc">2</td><td class="ilosc"><input type="number" min="0" value="2" aria-label="Zwrócono: Kabel zasilający 230 V"></td></tr>
+                <tr><td>Przedłużacz</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Przedłużacz"></td></tr>
+                <tr><td>Butla z gazem</td><td class="ilosc">2</td><td class="ilosc"><input type="number" min="0" value="2" aria-label="Zwrócono: Butla z gazem"></td></tr>
+                <tr><td>Wąż do wody</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Wąż do wody"></td></tr>
+                <tr><td>Konewka</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Konewka"></td></tr>
+                <tr><td>Kliny poziomujące</td><td class="ilosc">2</td><td class="ilosc"><input type="number" min="0" value="2" aria-label="Zwrócono: Kliny poziomujące"></td></tr>
+                <tr><td>Młotek</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Młotek"></td></tr>
+                <tr><td>Śmietnik składany</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Śmietnik składany"></td></tr>
+                <tr><td>Pasy ściągające</td><td class="ilosc">2</td><td class="ilosc"><input type="number" min="0" value="2" aria-label="Zwrócono: Pasy ściągające"></td></tr>
+                <tr><td>Markiza</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Markiza"></td></tr>
+                <tr><td>Gaśnica</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Gaśnica"></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="karta karta-plaska stos-maly" style="padding:12px">
+            <h3>Wnętrze</h3>
+            <div class="tabela-ramka"><table class="tabela tabela-zwrot">
+              <thead><tr><th>Pozycja</th><th class="ilosc">Wyd.</th><th class="ilosc">Zwr.</th></tr></thead>
+              <tbody>
+                <tr><td>Koc</td><td class="ilosc">4</td><td class="ilosc"><input type="number" min="0" value="4" aria-label="Zwrócono: Koc"></td></tr>
+                <tr><td>Farelka</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Farelka"></td></tr>
+                <tr><td>Wentylator</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Wentylator"></td></tr>
+                <tr><td>Kuchenka elektryczna</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Kuchenka elektryczna"></td></tr>
+                <tr><td>Garnek</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Garnek"></td></tr>
+                <tr><td>Patelnia</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Patelnia"></td></tr>
+                <tr><td>Sitko</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Sitko"></td></tr>
+                <tr><td>Zestaw sztućców i talerzy</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Zestaw sztućców i talerzy"></td></tr>
+                <tr><td>Zmiotka i szufelka</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Zmiotka i szufelka"></td></tr>
+                <tr><td>Kaseta toalety</td><td class="ilosc">1</td><td class="ilosc"><input type="number" min="0" value="1" aria-label="Zwrócono: Kaseta toalety"></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="karta karta-plaska stos-maly" style="padding:12px">
+            <h3>Dodatkowe płatne (Cennik poz. 1–2)</h3>
+            <p class="maly drugi-plan">Przedsionek z podłogą — niezamówiony · Zestaw 4 krzeseł i stołu — niezamówiony</p>
+          </div>
+          <div class="karta karta-plaska stos-maly" style="padding:12px">
+            <h3>Materiały eksploatacyjne</h3>
+            <div class="lista-wyboru">
+              <label class="pole-wyboru"><input type="checkbox" checked> <span>Butle gazowe — sprawdzone, zakręcone</span></label>
+              <label class="pole-wyboru"><input type="checkbox" checked> <span>Płyn do toalety chemicznej</span></label>
+              <label class="pole-wyboru"><input type="checkbox" checked> <span>Zbiornik wody — opróżniony</span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Stan -->
+      <section data-krok="Stan pojazdu">
+        <div class="stos">
+          <div class="karta karta-plaska" style="padding:14px">
+            <label class="pole"><span>Przebieg przy zwrocie</span>
+              <input type="text" inputmode="numeric" value="49 870 km">
+              <span class="pomoc">Przy wydaniu: 48 230 km · przejechano 1 640 km</span>
+            </label>
+            <div class="pole" style="margin-bottom:0">
+              <span>Poziom paliwa</span>
+              <div class="przelaczniki paliwo-skala">
+                <label><input type="radio" name="paliwo"> 1/8</label>
+                <label><input type="radio" name="paliwo"> 2/8</label>
+                <label><input type="radio" name="paliwo"> 3/8</label>
+                <label><input type="radio" name="paliwo"> 4/8</label>
+                <label><input type="radio" name="paliwo"> 5/8</label>
+                <label><input type="radio" name="paliwo" checked> 6/8</label>
+                <label><input type="radio" name="paliwo"> 7/8</label>
+                <label><input type="radio" name="paliwo"> 8/8</label>
+              </div>
+              <span class="pomoc">Przy wydaniu: 8/8 · brakuje ok. 22 l (bak 88 l) — Cennik poz. 30</span>
+            </div>
+          </div>
+
+          <div>
+            <h3>Kontrola według cennika</h3>
+            <p class="maly drugi-plan">Obok każdej pozycji kwota, która zostałaby naliczona.</p>
+          </div>
+          <div class="kontrola">
+            <div class="kontrola-wiersz">
+              <div class="rzad-rozsuniety">
+                <div><b>Czystość wnętrza</b><br><span class="maly drugi-plan">Cennik poz. 3</span></div>
+                <div class="przelaczniki">
+                  <label><input type="radio" name="kontrola-0" checked> W porządku</label>
+                  <label><input type="radio" name="kontrola-0"> Uwagi</label>
+                </div>
+              </div>
+              <p class="gdyby">Gdyby nie: <b>100 zł — oddanie brudnego, nieposprzątanego wnętrza</b></p>
+            </div>
+            <div class="kontrola-wiersz">
+              <div class="rzad-rozsuniety">
+                <div><b>Sierść i zabrudzenia po zwierzęciu</b><br><span class="maly drugi-plan">Cennik poz. 4</span></div>
+                <div class="przelaczniki">
+                  <label><input type="radio" name="kontrola-1" checked> W porządku</label>
+                  <label><input type="radio" name="kontrola-1"> Uwagi</label>
+                </div>
+              </div>
+              <p class="gdyby">Gdyby nie: <b>250 zł — sprzątanie po zwierzętach z praniem pokrowców</b></p>
+            </div>
+            <div class="kontrola-wiersz">
+              <div class="rzad-rozsuniety">
+                <div><b>Kaseta toalety opróżniona i czysta</b><br><span class="maly drugi-plan">Cennik poz. 5</span></div>
+                <div class="przelaczniki">
+                  <label><input type="radio" name="kontrola-2" checked> W porządku</label>
+                  <label><input type="radio" name="kontrola-2"> Uwagi</label>
+                </div>
+              </div>
+              <p class="gdyby">Gdyby nie: <b>100 zł — brudna kaseta toalety chemicznej</b></p>
+            </div>
+            <div class="kontrola-wiersz">
+              <div class="rzad-rozsuniety">
+                <div><b>Zapach dymu (tytoń, e-papierosy)</b><br><span class="maly drugi-plan">Cennik poz. 11</span></div>
+                <div class="przelaczniki">
+                  <label><input type="radio" name="kontrola-3" checked> W porządku</label>
+                  <label><input type="radio" name="kontrola-3"> Uwagi</label>
+                </div>
+              </div>
+              <p class="gdyby">Gdyby nie: <b>4 000 zł — złamanie zakazu palenia</b></p>
+            </div>
+            <div class="kontrola-wiersz">
+              <div class="rzad-rozsuniety">
+                <div><b>Zbiornik wody czystej</b><br><span class="maly drugi-plan">Cennik poz. 20</span></div>
+                <div class="przelaczniki">
+                  <label><input type="radio" name="kontrola-4" checked> W porządku</label>
+                  <label><input type="radio" name="kontrola-4"> Uwagi</label>
+                </div>
+              </div>
+              <p class="gdyby">Gdyby nie: <b>500 zł — wlanie do zbiornika innej substancji</b></p>
+            </div>
+            <div class="kontrola-wiersz">
+              <div class="rzad-rozsuniety">
+                <div><b>Zwrot w terminie i w godzinach pracy</b><br><span class="maly drugi-plan">21.07.2027, 16:00 — umowa: do 21.07.2027, 16:00</span></div>
+                <div class="przelaczniki">
+                  <label><input type="radio" name="kontrola-5" checked> W porządku</label>
+                  <label><input type="radio" name="kontrola-5"> Uwagi</label>
+                </div>
+              </div>
+              <p class="gdyby">Gdyby nie: <b>1 950 zł za każdą rozpoczętą dobę opóźnienia; zwrot w dzień wolny lub 17:00–20:00 — 100 zł</b> (Umowa II.5, Regulamin IX)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Potrącenia -->
+      <section data-krok="Potrącenia">
+        <div class="stos">
+          <div class="tabela-ramka"><table class="tabela tabela-zwrot">
+            <thead><tr><th>Pozycja</th><th>Cennik</th><th class="kwota">Kwota</th></tr></thead>
+            <tbody>
+              <tr><td>Brak paliwa<br><span class="maly drugi-plan">22 l × 8 zł + 100 zł za tankowanie</span></td><td class="maly">poz. 30</td><td class="kwota">276 zł</td></tr>
+              <tr><td>Brak kompletu kluczyków<br><span class="maly drugi-plan">wydano 2, zwrócono 1</span></td><td class="maly">poz. 24</td><td class="kwota">300 zł</td></tr>
+              <tr class="suma"><td colspan="2">Potrącenia razem</td><td class="kwota">576 zł</td></tr>
+              <tr><td>Rysa prawy bok<br><span class="maly drugi-plan">ok. 30 cm, do podkładu, wysokość drzwi</span></td><td class="maly">poz. 21</td><td class="kwota"><span class="do-wyceny">do wyceny</span></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="karta karta-plaska" style="padding:14px">
+            <dl class="dane dane-kwoty">
+              <dt>Kaucja (gotówka, 11.07.2027)</dt><dd>5 000 zł</dd>
+              <dt>Potrącenia</dt><dd>− 576 zł</dd>
+              <dt>Rysa prawy bok (poz. 21)</dt><dd><span class="do-wyceny">do wyceny</span></dd>
+              <dt class="razem">Wstępnie do zwrotu</dt><dd class="razem"><span class="kwota-duza">4 424 zł</span></dd>
+            </dl>
+          </div>
+
+          <div class="komunikat komunikat-ostrzezenie">
+            <b>Pozycja do wyceny.</b> Rysy do podkładu nie da się wypolerować (poz. 19), więc naprawa według faktur (poz. 21).
+            Kwota zostanie potrącona w rozliczeniu kaucji — zwrot kaucji do 28.07.2027 (7 dni od zwrotu pojazdu).
+          </div>
+          <p class="maly drugi-plan">Najemca odpowiada też za szkody z okresu najmu ujawnione po zwrocie (Regulamin, rozdz. IX).</p>
+        </div>
+      </section>
+
+      <!-- 5. Podsumowanie i podpisy -->
+      <section data-krok="Podsumowanie i podpisy" data-dalej-tekst="Zatwierdź protokół">
+        <div class="stos">
+          <div class="karta karta-plaska" style="padding:14px">
+            <dl class="dane">
+              <dt>Pojazd</dt><dd>Ducato alkowa, NGI 4K27</dd>
+              <dt>Zwrot</dt><dd>21.07.2027, 16:00 — w terminie</dd>
+              <dt>Przebieg</dt><dd>49 870 km (+1 640 km)</dd>
+              <dt>Paliwo</dt><dd>6/8 (przy wydaniu 8/8)</dd>
+              <dt>Zdjęcia</dt><dd>8 z 8, przed / po</dd>
+              <dt>Uszkodzenia</dt><dd>nowa rysa na prawym boku — do wyceny</dd>
+              <dt>Wyposażenie</dt><dd>brak 1 kompletu kluczyków</dd>
+              <dt>Kontrola</dt><dd>bez uwag</dd>
+              <dt>Potrącenia</dt><dd>576 zł + rysa do wyceny</dd>
+              <dt>Kaucja</dt><dd>5 000 zł, wstępnie do zwrotu 4 424 zł</dd>
+            </dl>
+          </div>
+          <div class="komunikat komunikat-ostrzezenie maly">Adnotacja: rysa prawy bok (ok. 30 cm, do podkładu) — do wyceny według Cennika poz. 21; ostateczna kwota w rozliczeniu kaucji do 28.07.2027.</div>
+          <label class="pole-wyboru"><input type="checkbox"> <span>Najemca: zapoznałem się z ustaleniami protokołu zwrotu, w tym z pozycją do wyceny.</span></label>
+          <div data-cc-podpis="odbierajacy" data-etykieta="Podpis odbierającego — Marek Wiśniewski"></div>
+          <div data-cc-podpis="najemca" data-etykieta="Podpis najemcy — Anna Kowalska"></div>
+        </div>
+      </section>
+
+      <section data-krok-koniec>
+        <div class="potwierdzenie">
+          <div class="potwierdzenie-ikona">✓</div>
+          <h2>Protokół zwrotu podpisany, PDF wysłany do obu stron</h2>
+          <p class="drugi-plan">Kaucja do rozliczenia: wstępnie 4 424 zł do zwrotu, rysa do wyceny. Termin zwrotu kaucji: 28.07.2027.</p>
+          <a class="btn btn-glowny btn-duzy" href="../panel/rezerwacja.html?stan=zwrocona">Wróć do rezerwacji</a>
+        </div>
+      </section>
     </div>
+
+    <!-- Okno: nowe uszkodzenie -->
+    <div class="modal" id="uszkodzenie"><div class="modal-okno">
+      <button type="button" class="modal-zamknij" data-cc-zamknij aria-label="Zamknij">×</button>
+      <h2>Nowe uszkodzenie</h2>
+      <div id="uszkodzenie-formularz">
+        <label class="pole"><span>Miejsce</span>
+          <select id="uszkodzenie-miejsce">
+            <option>Przód</option><option>Lewy bok</option><option>Tył</option><option selected>Prawy bok</option>
+            <option>Dach</option><option>Wnętrze</option>
+          </select>
+        </label>
+        <label class="pole"><span>Opis</span>
+          <textarea rows="3" id="uszkodzenie-pole-opis" data-przyklad="Rysa na prawym boku, ok. 30 cm, do podkładu, wysokość drzwi" placeholder="Co, gdzie, jak duże"></textarea>
+        </label>
+        <div class="pole"><span>Zdjęcie zbliżenia</span>
+          <div data-cc-zdjecie="uszkodzenie-1" data-etykieta="Zbliżenie" data-przyklad="../assets/img/protokol-prawy-bok-rysa.svg" style="max-width:240px"></div>
+        </div>
+        <label class="pole-wyboru"><input type="checkbox" checked> <span>Do wyceny (Cennik poz. 21 — inne naprawy, według faktur)</span></label>
+      </div>
+      <div class="modal-przyciski">
+        <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij="#uszkodzenie-formularz">Wypełnij przykładowymi</button>
+        <button type="button" class="btn btn-drugi" data-cc-zamknij>Anuluj</button>
+        <button type="button" class="btn btn-glowny" id="uszkodzenie-zapisz">Zapisz</button>
+      </div>
+    </div></div>
   </main>
+
+  <script>
+    CC.gotowe(function () {
+      // E5-6: zdjęcia z protokołu wydania (localStorage), gdy są zapamiętane
+      var wydanie = CC.odczytaj('cc-wydanie-zdjecia');
+      if (wydanie && typeof wydanie === 'object') {
+        var ile = 0;
+        document.querySelectorAll('img[data-wydanie]').forEach(function (img) {
+          var src = wydanie[img.getAttribute('data-wydanie')];
+          if (src) { img.src = src; ile++; }
+        });
+        if (ile) document.getElementById('zrodlo-zdjec').textContent = 'Zdjęcia z wydania: z protokołu wydania 11.07.2027 (' + ile + ' z 8).';
+      }
+
+      // Nowe uszkodzenie — wpis pod ujęciem prawego boku
+      function pokazUszkodzenie(opis, zdjecie) {
+        if (opis) document.getElementById('uszkodzenie-opis').textContent = opis;
+        if (zdjecie) document.getElementById('uszkodzenie-miniatura').src = zdjecie;
+        document.getElementById('uszkodzenie-wpis').hidden = false;
+        document.getElementById('ujecie-prawy-bok').classList.add('ujecie-zmiana');
+      }
+      document.getElementById('uszkodzenie-zapisz').addEventListener('click', function () {
+        var z = CC.zdjecie('uszkodzenie-1');
+        pokazUszkodzenie(document.getElementById('uszkodzenie-pole-opis').value.trim(), z && z.obraz());
+        CC.zamknij('uszkodzenie');
+        CC.toast('Uszkodzenie dodane do protokołu');
+      });
+      // „Wypełnij przykładowymi zdjęciami” dodaje też przykładowe uszkodzenie (rysa widoczna na zdjęciu)
+      document.getElementById('wypelnij-zdjecia').addEventListener('click', function () { pokazUszkodzenie(); });
+
+      // Zapamiętanie podpisów (i zdjęć zwrotu dla rozliczenia M3)
+      document.getElementById('protokol').addEventListener('cc:koniec', function () {
+        CC.zapisz('cc-zwrot-podpisy', { odbierajacy: CC.podpis('odbierajacy').obraz(), najemca: CC.podpis('najemca').obraz() });
+        CC.zapisz('cc-zwrot-zdjecia', CC.zdjecia('zdjecia-zwrot'));
+      });
+    });
+  </script>
 </body>
 </html>
