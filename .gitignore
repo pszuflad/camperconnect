@@ -3,3 +3,5 @@ dist/
 .env*
 .DS_Store
 *.log
+# materiały źródłowe (dokumenty wypożyczalni) — nie publikujemy
+*.pdf

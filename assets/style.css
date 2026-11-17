@@ -1,0 +1,365 @@
+/* CamperConnect — makieta MVP. Wspólny styl (właściciel: agent 0 / 6). Opis klas: docs/KONTRAKT.md */
+
+/* ---------- 1. Zmienne ---------- */
+:root {
+  --tlo: #f5f6f3;
+  --powierzchnia: #ffffff;
+  --powierzchnia-2: #f0f2ee;
+  --ramka: #dfe3dd;
+  --tekst: #1f2a2e;
+  --tekst-2: #5c686d;
+  --tekst-3: #8b9599;
+
+  --glowny: #2a6f7f;          /* morski — przyciski główne, linki */
+  --glowny-ciemny: #1f5562;
+  --glowny-jasny: #e3f0f2;
+  --akcent: #e0a43a;          /* bursztyn — drobne akcenty */
+  --sukces: #2f8a57;
+  --sukces-jasny: #e3f3ea;
+  --ostrzezenie: #a86a00;
+  --ostrzezenie-jasny: #fdf1d6;
+  --blad: #c0392b;
+  --blad-jasny: #fbe5e2;
+
+  /* statusy rezerwacji (backlog pkt 5) */
+  --st-wstepna: #f2c94c;      --st-wstepna-tlo: #fdf3cf;   --st-wstepna-tekst: #6f5400;
+  --st-zajete: #d9534f;       --st-zajete-tlo: #fbe2e1;    --st-zajete-tekst: #8e1f1b;
+  --st-rozliczona: #9aa3a7;   --st-rozliczona-tlo: #eceeef; --st-rozliczona-tekst: #4d575b;
+  --st-wygasla: #c9cfd2;      --st-wygasla-tlo: #f6f7f7;   --st-wygasla-tekst: #8b9599;
+  --st-wolne: #e9f4ec;        --st-wolne-tekst: #2f6d45;
+
+  --promien: 10px;
+  --promien-maly: 6px;
+  --cien: 0 1px 2px rgba(20, 40, 45, .06), 0 2px 8px rgba(20, 40, 45, .05);
+  --cien-duzy: 0 10px 40px rgba(20, 40, 45, .18);
+  --czcionka: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --odstep: 16px;
+  --szer-panel: 1280px;
+  --szer-mobile: 520px;
+  --szer-klient: 1040px;
+}
+
+/* ---------- 2. Podstawy ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--tlo); color: var(--tekst);
+  font-family: var(--czcionka); font-size: 16px; line-height: 1.5;
+}
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .5em; font-weight: 650; }
+h1 { font-size: 1.6rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 .75em; }
+a { color: var(--glowny); }
+a:hover { color: var(--glowny-ciemny); }
+img { max-width: 100%; display: block; }
+hr { border: 0; border-top: 1px solid var(--ramka); margin: var(--odstep) 0; }
+small, .maly { font-size: .875rem; }
+.drugi-plan { color: var(--tekst-2); }
+.wyszarzony { color: var(--tekst-3); }
+.kwota { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pogrubiony { font-weight: 650; }
+.ukryty, [hidden] { display: none !important; }
+.do-prawej { text-align: right; }
+.wysrodkowany { text-align: center; }
+
+/* ---------- 3. Układy ---------- */
+.tresc { margin: 0 auto; padding: 20px var(--odstep) 48px; }
+.uklad-klient .tresc { max-width: var(--szer-klient); }
+.uklad-panel .tresc { max-width: var(--szer-panel); padding-top: 24px; }
+.uklad-mobile .tresc { max-width: var(--szer-mobile); padding-bottom: 96px; }
+.uklad-mobile { background: var(--powierzchnia-2); }
+
+.naglowek-ekranu { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.naglowek-ekranu h1 { margin: 0; }
+.naglowek-ekranu .podtytul { color: var(--tekst-2); margin: 4px 0 0; }
+
+.stos > * + * { margin-top: var(--odstep); }
+.stos-maly > * + * { margin-top: 8px; }
+.rzad { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.rzad-rozsuniety { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.siatka { display: grid; gap: var(--odstep); }
+.siatka-2 { display: grid; gap: var(--odstep); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.siatka-3 { display: grid; gap: var(--odstep); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.siatka-auto { display: grid; gap: var(--odstep); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.kolumny-panel { display: grid; gap: 20px; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); align-items: start; }
+@media (max-width: 760px) {
+  .siatka-2, .siatka-3, .kolumny-panel { grid-template-columns: minmax(0, 1fr); }
+  h1 { font-size: 1.35rem; }
+}
+
+/* ---------- 4. Nagłówek makiety (generuje app.js w [data-cc-naglowek]) ---------- */
+.cc-makieta { background: #263238; color: #cfd8dc; font-size: .8rem; }
+.cc-makieta-wnetrze { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px var(--odstep); flex-wrap: wrap; }
+.cc-makieta a { color: #fff; text-decoration: none; }
+.cc-makieta a:hover { text-decoration: underline; color: #fff; }
+.cc-makieta-etykieta { letter-spacing: .08em; text-transform: uppercase; opacity: .7; margin-right: 8px; }
+.cc-przelacznik { display: inline-flex; border: 1px solid #546e7a; border-radius: 999px; overflow: hidden; }
+.cc-przelacznik a { padding: 3px 12px; }
+.cc-przelacznik a.aktywny { background: #eceff1; color: #263238; }
+.cc-przelacznik a.aktywny:hover { text-decoration: none; color: #263238; }
+
+.cc-aplikacja { background: var(--powierzchnia); border-bottom: 1px solid var(--ramka); }
+.cc-aplikacja-wnetrze { display: flex; align-items: center; gap: 20px; padding: 10px var(--odstep); margin: 0 auto; min-height: 56px; }
+.uklad-panel .cc-aplikacja-wnetrze { max-width: var(--szer-panel); }
+.uklad-klient .cc-aplikacja-wnetrze { max-width: var(--szer-klient); }
+.uklad-mobile .cc-aplikacja-wnetrze { max-width: var(--szer-mobile); }
+.cc-marka { font-weight: 700; color: var(--tekst); text-decoration: none; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.cc-marka:hover { color: var(--tekst); }
+.cc-marka-znak { width: 28px; height: 28px; border-radius: 8px; background: var(--glowny); color: #fff; display: grid; place-items: center; font-size: .9rem; }
+.cc-marka small { font-weight: 400; color: var(--tekst-2); }
+.cc-menu { display: flex; gap: 4px; }
+.cc-menu a { padding: 8px 14px; border-radius: var(--promien-maly); color: var(--tekst-2); text-decoration: none; font-weight: 550; }
+.cc-menu a:hover { background: var(--powierzchnia-2); color: var(--tekst); }
+.cc-menu a.aktywny { background: var(--glowny-jasny); color: var(--glowny-ciemny); }
+.cc-uzytkownik { margin-left: auto; color: var(--tekst-2); font-size: .9rem; white-space: nowrap; }
+@media (max-width: 600px) {
+  .cc-aplikacja-wnetrze { gap: 10px; flex-wrap: wrap; }
+  .cc-uzytkownik { display: none; }
+  .cc-menu a { padding: 6px 10px; }
+}
+
+/* ---------- 5. Przyciski ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font: inherit; font-weight: 600; font-size: .95rem; line-height: 1.2;
+  padding: 10px 18px; min-height: 42px; border-radius: var(--promien-maly);
+  border: 1px solid var(--ramka); background: var(--powierzchnia); color: var(--tekst);
+  cursor: pointer; text-decoration: none; transition: background .15s, border-color .15s;
+}
+.btn:hover { background: var(--powierzchnia-2); color: var(--tekst); }
+.btn:focus-visible { outline: 3px solid rgba(42, 111, 127, .35); outline-offset: 2px; }
+.btn-glowny { background: var(--glowny); border-color: var(--glowny); color: #fff; }
+.btn-glowny:hover { background: var(--glowny-ciemny); border-color: var(--glowny-ciemny); color: #fff; }
+.btn-drugi { background: var(--powierzchnia); border-color: var(--glowny); color: var(--glowny); }
+.btn-drugi:hover { background: var(--glowny-jasny); color: var(--glowny-ciemny); }
+.btn-niebezpieczny { background: var(--powierzchnia); border-color: var(--blad); color: var(--blad); }
+.btn-niebezpieczny:hover { background: var(--blad-jasny); color: var(--blad); }
+.btn-tekst { border-color: transparent; background: transparent; color: var(--glowny); padding-left: 8px; padding-right: 8px; }
+.btn-tekst:hover { background: var(--glowny-jasny); }
+.btn-maly { padding: 6px 12px; min-height: 34px; font-size: .875rem; }
+.btn-duzy { padding: 14px 24px; min-height: 52px; font-size: 1.05rem; }
+.btn-blok { display: flex; width: 100%; }
+.btn:disabled, .btn.wylaczony { opacity: .45; cursor: not-allowed; pointer-events: none; }
+
+/* ---------- 6. Karty ---------- */
+.karta { background: var(--powierzchnia); border: 1px solid var(--ramka); border-radius: var(--promien); box-shadow: var(--cien); padding: 20px; }
+.karta > :last-child { margin-bottom: 0; }
+.karta-naglowek { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.karta-naglowek h2, .karta-naglowek h3 { margin: 0; }
+.karta-zdjecie { margin: -20px -20px 16px; border-radius: var(--promien) var(--promien) 0 0; overflow: hidden; aspect-ratio: 16 / 10; background: var(--powierzchnia-2); }
+.karta-zdjecie img { width: 100%; height: 100%; object-fit: cover; }
+.karta-wybrana { border-color: var(--glowny); box-shadow: 0 0 0 2px var(--glowny); }
+.karta-klikalna { cursor: pointer; }
+.karta-klikalna:hover { border-color: var(--glowny); }
+.karta-plaska { box-shadow: none; }
+
+/* lista „etykieta: wartość” */
+.dane { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+.dane dt { color: var(--tekst-2); }
+.dane dd { margin: 0; font-weight: 550; }
+
+/* komunikaty w treści */
+.komunikat { border-radius: var(--promien-maly); padding: 12px 14px; background: var(--glowny-jasny); color: var(--glowny-ciemny); border-left: 4px solid var(--glowny); }
+.komunikat-sukces { background: var(--sukces-jasny); color: #1d5e39; border-left-color: var(--sukces); }
+.komunikat-ostrzezenie { background: var(--ostrzezenie-jasny); color: #6b4500; border-left-color: var(--akcent); }
+.komunikat-blad { background: var(--blad-jasny); color: #8a2318; border-left-color: var(--blad); }
+
+/* ekran potwierdzenia (np. „Prośba wysłana”, „PDF wysłany”) */
+.potwierdzenie { text-align: center; padding: 32px 20px; }
+.potwierdzenie-ikona { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center; font-size: 2rem; background: var(--sukces-jasny); color: var(--sukces); }
+
+/* znacznik do zaślepek budowy */
+.w-budowie { border: 2px dashed var(--ramka); border-radius: var(--promien); padding: 32px; text-align: center; color: var(--tekst-3); }
+
+/* ---------- 7. Formularze ---------- */
+.pole { display: block; margin-bottom: 14px; }
+.pole > span, .pole > label, .etykieta { display: block; font-weight: 550; font-size: .9rem; margin-bottom: 4px; }
+.pole .pomoc { display: block; font-size: .8rem; color: var(--tekst-2); margin-top: 4px; font-weight: 400; }
+input[type=text], input[type=email], input[type=tel], input[type=number], input[type=date],
+input[type=datetime-local], input[type=time], input[type=search], select, textarea {
+  width: 100%; font: inherit; color: var(--tekst); background: var(--powierzchnia);
+  border: 1px solid var(--ramka); border-radius: var(--promien-maly); padding: 10px 12px; min-height: 44px;
+}
+textarea { min-height: 88px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--glowny); box-shadow: 0 0 0 3px rgba(42, 111, 127, .18); }
+.pole-wyboru { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; cursor: pointer; }
+.pole-wyboru input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--glowny); }
+.lista-wyboru { border: 1px solid var(--ramka); border-radius: var(--promien); background: var(--powierzchnia); }
+.lista-wyboru .pole-wyboru { padding: 12px 14px; border-top: 1px solid var(--ramka); }
+.lista-wyboru .pole-wyboru:first-child { border-top: 0; }
+.przelaczniki { display: inline-flex; border: 1px solid var(--ramka); border-radius: var(--promien-maly); overflow: hidden; background: var(--powierzchnia); }
+.przelaczniki label { padding: 8px 14px; cursor: pointer; border-left: 1px solid var(--ramka); }
+.przelaczniki label:first-child { border-left: 0; }
+.przelaczniki input { position: absolute; opacity: 0; pointer-events: none; }
+.przelaczniki label:has(input:checked) { background: var(--glowny-jasny); color: var(--glowny-ciemny); font-weight: 600; }
+
+/* ---------- 8. Tabele ---------- */
+.tabela-ramka { overflow-x: auto; border: 1px solid var(--ramka); border-radius: var(--promien); background: var(--powierzchnia); }
+.tabela { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.tabela th, .tabela td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--ramka); vertical-align: middle; }
+.tabela th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--tekst-2); background: var(--powierzchnia-2); font-weight: 600; }
+.tabela tr:last-child td { border-bottom: 0; }
+.tabela tbody tr:hover { background: #fafbf9; }
+.tabela .suma td { font-weight: 700; background: var(--powierzchnia-2); }
+.tabela td.kwota, .tabela th.kwota { text-align: right; }
+
+/* ---------- 9. Znaczki statusów (8 statusów, backlog pkt 5) ---------- */
+.znaczek {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px;
+  font-size: .8rem; font-weight: 600; line-height: 1.4; white-space: nowrap; border: 1px solid transparent;
+}
+.znaczek::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.znaczek-wstepna { background: var(--st-wstepna-tlo); color: var(--st-wstepna-tekst); border-color: var(--st-wstepna); }
+.znaczek-wstepna::before { background: var(--st-wstepna); }
+.znaczek-potwierdzona, .znaczek-umowa-wyslana, .znaczek-umowa-podpisana, .znaczek-wydana, .znaczek-zwrocona {
+  background: var(--st-zajete-tlo); color: var(--st-zajete-tekst); border-color: #f0b9b7;
+}
+.znaczek-potwierdzona::before, .znaczek-umowa-wyslana::before, .znaczek-umowa-podpisana::before,
+.znaczek-wydana::before, .znaczek-zwrocona::before { background: var(--st-zajete); }
+.znaczek-rozliczona { background: var(--st-rozliczona-tlo); color: var(--st-rozliczona-tekst); border-color: #d3d8da; }
+.znaczek-rozliczona::before { background: var(--st-rozliczona); }
+.znaczek-wygasla { background: var(--st-wygasla-tlo); color: var(--st-wygasla-tekst); border: 1px dashed var(--st-wygasla); }
+.znaczek-wygasla::before { background: var(--st-wygasla); }
+.znaczek-neutralny { background: var(--powierzchnia-2); color: var(--tekst-2); border-color: var(--ramka); }
+.znaczek-neutralny::before { display: none; }
+.znaczek-ok { background: var(--sukces-jasny); color: #1d5e39; border-color: #b9e0c8; }
+.znaczek-ok::before { background: var(--sukces); }
+
+/* tła do pasków kalendarza / komórek: .tlo-<status> */
+.tlo-wstepna { background: var(--st-wstepna); color: #4a3800; }
+.tlo-potwierdzona, .tlo-umowa-wyslana, .tlo-umowa-podpisana, .tlo-wydana, .tlo-zwrocona, .tlo-zajete { background: var(--st-zajete); color: #fff; }
+.tlo-rozliczona { background: var(--st-rozliczona); color: #fff; }
+.tlo-wygasla { background: transparent; color: var(--st-wygasla-tekst); border: 1px dashed var(--st-wygasla); }
+.tlo-wolne { background: var(--st-wolne); color: var(--st-wolne-tekst); }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .85rem; color: var(--tekst-2); }
+.legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.legenda i { width: 22px; height: 12px; border-radius: 3px; display: inline-block; }
+
+/* ---------- 10. Pasek kroków najmu (P3) ---------- */
+.kroki-najmu { list-style: none; margin: 0; padding: 0; display: flex; gap: 0; counter-reset: krok; }
+.kroki-najmu li { flex: 1; position: relative; text-align: center; font-size: .85rem; color: var(--tekst-3); padding-top: 38px; counter-increment: krok; }
+.kroki-najmu li::before {
+  content: counter(krok); position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: .85rem;
+  background: var(--powierzchnia); border: 2px solid var(--ramka); color: var(--tekst-3); z-index: 1;
+}
+.kroki-najmu li::after { content: ""; position: absolute; top: 14px; left: -50%; width: 100%; height: 2px; background: var(--ramka); }
+.kroki-najmu li:first-child::after { display: none; }
+.kroki-najmu li.zrobione { color: var(--tekst-2); }
+.kroki-najmu li.zrobione::before { content: "✓"; background: var(--sukces); border-color: var(--sukces); color: #fff; }
+.kroki-najmu li.zrobione::after, .kroki-najmu li.biezace::after { background: var(--sukces); }
+.kroki-najmu li.biezace { color: var(--glowny-ciemny); font-weight: 650; }
+.kroki-najmu li.biezace::before { border-color: var(--glowny); color: var(--glowny); box-shadow: 0 0 0 4px var(--glowny-jasny); }
+.kroki-najmu li.przerwane { color: var(--tekst-3); text-decoration: line-through; }
+@media (max-width: 640px) {
+  .kroki-najmu { flex-direction: column; gap: 10px; }
+  .kroki-najmu li { text-align: left; padding: 4px 0 4px 42px; min-height: 30px; }
+  .kroki-najmu li::before { left: 0; transform: none; }
+  .kroki-najmu li::after { display: none; }
+}
+
+/* ---------- 11. Kreator krok po kroku ([data-cc-kreator], app.js) ---------- */
+.kreator-postep { position: sticky; top: 0; z-index: 5; background: var(--powierzchnia-2); padding: 12px 0 10px; margin-bottom: 8px; }
+.kreator-postep-tekst { display: flex; justify-content: space-between; font-size: .85rem; color: var(--tekst-2); margin-bottom: 6px; }
+.kreator-postep-tekst b { color: var(--tekst); }
+.kreator-postep-pasek { height: 6px; background: var(--ramka); border-radius: 999px; overflow: hidden; }
+.kreator-postep-pasek i { display: block; height: 100%; background: var(--glowny); width: 0; transition: width .25s; }
+.kreator [data-krok] { display: none; }
+.kreator [data-krok].aktywny { display: block; }
+.kreator [data-krok-koniec] { display: none; }
+.kreator.zakonczony [data-krok-koniec] { display: block; }
+.kreator.zakonczony [data-krok], .kreator.zakonczony .kreator-postep, .kreator.zakonczony .kreator-nawigacja { display: none !important; }
+.kreator-nawigacja {
+  position: sticky; bottom: 0; z-index: 5; display: flex; gap: 10px; padding: 12px 0;
+  background: linear-gradient(to top, var(--powierzchnia-2) 75%, rgba(240, 242, 238, 0));
+  margin-top: 16px;
+}
+.kreator-nawigacja .btn { flex: 1; }
+.kreator-nawigacja [data-cc-wstecz] { flex: 0 0 auto; }
+
+/* ---------- 12. Zdjęcia ([data-cc-zdjecie], app.js) ---------- */
+.zdjecia { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) { .zdjecia { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.cc-zdjecie { background: var(--powierzchnia); border: 1px solid var(--ramka); border-radius: var(--promien); overflow: hidden; }
+.cc-zdjecie-podglad {
+  position: relative; aspect-ratio: 4 / 3; background: var(--powierzchnia-2); display: grid; place-items: center;
+  color: var(--tekst-3); font-size: .85rem; cursor: pointer; border-bottom: 1px solid var(--ramka); text-align: center; padding: 0;
+  width: 100%; border-width: 0 0 1px; font-family: inherit;
+}
+.cc-zdjecie-podglad img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cc-zdjecie-podglad .ikona { font-size: 1.6rem; display: block; }
+.cc-zdjecie.jest .cc-zdjecie-podglad::after {
+  content: "✓"; position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--sukces); color: #fff; font-size: .8rem; display: grid; place-items: center;
+}
+.cc-zdjecie-stopka { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 6px 8px 6px 10px; font-size: .85rem; font-weight: 600; }
+.cc-zdjecie-stopka .btn { padding: 4px 8px; min-height: 28px; font-size: .75rem; font-weight: 500; }
+.cc-zdjecie input[type=file] { display: none; }
+.licznik-zdjec { font-weight: 700; }
+.licznik-zdjec.komplet { color: var(--sukces); }
+.przed-po { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.przed-po figure { margin: 0; }
+.przed-po figcaption { font-size: .75rem; color: var(--tekst-2); margin-top: 4px; }
+.miniatura { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; border-radius: var(--promien-maly); border: 1px solid var(--ramka); background: var(--powierzchnia-2); }
+
+/* ---------- 13. Podpis ([data-cc-podpis], app.js) ---------- */
+.cc-podpis { border: 1px solid var(--ramka); border-radius: var(--promien); background: var(--powierzchnia); overflow: hidden; }
+.cc-podpis-naglowek { display: flex; justify-content: space-between; align-items: center; padding: 8px 8px 8px 12px; font-size: .9rem; font-weight: 600; border-bottom: 1px solid var(--ramka); }
+.cc-podpis canvas { display: block; width: 100%; height: 170px; touch-action: none; cursor: crosshair;
+  background: linear-gradient(to top, transparent 38px, var(--ramka) 38px, var(--ramka) 39px, transparent 39px) #fff; }
+.cc-podpis-pomoc { font-size: .75rem; color: var(--tekst-3); padding: 4px 12px 8px; }
+.cc-podpis.podpisany .cc-podpis-pomoc { color: var(--sukces); }
+.podpis-obraz { height: 70px; width: auto; max-width: 100%; }
+
+/* ---------- 14. Okno modalne ---------- */
+.modal { position: fixed; inset: 0; z-index: 100; background: rgba(25, 35, 40, .45); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.modal:not(.otwarty) { display: none; }
+.modal-okno { background: var(--powierzchnia); border-radius: 14px; box-shadow: var(--cien-duzy); width: 100%; max-width: 480px; max-height: calc(100vh - 32px); overflow: auto; padding: 24px; position: relative; }
+.modal-szerokie .modal-okno { max-width: 720px; }
+.modal-okno h2 { padding-right: 32px; }
+.modal-zamknij { position: absolute; top: 14px; right: 14px; border: 0; background: transparent; font-size: 1.4rem; line-height: 1; cursor: pointer; color: var(--tekst-2); width: 32px; height: 32px; border-radius: 50%; }
+.modal-zamknij:hover { background: var(--powierzchnia-2); }
+.modal-przyciski { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+body.modal-otwarty { overflow: hidden; }
+
+/* ---------- 15. Toast ---------- */
+.cc-toasty { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; width: calc(100% - 32px); max-width: 440px; }
+.cc-toast { background: #263238; color: #fff; padding: 12px 18px; border-radius: 10px; box-shadow: var(--cien-duzy); font-size: .95rem; opacity: 0; transform: translateY(10px); transition: opacity .2s, transform .2s; text-align: center; }
+.cc-toast.widoczny { opacity: 1; transform: none; }
+.cc-toast::before { content: "✓ "; color: #8fd6a8; font-weight: 700; }
+
+/* ---------- 16. Dokument / widok do druku ---------- */
+.dokument { background: #fff; color: #111; max-width: 800px; margin: 0 auto; padding: 40px 48px; border: 1px solid var(--ramka); box-shadow: var(--cien); font-size: .95rem; }
+.dokument h1 { font-size: 1.4rem; text-align: center; }
+.dokument h2 { font-size: 1.05rem; margin-top: 1.4em; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+.dokument .podpisy { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+.dokument .podpisy figure { margin: 0; border-top: 1px solid #333; padding-top: 6px; font-size: .85rem; text-align: center; }
+.dokument .podpisy img { height: 70px; margin: 0 auto 6px; }
+.tresc-przewijana { max-height: 320px; overflow-y: auto; border: 1px solid var(--ramka); border-radius: var(--promien-maly); padding: 14px 16px; background: #fcfcfb; font-size: .9rem; }
+@media (max-width: 600px) { .dokument { padding: 20px 16px; } .dokument .podpisy { gap: 16px; } }
+
+@media print {
+  @page { margin: 15mm; }
+  body { background: #fff; font-size: 11pt; }
+  [data-cc-naglowek], .cc-makieta, .cc-aplikacja, .cc-toasty, .modal, .nie-drukuj, .btn, .kreator-nawigacja, .kreator-postep { display: none !important; }
+  .tresc { max-width: none !important; padding: 0 !important; }
+  .dokument { border: 0; box-shadow: none; padding: 0; max-width: none; }
+  .karta { box-shadow: none; break-inside: avoid; }
+  .tresc-przewijana { max-height: none; overflow: visible; border: 0; padding: 0; }
+  a { color: inherit; text-decoration: none; }
+  img { break-inside: avoid; }
+  .tylko-druk { display: block !important; }
+}
+.tylko-druk { display: none; }
+
+/* ---------- 17. Mapa makiety (index.html) ---------- */
+.mapa-sekcja h2 { display: flex; align-items: center; gap: 8px; }
+.mapa-lista { list-style: none; margin: 0; padding: 0; }
+.mapa-lista > li { padding: 10px 0; border-top: 1px solid var(--ramka); }
+.mapa-lista > li:first-child { border-top: 0; }
+.mapa-kod { display: inline-block; min-width: 46px; font-weight: 700; color: var(--glowny); }
+.mapa-warianty { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; padding-left: 46px; }
+.mapa-warianty a { text-decoration: none; }

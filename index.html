@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mapa makiety — CamperConnect</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/app.js"></script>
+</head>
+<body class="uklad-klient">
+  <header data-cc-naglowek="klient"></header>
+
+  <main class="tresc stos">
+    <section class="karta">
+      <h1>CamperConnect — makieta MVP</h1>
+      <p>Narzędzie dla małych wypożyczalni kamperów i przyczep: kalendarz z wstępną rezerwacją potwierdzaną przez właściciela,
+        umowa online oraz checklisty i fotoprotokół wydania i zwrotu. Decyzja „komu wynajmuję” zostaje u właściciela.</p>
+      <p class="drugi-plan">Makieta pokazuje jeden najem od prośby o termin do rozliczenia kaucji: <b>R-2027-014</b>, Anna Kowalska,
+        Ducato alkowa, 11.07.2027 – 21.07.2027. Dane są przykładowe, nic się nie wylicza ani nie wysyła.</p>
+      <a class="btn btn-glowny btn-duzy" href="klient/strona.html">Zacznij scenariusz demo →</a>
+    </section>
+
+    <div class="siatka-3">
+      <section class="karta mapa-sekcja">
+        <h2>Strona klienta</h2>
+        <ul class="mapa-lista">
+          <li><span class="mapa-kod">K1</span><a href="klient/strona.html">Kalendarz i prośba o termin</a></li>
+          <li><span class="mapa-kod">K1a</span><a href="klient/prosba-wyslana.html">Prośba wysłana</a></li>
+          <li><span class="mapa-kod">K2</span><a href="umowa/umowa.html">Umowa do podpisu</a> <small class="drugi-plan">telefon</small></li>
+          <li><span class="mapa-kod">K2a</span><a href="umowa/umowa-podpisana.html">Umowa podpisana</a></li>
+        </ul>
+      </section>
+
+      <section class="karta mapa-sekcja">
+        <h2>Panel wypożyczalni <small class="drugi-plan">laptop</small></h2>
+        <ul class="mapa-lista">
+          <li><span class="mapa-kod">P1</span><a href="panel/kalendarz.html">Kalendarz floty</a>
+            <div class="mapa-warianty">
+              <a href="panel/kalendarz.html?stan=wstepna" class="znaczek znaczek-wstepna">wstępna</a>
+              <a href="panel/kalendarz.html?stan=potwierdzona" class="znaczek znaczek-potwierdzona">potwierdzona</a>
+              <a href="panel/kalendarz.html?stan=wygasla" class="znaczek znaczek-wygasla">wygasła</a>
+            </div></li>
+          <li><span class="mapa-kod">P2</span><a href="panel/rezerwacje.html">Lista próśb i rezerwacji</a></li>
+          <li><span class="mapa-kod">P3</span><a href="panel/rezerwacja.html">Szczegóły rezerwacji</a>
+            <div class="mapa-warianty">
+              <a href="panel/rezerwacja.html?stan=wstepna" class="znaczek znaczek-wstepna">Wstępna</a>
+              <a href="panel/rezerwacja.html?stan=potwierdzona" class="znaczek znaczek-potwierdzona">Potwierdzona</a>
+              <a href="panel/rezerwacja.html?stan=umowa-wyslana" class="znaczek znaczek-umowa-wyslana">Umowa wysłana</a>
+              <a href="panel/rezerwacja.html?stan=umowa-podpisana" class="znaczek znaczek-umowa-podpisana">Umowa podpisana</a>
+              <a href="panel/rezerwacja.html?stan=wydana" class="znaczek znaczek-wydana">Wydana</a>
+              <a href="panel/rezerwacja.html?stan=zwrocona" class="znaczek znaczek-zwrocona">Zwrócona</a>
+              <a href="panel/rezerwacja.html?stan=rozliczona" class="znaczek znaczek-rozliczona">Rozliczona</a>
+              <a href="panel/rezerwacja.html?stan=wygasla" class="znaczek znaczek-wygasla">Wygasła</a>
+            </div></li>
+          <li><span class="mapa-kod">P4</span><a href="panel/nowa.html">Dodanie rezerwacji ręcznie</a></li>
+        </ul>
+      </section>
+
+      <section class="karta mapa-sekcja">
+        <h2>Telefon właściciela</h2>
+        <ul class="mapa-lista">
+          <li><span class="mapa-kod">M1</span><a href="wydanie/wydanie.html">Protokół wydania</a></li>
+          <li><span class="mapa-kod">M1a</span><a href="wydanie/podglad.html">Podgląd protokołu wydania</a></li>
+          <li><span class="mapa-kod">M2</span><a href="zwrot/zwrot.html">Protokół zwrotu</a></li>
+          <li><span class="mapa-kod">M3</span><a href="zwrot/rozliczenie.html">Rozliczenie kaucji</a> <small class="drugi-plan">laptop</small></li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="karta">
+      <h2>Scenariusz demo</h2>
+      <div class="tabela-ramka"><table class="tabela">
+        <thead><tr><th>#</th><th>Kto, kiedy</th><th>Ekrany</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Klient, wieczór</td><td><a href="klient/strona.html">K1</a> → <a href="klient/prosba-wyslana.html">K1a</a></td></tr>
+          <tr><td>2</td><td>Właściciel, rano</td><td><a href="panel/kalendarz.html?stan=wstepna">P1 wstępna</a> → <a href="panel/rezerwacje.html">P2</a></td></tr>
+          <tr><td>3</td><td>Po rozmowie telefonicznej</td><td><a href="panel/rezerwacje.html">P2 (okno zadatku)</a> → <a href="panel/rezerwacja.html?stan=potwierdzona">P3 potwierdzona</a> → <a href="panel/kalendarz.html?stan=potwierdzona">P1 potwierdzona</a></td></tr>
+          <tr><td>4</td><td>Umowa</td><td><a href="panel/rezerwacja.html?stan=umowa-wyslana">P3 umowa wysłana</a> → <a href="umowa/umowa.html">K2</a> → <a href="umowa/umowa-podpisana.html">K2a</a> → <a href="panel/rezerwacja.html?stan=umowa-podpisana">P3 umowa podpisana</a></td></tr>
+          <tr><td>5</td><td>Wydanie (telefon)</td><td><a href="wydanie/wydanie.html">M1</a> → <a href="panel/rezerwacja.html?stan=wydana">P3 wydana</a></td></tr>
+          <tr><td>6</td><td>Zwrot (telefon)</td><td><a href="zwrot/zwrot.html">M2</a> → <a href="panel/rezerwacja.html?stan=zwrocona">P3 zwrócona</a></td></tr>
+          <tr><td>7</td><td>Rozliczenie</td><td><a href="zwrot/rozliczenie.html">M3</a> → <a href="panel/rezerwacja.html?stan=rozliczona">P3 rozliczona</a></td></tr>
+          <tr><td>8</td><td>Na koniec</td><td><a href="panel/kalendarz.html">P1</a> → <a href="panel/rezerwacja.html?stan=wygasla">P3 wygasła</a> → <a href="panel/kalendarz.html?stan=wygasla">P1 wygasła</a></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <p class="maly drugi-plan">Dla zespołu: <a href="wzorzec.html">komponenty makiety</a> · każdy ekran jest samodzielny i otwiera się też na telefonie.</p>
+  </main>
+</body>
+</html>

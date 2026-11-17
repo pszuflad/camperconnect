@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K1 · Kalendarz i prośba o termin — CamperConnect</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/app.js"></script>
+</head>
+<!--
+  WZORZEC EKRANU — kopiuj ten plik jako punkt wyjścia.
+  1. <body class="uklad-klient | uklad-panel | uklad-mobile">
+  2. <header data-cc-naglowek="klient | panel | mobile" data-cc-menu="kalendarz | rezerwacje"></header>
+  3. <main class="tresc"> … </main>
+  4. ścieżki do assets zawsze względne: ../assets/…
+  Agent 1 zastępuje treść poniżej prawdziwym ekranem K1. Pełna lista klas i atrybutów: docs/KONTRAKT.md
+-->
+<body class="uklad-klient">
+  <header data-cc-naglowek="klient"></header>
+
+  <main class="tresc">
+    <div class="naglowek-ekranu">
+      <div>
+        <h1>Zarezerwuj kampera</h1>
+        <p class="podtytul">Wybierz pojazd i termin — wypożyczalnia potwierdzi rezerwację telefonicznie.</p>
+      </div>
+    </div>
+
+    <div class="kolumny-panel">
+      <div class="stos">
+        <!-- Karty pojazdów -->
+        <section>
+          <h2>Pojazdy</h2>
+          <div class="siatka-auto">
+            <article class="karta karta-klikalna karta-wybrana">
+              <div class="karta-zdjecie"><img src="../assets/img/pojazd-ducato-alkowa.svg" alt="Ducato alkowa"></div>
+              <div class="karta-naglowek"><h3>Ducato alkowa</h3><span class="znaczek znaczek-ok">Wybrany</span></div>
+              <p class="drugi-plan maly">Kamper · 6 osób</p>
+              <p><span class="kwota pogrubiony">650 zł</span> / doba · kaucja <span class="kwota">5 000 zł</span></p>
+            </article>
+            <article class="karta karta-klikalna">
+              <div class="karta-zdjecie"><img src="../assets/img/pojazd-ford-nugget.svg" alt="Ford Nugget"></div>
+              <div class="karta-naglowek"><h3>Ford Nugget</h3></div>
+              <p class="drugi-plan maly">Kamper · 4 osoby</p>
+              <p><span class="kwota pogrubiony">500 zł</span> / doba · kaucja <span class="kwota">4 000 zł</span></p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Formularz -->
+        <section class="karta">
+          <div class="karta-naglowek">
+            <h2>Twoje dane</h2>
+            <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij="#prosba">Wypełnij przykładowymi danymi</button>
+          </div>
+          <form id="prosba" data-cc-przejdz="prosba-wyslana.html">
+            <label class="pole"><span>Imię i nazwisko</span>
+              <input type="text" name="imie" required data-przyklad="Anna Kowalska"></label>
+            <div class="siatka-2">
+              <label class="pole"><span>Telefon</span>
+                <input type="tel" name="telefon" required data-przyklad="600 123 456"></label>
+              <label class="pole"><span>E-mail</span>
+                <input type="email" name="email" required data-przyklad="anna.kowalska@example.com"></label>
+            </div>
+            <label class="pole"><span>Wiadomość (opcjonalnie)</span>
+              <textarea name="wiadomosc" data-przyklad="Jedziemy z dwójką dzieci, czy można zabrać psa?"></textarea>
+              <span class="pomoc">Np. liczba osób, zwierzęta, pytania o wyposażenie.</span></label>
+            <label class="pole-wyboru"><input type="checkbox" required data-przyklad> <span>Akceptuję regulamin wypożyczalni</span></label>
+            <div class="rzad" style="margin-top:12px">
+              <button type="submit" class="btn btn-glowny">Wyślij prośbę o termin</button>
+              <button type="button" class="btn btn-drugi" data-cc-toast="Przykładowy komunikat">Przycisk drugorzędny</button>
+              <button type="button" class="btn btn-niebezpieczny" data-cc-modal="przyklad-modal">Przycisk niebezpieczny</button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- Podsumowanie -->
+      <aside class="karta stos-maly">
+        <h2>Podsumowanie</h2>
+        <dl class="dane">
+          <dt>Pojazd</dt><dd>Ducato alkowa</dd>
+          <dt>Termin</dt><dd>11.07.2027 – 21.07.2027</dd>
+          <dt>Liczba dób</dt><dd>10</dd>
+          <dt>Cena</dt><dd class="kwota">6 500 zł</dd>
+          <dt>Zadatek (30%)</dt><dd class="kwota">1 950 zł</dd>
+          <dt>Kaucja</dt><dd class="kwota">5 000 zł</dd>
+        </dl>
+        <div class="komunikat">To prośba o termin, nie płatność. Termin blokujemy na 3 dni.</div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Okno modalne: otwiera je data-cc-modal="przyklad-modal" albo CC.modal('przyklad-modal') -->
+  <div class="modal" id="przyklad-modal">
+    <div class="modal-okno">
+      <h2>Przykładowe okno</h2>
+      <p>Treść okna modalnego. Zamyka je ×, Esc, klik w tło albo przycisk z data-cc-zamknij.</p>
+      <div class="modal-przyciski">
+        <button type="button" class="btn btn-drugi" data-cc-zamknij>Anuluj</button>
+        <button type="button" class="btn btn-glowny" data-cc-zamknij data-cc-toast="Zapisano">Zapisz</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

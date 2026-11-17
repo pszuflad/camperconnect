@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Komponenty makiety — CamperConnect</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/app.js"></script>
+</head>
+<!-- Galeria wspólnych komponentów (właściciel: agent 0/6). Do podejrzenia i kopiowania; nie jest ekranem scenariusza. -->
+<body class="uklad-mobile">
+  <header data-cc-naglowek="mobile" data-cc-menu="rezerwacje"></header>
+
+  <main class="tresc stos">
+    <div class="naglowek-ekranu"><div><h1>Komponenty makiety</h1><p class="podtytul">Wszystko, co daje assets/style.css i assets/app.js. Opis: docs/KONTRAKT.md</p></div></div>
+
+    <section class="karta">
+      <h2>Znaczki statusów</h2>
+      <div class="rzad">
+        <span data-cc-znaczek="wstepna"></span><span data-cc-znaczek="potwierdzona"></span>
+        <span data-cc-znaczek="umowa-wyslana"></span><span data-cc-znaczek="umowa-podpisana"></span>
+        <span data-cc-znaczek="wydana"></span><span data-cc-znaczek="zwrocona"></span>
+        <span data-cc-znaczek="rozliczona"></span><span data-cc-znaczek="wygasla"></span>
+      </div>
+      <hr>
+      <div class="legenda">
+        <span><i class="tlo-wstepna"></i>Wstępna</span><span><i class="tlo-potwierdzona"></i>Potwierdzona i dalsze</span>
+        <span><i class="tlo-rozliczona"></i>Rozliczona</span><span><i class="tlo-wolne"></i>Wolne</span>
+      </div>
+    </section>
+
+    <section class="karta">
+      <h2>Pasek kroków najmu</h2>
+      <ol data-cc-kroki="3"></ol>
+    </section>
+
+    <section class="karta stos-maly">
+      <h2>Stany (?stan=)</h2>
+      <p>Aktualny stan: <b id="aktualny-stan"></b>. <a href="?stan=wydana">?stan=wydana</a> · <a href="?stan=wstepna">?stan=wstepna</a></p>
+      <p data-stan="wstepna" class="komunikat komunikat-ostrzezenie">Widoczne tylko przy ?stan=wstepna (domyślny tu brak).</p>
+      <p data-stan="wydana zwrocona" class="komunikat komunikat-sukces">Widoczne przy ?stan=wydana lub zwrocona.</p>
+    </section>
+
+    <section class="karta">
+      <h2>Kreator</h2>
+      <div data-cc-kreator id="kreator-demo">
+        <section data-krok="Wyposażenie">
+          <div class="lista-wyboru">
+            <label class="pole-wyboru"><input type="checkbox" data-przyklad> Stolik</label>
+            <label class="pole-wyboru"><input type="checkbox" data-przyklad> 4 krzesła</label>
+          </div>
+          <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij>Zaznacz wszystko</button>
+        </section>
+        <section data-krok="Zdjęcia">
+          <div data-cc-zdjecia data-wymagaj>
+            <p>Zdjęcia: <span data-cc-licznik></span> — „Dalej” aktywne po komplecie.
+              <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij>Wypełnij przykładowymi zdjęciami</button></p>
+            <div class="zdjecia">
+              <div data-cc-zdjecie="przod" data-etykieta="Przód" data-przyklad="assets/img/protokol-przod.svg"></div>
+              <div data-cc-zdjecie="prawy-bok" data-etykieta="Prawy bok" data-przyklad="assets/img/protokol-prawy-bok.svg"></div>
+            </div>
+          </div>
+        </section>
+        <section data-krok="Podpisy" data-dalej-tekst="Zatwierdź protokół">
+          <div class="stos">
+            <div data-cc-podpis="wydajacy" data-etykieta="Podpis wydającego"></div>
+            <div data-cc-podpis="najemca" data-etykieta="Podpis najemcy"></div>
+          </div>
+        </section>
+        <section data-krok-koniec>
+          <div class="potwierdzenie">
+            <div class="potwierdzenie-ikona">✓</div>
+            <h2>Protokół podpisany, PDF wysłany do obu stron</h2>
+            <button type="button" class="btn btn-drugi" onclick="CC.kreator('kreator-demo').idz(0)">Od początku</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="karta">
+      <h2>Przed / po</h2>
+      <div class="przed-po">
+        <figure><img class="miniatura" src="assets/img/protokol-prawy-bok.svg" alt=""><figcaption>Wydanie 11.07.2027</figcaption></figure>
+        <figure><img class="miniatura" src="assets/img/protokol-prawy-bok-rysa.svg" alt=""><figcaption>Zwrot 21.07.2027</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="karta">
+      <h2>Tabela</h2>
+      <div class="tabela-ramka"><table class="tabela">
+        <thead><tr><th>Pozycja</th><th class="kwota">Kwota</th></tr></thead>
+        <tbody>
+          <tr><td>Paliwo 22 l × 8 zł + 100 zł</td><td class="kwota">276 zł</td></tr>
+          <tr><td>Brak klucza</td><td class="kwota">60 zł</td></tr>
+          <tr class="suma"><td>Razem</td><td class="kwota">336 zł</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="karta rzad">
+      <button class="btn btn-glowny" data-cc-toast="PDF wysłany do obu stron">Pokaż toast</button>
+      <button class="btn btn-drugi" data-cc-modal="m-demo">Otwórz okno</button>
+      <button class="btn btn-tekst" data-cc-drukuj>Drukuj</button>
+    </section>
+  </main>
+
+  <div class="modal" id="m-demo"><div class="modal-okno">
+    <h2>Zadatek</h2>
+    <label class="pole"><span>Kwota</span><input type="text" value="1 950 zł"></label>
+    <div class="modal-przyciski"><button class="btn btn-drugi" data-cc-zamknij>Anuluj</button><button class="btn btn-glowny" data-cc-zamknij>Zapisz</button></div>
+  </div></div>
+
+  <script>
+    CC.gotowe(function () { document.getElementById('aktualny-stan').textContent = CC.stan() || '(brak)'; });
+  </script>
+</body>
+</html>
