@@ -1,0 +1,54 @@
+/* K1 / K1a — style lokalne strony klienta (agent 1) */
+
+/* Karty pojazdów: kompaktowe, 2 kolumny na telefonie, 3 na laptopie */
+.pojazdy { display: grid; gap: 12px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .pojazdy { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pojazdy .karta h3 { font-size: 1rem; margin: 0; }
+.pojazdy .karta p { margin: 4px 0 0; }
+.pojazdy .karta-naglowek { margin-bottom: 0; gap: 6px; flex-wrap: wrap; }
+
+/* Kalendarz miesięczny */
+.kal-naglowek { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.kal-naglowek h3 { margin: 0; font-size: 1.05rem; }
+.kal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.kal .dzien-tyg { text-align: center; font-size: .75rem; font-weight: 600; color: var(--tekst-2); padding: 2px 0 4px; }
+.kal .dzien {
+  height: 46px; display: grid; place-items: center;
+  border-radius: 8px; font-size: .9rem; font-variant-numeric: tabular-nums; user-select: none;
+}
+.kal .pusty { background: transparent; }
+.kal .wolny { background: var(--st-wolne); color: var(--st-wolne-tekst); cursor: pointer; }
+.kal .wolny:hover { outline: 2px solid var(--glowny); outline-offset: -2px; }
+.kal .zajety {
+  background: repeating-linear-gradient(135deg, var(--powierzchnia-2) 0 6px, #e4e7e8 6px 12px);
+  color: var(--tekst-2); text-decoration: line-through; cursor: not-allowed;
+}
+.kal .wybrany { background: var(--glowny); color: #fff; border-radius: 0; font-weight: 600; }
+.kal .wybrany.poczatek { border-radius: 8px 0 0 8px; }
+.kal .wybrany.koniec { border-radius: 0 8px 8px 0; }
+.kal .wybrany small { display: block; font-size: .6rem; font-weight: 500; line-height: 1; opacity: .9; }
+@media (max-width: 600px) { .kal .dzien { height: 40px; } }
+.kal .wybrany { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.legenda .l-wybrany { background: var(--glowny); }
+.legenda .l-zajety { background: repeating-linear-gradient(135deg, var(--powierzchnia-2) 0 3px, #d6dadc 3px 6px); }
+
+/* Podsumowanie — przyklejone obok formularza na laptopie */
+@media (min-width: 761px) { .podsumowanie { position: sticky; top: 16px; } }
+.podsumowanie .suma-kwota { font-size: 1.35rem; font-weight: 700; }
+.warunki { font-size: .85rem; color: var(--tekst-2); line-height: 1.45; }
+
+/* Skrót regulaminu w modalu */
+.regulamin h3 { font-size: .95rem; margin: 14px 0 4px; }
+.regulamin h3:first-child { margin-top: 0; }
+.regulamin ol { margin: 0; padding-left: 20px; }
+.regulamin li { margin: 2px 0; }
+
+/* K1a */
+.k1a { max-width: 640px; margin: 0 auto; }
+.kroki-dalej { margin: 0; padding-left: 20px; }
+.kroki-dalej li { margin: 6px 0; }
+
+/* Krótkie podsumowanie nad przyciskiem — tylko na telefonie (pełne jest pod formularzem) */
+.podsumowanie-krotkie { display: none; }
+@media (max-width: 760px) { .podsumowanie-krotkie { display: block; } }
+.k1a dd, .k1a p { overflow-wrap: anywhere; }
