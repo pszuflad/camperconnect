@@ -1,0 +1,56 @@
+/* Style lokalne obszaru umowa/ (K2, K2a). Wspólne komponenty: ../assets/style.css */
+
+/* --- treść dokumentów (dokumenty.js) --- */
+[data-dokument] ol, [data-dokument] ul { padding-left: 1.4em; margin: 0 0 .6em; }
+[data-dokument] li { margin: 0 0 .35em; }
+[data-dokument] p { margin: 0 0 .6em; }
+.tresc-przewijana [data-dokument] h2 { font-size: .95rem; margin: 1.1em 0 .4em; }
+.tresc-przewijana [data-dokument] h2:first-child { margin-top: 0; }
+.dok-wstep { font-style: italic; color: var(--tekst-2); }
+.dok-oswiadczenie { margin-top: 12px !important; font-style: italic; }
+.dok-cennik { font-size: .85rem; }
+.dok-cennik th, .dok-cennik td { padding: 7px 8px; vertical-align: top; }
+.dok-cennik td:first-child { color: var(--tekst-2); width: 2.2em; }
+.dok-cennik .dok-kwota { text-align: right; min-width: 7em; }
+.tresc-przewijana .tabela-ramka { border: 0; border-radius: 0; background: transparent; }
+
+/* --- K2: zwijane dokumenty z akceptacją pod spodem --- */
+.dok-sekcja { border: 1px solid var(--ramka); border-radius: var(--promien); background: var(--powierzchnia); box-shadow: var(--cien); }
+.dok-sekcja > details > summary {
+  list-style: none; cursor: pointer; padding: 14px 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between;
+}
+.dok-sekcja > details > summary::-webkit-details-marker { display: none; }
+.dok-sekcja > details > summary::after { content: "▾"; color: var(--tekst-3); transition: transform .15s; flex: none; }
+.dok-sekcja > details[open] > summary::after { transform: rotate(180deg); }
+.dok-tytul { display: block; font-weight: 650; }
+.dok-opis { display: block; font-size: .8rem; color: var(--tekst-2); }
+.dok-sekcja .tresc-przewijana { margin: 0 16px; max-height: 360px; }
+.dok-akceptacja { padding: 6px 16px 10px; border-top: 1px solid var(--ramka); margin-top: 12px; }
+.dok-sekcja > details:not([open]) + .dok-akceptacja, .dok-akceptacja-bez-odstepu { margin-top: 0; }
+.dok-owu { padding: 14px 16px; }
+.dok-sekcja:has(.dok-akceptacja input:checked) { border-color: var(--sukces); }
+.dok-sekcja:has(.dok-akceptacja input:checked) .dok-opis::before { content: "✓ zaakceptowano · "; color: var(--sukces); font-weight: 600; }
+.dok-krok { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--glowny); color: #fff; font-size: .85rem; font-weight: 700; margin-right: 8px; flex: none; }
+.dok-krok-naglowek { display: flex; align-items: center; margin: 8px 0 0; }
+.dok-krok-naglowek h2 { margin: 0; }
+fieldset.dok-grupa { border: 0; padding: 0; margin: 0; }
+fieldset.dok-grupa legend { font-weight: 650; padding: 0; margin-bottom: 8px; }
+.dok-podpis-pomoc { font-size: .85rem; color: var(--tekst-2); margin-top: 6px; }
+
+/* --- K2a: widok do druku --- */
+.dok-strony { display: flex; flex-direction: column; gap: 24px; }
+.dok-zalacznik-znak { text-align: center; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: #555; margin-bottom: 4px; }
+.dok-adnotacja { margin-top: 20px; padding: 8px 12px; border: 1px dashed #9aa; border-radius: 4px; font-size: .82rem; color: #333; background: #f7faf9; }
+.dok-dane { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 0 0 1em; }
+.dok-dane th, .dok-dane td { text-align: left; vertical-align: top; padding: 4px 8px 4px 0; border-bottom: 1px solid #eee; }
+.dok-dane th { font-weight: 600; width: 38%; color: #333; }
+.dokument .podpisy figure small { display: block; color: #555; }
+
+@media print {
+  .dok-strony { display: block; }
+  .dok-strony > .dokument + .dokument { break-before: page; }
+  .dok-adnotacja { background: none; }
+}
+
+/* K2: podsumowanie najmu mieści się w szerokości telefonu */
+.dok-podsumowanie { grid-template-columns: minmax(0, 40%) minmax(0, 1fr); }
