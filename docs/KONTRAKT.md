@@ -43,6 +43,7 @@ Szkielet każdego pliku już istnieje — **zachowaj** `<head>`, klasę `body`, 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>P3 · Rezerwacja R-2027-014 — CamperConnect</title>
+  <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>          <!-- w <head>, BEZ defer -->
   <!-- opcjonalnie: <link rel="stylesheet" href="rezerwacja.css"> -->
