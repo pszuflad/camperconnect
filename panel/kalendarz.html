@@ -7,6 +7,8 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <link rel="stylesheet" href="panel.css">
+  <script src="dane.js"></script>
 </head>
 <body class="uklad-panel" data-stan-domyslny="wstepna">
   <header data-cc-naglowek="panel" data-cc-menu="kalendarz"></header>
@@ -15,17 +17,113 @@
     <div class="naglowek-ekranu">
       <div>
         <h1>Kalendarz floty</h1>
-        <p class="podtytul">Lipiec 2027 · 6 pojazdów</p>
+        <p class="podtytul">Sezon 2027 · 6 pojazdów · Kamper na Mazury</p>
+      </div>
+      <div class="rzad">
+        <a data-stan="wstepna" class="licznik-prosb" href="rezerwacje.html"><b>1</b> prośba do potwierdzenia</a>
+        <span data-stan="potwierdzona wygasla" class="licznik-prosb pusty"><b>0</b> próśb do potwierdzenia</span>
+        <a class="btn btn-glowny" href="nowa.html">+ Dodaj rezerwację</a>
       </div>
     </div>
 
-    <!-- Treść ekranu P1 — buduje agent 2. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>P1</b> — ekran w budowie (agent 2)</p>
-      <p data-stan="wstepna">Wariant stanu: <span data-cc-znaczek="wstepna"></span></p>
-      <p data-stan="potwierdzona">Wariant stanu: <span data-cc-znaczek="potwierdzona"></span></p>
-      <p data-stan="wygasla">Wariant stanu: <span data-cc-znaczek="wygasla"></span></p>
+    <div class="stos">
+      <div data-stan="wstepna" class="komunikat komunikat-ostrzezenie">
+        <b>Nowa prośba o termin:</b> Anna Kowalska, Ducato alkowa, 11.07.2027 – 21.07.2027 (10 dób).
+        Termin zablokowany do <b>15.03.2027</b> — potwierdź albo odrzuć, inaczej wróci jako wolny.
+        <a href="rezerwacje.html">Przejdź do prośby</a>
+      </div>
+      <div data-stan="potwierdzona" class="komunikat komunikat-sukces">
+        Rezerwacja <b>R-2027-014</b> potwierdzona — zadatek 1 950 zł odnotowany 13.03.2027. Termin 11.07.2027 – 21.07.2027 zajęty.
+        <a href="rezerwacja.html?stan=potwierdzona">Szczegóły rezerwacji</a>
+      </div>
+      <div data-stan="wygasla" class="komunikat">
+        Prośba Anny Kowalskiej wygasła 15.03.2027 bez potwierdzenia. Termin <b>11.07.2027 – 21.07.2027</b> dla Ducato alkowa wrócił jako wolny.
+        <a href="rezerwacja.html?stan=wygasla">Zobacz prośbę</a>
+      </div>
+
+      <div class="karta">
+        <div class="os-pasek">
+          <div class="os-miesiac">
+            <button type="button" class="btn btn-drugi btn-maly" id="poprzedni" aria-label="Poprzedni miesiąc">←</button>
+            <b id="nazwa-miesiaca">Lipiec 2027</b>
+            <button type="button" class="btn btn-drugi btn-maly" id="nastepny" aria-label="Następny miesiąc">→</button>
+          </div>
+          <div class="legenda">
+            <span><i class="tlo-wstepna"></i>Wstępna (blokuje termin do daty ważności)</span>
+            <span><i class="tlo-potwierdzona"></i>Potwierdzona · umowa · wydana · zwrócona</span>
+            <span><i class="tlo-rozliczona"></i>Rozliczona</span>
+            <span><i class="tlo-wolne"></i>Wolne</span>
+          </div>
+        </div>
+        <div class="os-ramka">
+          <div class="os" id="os"></div>
+        </div>
+        <p class="maly drugi-plan" style="margin:10px 0 0">Najedź na pasek, żeby zobaczyć szczegóły; kliknij, żeby otworzyć rezerwację. W makiecie pełne szczegóły ma rezerwacja R-2027-014 (Ania K.).</p>
+      </div>
     </div>
   </main>
+
+  <script>
+    CC.gotowe(function () {
+      var stan = CC.stan();
+      var MIESIACE = { 6: 'Czerwiec', 7: 'Lipiec', 8: 'Sierpień' };
+      var DNI_TYG = ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'];
+      var miesiac = parseInt(new URLSearchParams(location.search).get('miesiac'), 10);
+      if (!MIESIACE[miesiac]) miesiac = 7;
+      var os = document.getElementById('os');
+
+      function data(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+      function weekend(d) { var w = new Date(2027, miesiac - 1, d).getDay(); return w === 0 || w === 6; }
+
+      function rysuj() {
+        var dni = new Date(2027, miesiac, 0).getDate();
+        var poczatek = new Date(2027, miesiac - 1, 1), koniec = new Date(2027, miesiac - 1, dni);
+        document.getElementById('nazwa-miesiaca').textContent = MIESIACE[miesiac] + ' 2027';
+        document.getElementById('poprzedni').disabled = miesiac === 6;
+        document.getElementById('nastepny').disabled = miesiac === 8;
+        os.style.setProperty('--dni', dni);
+
+        var html = '<div class="os-naroznik" style="grid-row:1;grid-column:1">Pojazd</div>';
+        for (var d = 1; d <= dni; d++) {
+          html += '<div class="os-dzien' + (weekend(d) ? ' weekend' : '') + '" style="grid-row:1;grid-column:' + (d + 1) + '"><b>' + d + '</b>' +
+            DNI_TYG[new Date(2027, miesiac - 1, d).getDay()] + '</div>';
+        }
+        PANEL.pojazdy.forEach(function (p, i) {
+          var r = i + 2;
+          html += '<div class="os-pojazd" style="grid-row:' + r + ';grid-column:1"><b>' + p.nazwa + '</b><span>' + p.typ + ' · ' + p.cena + '</span></div>';
+          for (var d = 1; d <= dni; d++) {
+            html += '<div class="os-komorka' + (weekend(d) ? ' weekend' : '') + '" style="grid-row:' + r + ';grid-column:' + (d + 1) + '"></div>';
+          }
+        });
+
+        PANEL.rezerwacje.forEach(function (z) {
+          var status = z.status;
+          if (z.demo) {
+            if (stan === 'wygasla') return;                    // wygasła — paska nie ma, termin wolny
+            status = stan === 'potwierdzona' ? 'potwierdzona' : 'wstepna';
+          }
+          var od = data(z.od), doo = data(z.do);
+          if (doo < poczatek || od > koniec) return;
+          var s = od < poczatek ? 1 : od.getDate(), k = doo > koniec ? dni : doo.getDate();
+          var wiersz = PANEL.pojazdy.findIndex(function (p) { return p.id === z.pojazd; }) + 2;
+          var klasy = 'os-pasek-rez tlo-' + status + (od < poczatek ? ' ucieta-l' : '') + (doo > koniec ? ' ucieta-p' : '') + (z.demo ? ' demo' : '');
+          var etykieta = z.skrot + (z.demo && status === 'wstepna' ? ' <small>· ważna do 15.03</small>' : '');
+          var opis = z.nr + ' · ' + z.klient + ' · ' + z.termin + ' · ' + CC.STATUSY[status];
+          var styl = 'grid-row:' + wiersz + ';grid-column:' + (s + 1) + ' / ' + (k + 2);
+          if (z.demo) html += '<a class="' + klasy + '" style="' + styl + '" title="' + opis + '" href="rezerwacja.html?stan=' + status + '">' + etykieta + '</a>';
+          else html += '<div class="' + klasy + '" style="' + styl + '" title="' + opis + '" data-opis="' + opis + '">' + etykieta + '</div>';
+        });
+        os.innerHTML = html;
+      }
+
+      os.addEventListener('click', function (e) {
+        var p = e.target.closest('[data-opis]');
+        if (p) CC.toast(p.getAttribute('data-opis') + ' — w makiecie szczegóły tylko dla R-2027-014');
+      });
+      document.getElementById('poprzedni').addEventListener('click', function () { if (miesiac > 6) { miesiac--; rysuj(); } });
+      document.getElementById('nastepny').addEventListener('click', function () { if (miesiac < 8) { miesiac++; rysuj(); } });
+      rysuj();
+    });
+  </script>
 </body>
 </html>

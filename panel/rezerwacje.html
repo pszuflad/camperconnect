@@ -7,6 +7,8 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <link rel="stylesheet" href="panel.css">
+  <script src="dane.js"></script>
 </head>
 <body class="uklad-panel">
   <header data-cc-naglowek="panel" data-cc-menu="rezerwacje"></header>
@@ -15,14 +17,152 @@
     <div class="naglowek-ekranu">
       <div>
         <h1>Rezerwacje</h1>
-        <p class="podtytul">Prośby do potwierdzenia i rezerwacje sezonu</p>
+        <p class="podtytul">Prośby do potwierdzenia i rezerwacje sezonu 2027</p>
+      </div>
+      <div class="rzad">
+        <a class="btn btn-drugi" href="kalendarz.html">Kalendarz floty</a>
+        <a class="btn btn-glowny" href="nowa.html">+ Dodaj rezerwację</a>
       </div>
     </div>
 
-    <!-- Treść ekranu P2 — buduje agent 2. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>P2</b> — ekran w budowie (agent 2)</p>
+    <div class="stos">
+      <div class="kafle-liczby">
+        <div class="karta"><span class="drugi-plan maly">Do potwierdzenia</span><b>1</b></div>
+        <div class="karta"><span class="drugi-plan maly">Rezerwacje w sezonie</span><b>21</b></div>
+        <div class="karta"><span class="drugi-plan maly">Czekają na podpis umowy</span><b>3</b></div>
+        <div class="karta"><span class="drugi-plan maly">Wydania w lipcu</span><b>12</b></div>
+      </div>
+
+      <section class="stos-maly">
+        <h2>Do potwierdzenia <span class="znaczek znaczek-wstepna">1</span></h2>
+        <div class="karta prosba" id="prosba">
+          <div class="rzad-rozsuniety" style="align-items:flex-start;flex-wrap:wrap;gap:16px">
+            <div class="stos-maly" style="flex:1;min-width:320px">
+              <div class="rzad">
+                <span data-cc-znaczek="wstepna"></span>
+                <b>R-2027-014</b>
+                <span class="drugi-plan maly">prośba wysłana 12.03.2027, 21:40 przez stronę wypożyczalni</span>
+              </div>
+              <dl class="dane">
+                <dt>Klient</dt><dd>Anna Kowalska</dd>
+                <dt>Telefon</dt><dd><a href="tel:600123456">600 123 456</a> · anna.kowalska@example.com</dd>
+                <dt>Pojazd</dt><dd>Ducato alkowa (NGI 4K27)</dd>
+                <dt>Termin</dt><dd>11.07.2027 – 21.07.2027 · 10 dób</dd>
+                <dt>Kwota</dt><dd><span class="kwota">6 500 zł</span> · zadatek <span class="kwota">1 950 zł</span> · kaucja <span class="kwota">5 000 zł</span></dd>
+                <dt>Ważna do</dt><dd><b>15.03.2027</b> <span class="drugi-plan">(potem termin wraca jako wolny)</span></dd>
+              </dl>
+              <p class="prosba-wiadomosc">„Jedziemy z dwójką dzieci, czy można zabrać psa?"</p>
+            </div>
+            <div class="stos-maly" style="min-width:200px">
+              <button type="button" class="btn btn-glowny" data-cc-modal="zadatek">Potwierdź</button>
+              <button type="button" class="btn btn-drugi" data-cc-modal="odrzuc">Odrzuć</button>
+              <a class="btn btn-tekst btn-maly" href="rezerwacja.html?stan=wstepna">Szczegóły prośby</a>
+            </div>
+          </div>
+        </div>
+        <p class="drugi-plan maly" id="brak-prosb" hidden>Brak próśb do potwierdzenia.</p>
+      </section>
+
+      <section class="stos-maly">
+        <div class="rzad-rozsuniety" style="flex-wrap:wrap;gap:12px">
+          <h2 style="margin:0">Rezerwacje sezonu</h2>
+          <div class="filtry">
+            <label class="pole"><span>Status</span>
+              <select id="filtr-status">
+                <option value="">Wszystkie statusy</option>
+                <option value="wstepna">Wstępna</option>
+                <option value="potwierdzona">Potwierdzona</option>
+                <option value="umowa-wyslana">Umowa wysłana</option>
+                <option value="umowa-podpisana">Umowa podpisana</option>
+                <option value="wydana">Wydana</option>
+                <option value="zwrocona">Zwrócona</option>
+                <option value="rozliczona">Rozliczona</option>
+              </select>
+            </label>
+            <label class="pole"><span>Pojazd</span>
+              <select id="filtr-pojazd"><option value="">Wszystkie pojazdy</option></select>
+            </label>
+          </div>
+        </div>
+        <div class="tabela-ramka">
+          <table class="tabela">
+            <thead><tr><th>Nr</th><th>Klient</th><th>Pojazd</th><th>Termin</th><th class="kwota">Doby</th><th class="kwota">Czynsz</th><th>Status</th></tr></thead>
+            <tbody id="lista"></tbody>
+          </table>
+        </div>
+        <p class="drugi-plan maly" id="licznik-listy"></p>
+      </section>
     </div>
+
+    <!-- Okno zadatku -->
+    <div class="modal" id="zadatek"><div class="modal-okno">
+      <h2>Potwierdź rezerwację i odnotuj zadatek</h2>
+      <p class="drugi-plan">R-2027-014 · Anna Kowalska · Ducato alkowa · 11.07.2027 – 21.07.2027</p>
+      <label class="pole"><span>Kwota zadatku</span><input type="text" value="1 950 zł"><span class="pomoc">30% czynszu 6 500 zł</span></label>
+      <label class="pole"><span>Data wpłaty</span><input type="text" value="13.03.2027"></label>
+      <div class="pole"><span>Forma</span>
+        <div class="przelaczniki">
+          <label><input type="radio" name="forma" checked> Przelew</label>
+          <label><input type="radio" name="forma"> Gotówka</label>
+        </div>
+      </div>
+      <div class="komunikat">Termin wpłaty: 3 dni od potwierdzenia (do 16.03.2027)</div>
+      <label class="pole-wyboru"><input type="checkbox" checked> <span>Wyślij klientowi potwierdzenie rezerwacji (e-mail i SMS)</span></label>
+      <div class="modal-przyciski">
+        <button type="button" class="btn btn-drugi" data-cc-zamknij>Anuluj</button>
+        <a class="btn btn-glowny" href="rezerwacja.html?stan=potwierdzona" data-cc-toast="Rezerwacja potwierdzona, zadatek odnotowany">Zapisz</a>
+      </div>
+    </div></div>
+
+    <!-- Okno odrzucenia -->
+    <div class="modal" id="odrzuc"><div class="modal-okno">
+      <h2>Odrzucić prośbę?</h2>
+      <p>Anna Kowalska dostanie e-mail, że termin 11.07.2027 – 21.07.2027 jest niedostępny. Termin wróci w kalendarzu jako wolny.</p>
+      <label class="pole"><span>Wiadomość do klienta (opcjonalnie)</span><textarea rows="3" placeholder="np. propozycja innego terminu"></textarea></label>
+      <div class="modal-przyciski">
+        <button type="button" class="btn btn-drugi" data-cc-zamknij>Anuluj</button>
+        <button type="button" class="btn btn-niebezpieczny" id="odrzuc-tak">Odrzuć prośbę</button>
+      </div>
+    </div></div>
   </main>
+
+  <script>
+    CC.gotowe(function () {
+      var nazwy = {};
+      var sel = document.getElementById('filtr-pojazd');
+      PANEL.pojazdy.forEach(function (p) {
+        nazwy[p.id] = p.nazwa;
+        sel.insertAdjacentHTML('beforeend', '<option value="' + p.id + '">' + p.nazwa + '</option>');
+      });
+
+      function rysuj() {
+        var st = document.getElementById('filtr-status').value, po = sel.value;
+        var wiersze = PANEL.rezerwacje.filter(function (z) {
+          return (!st || z.status === st) && (!po || z.pojazd === po);
+        });
+        document.getElementById('lista').innerHTML = wiersze.length ? wiersze.map(function (z) {
+          return '<tr' + (z.demo ? ' class="demo klikalny" data-href="rezerwacja.html?stan=wstepna"' : '') + '>' +
+            '<td>' + (z.demo ? '<a href="rezerwacja.html?stan=wstepna"><b>' + z.nr + '</b></a>' : z.nr) + '</td>' +
+            '<td>' + z.klient + '</td><td>' + nazwy[z.pojazd] + '</td><td>' + z.termin +
+            (z.demo ? ' <span class="maly drugi-plan">· ważna do 15.03.2027</span>' : '') + '</td>' +
+            '<td class="kwota">' + z.doby + '</td><td class="kwota">' + z.kwota + '</td><td>' + CC.znaczek(z.status) + '</td></tr>';
+        }).join('') : '<tr><td colspan="7" class="wysrodkowany drugi-plan">Brak rezerwacji dla wybranych filtrów.</td></tr>';
+        document.getElementById('licznik-listy').textContent = 'Pokazano ' + wiersze.length + ' z ' + PANEL.rezerwacje.length + ' (prośby i rezerwacje czerwiec–sierpień 2027).';
+      }
+      document.getElementById('filtr-status').addEventListener('change', rysuj);
+      sel.addEventListener('change', rysuj);
+      document.getElementById('lista').addEventListener('click', function (e) {
+        var tr = e.target.closest('tr[data-href]');
+        if (tr && !e.target.closest('a')) location.href = tr.getAttribute('data-href');
+      });
+      document.getElementById('odrzuc-tak').addEventListener('click', function () {
+        CC.zamknij();
+        document.getElementById('prosba').hidden = true;
+        document.getElementById('brak-prosb').hidden = false;
+        CC.toast('Prośba odrzucona, klient powiadomiony, termin zwolniony');
+      });
+      rysuj();
+    });
+  </script>
 </body>
 </html>
