@@ -1,6 +1,6 @@
 # KONTRAKT — makieta MVP CamperConnect
 
-Jedyne źródło prawdy dla agentów 1–5. Zakres i ekrany: [`CC_Makieta_MVP_Backlog.md`](CC_Makieta_MVP_Backlog.md). **Wszystkie kwoty, daty i dane: [pkt 4.1 backlogu](CC_Makieta_MVP_Backlog.md#41-wartości-kanoniczne-najmu-demo)** (oraz pkt 4 — flota, cennik potrąceń, wyposażenie, szkolenie).
+Jedyne źródło prawdy dla agentów 1–5. Zakres i ekrany: [`CC_Makieta_MVP_Backlog.md`](CC_Makieta_MVP_Backlog.md). **Wszystkie kwoty, daty i dane: [pkt 4.1 backlogu](CC_Makieta_MVP_Backlog.md#41-wartości-kanoniczne-najmu-demo)** (oraz pkt 4 — flota, cennik potrąceń, wyposażenie, instruktaż). **Treść umowy, regulaminu, cennika usług dodatkowych i kar oraz protokołu zdawczo-odbiorczego: [`CC_Dokumenty_Wypozyczalni.md`](CC_Dokumenty_Wypozyczalni.md)** — oparta na prawdziwych dokumentach wypożyczalni; nie wymyślaj własnych zapisów i nie wpisuj danych prawdziwej firmy.
 
 Podgląd wszystkich komponentów na żywo: [`wzorzec.html`](../wzorzec.html). Wzorzec ekranu do kopiowania: `klient/strona.html` (w wersji z `main` sprzed pracy agenta 1).
 

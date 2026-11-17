@@ -1,10 +1,12 @@
 # CamperConnect — makieta MVP 1.1: zakres i backlog
 
-**Wersja:** 1.1 (17.11.2026) · **Termin makiety:** 18.11.2026 (jeden dzień pracy) · **Podstawa:** `CC_MVP_Faza1.md` v1.1, `CC_Proces_Przed_Po.md` v1.1, `CC_Wywiad_Robert_Sekula.md`
+**Wersja:** 1.2 (17.11.2026) · **Termin makiety:** 18.11.2026 (jeden dzień pracy) · **Podstawa:** `CC_MVP_Faza1.md` v1.1, `CC_Proces_Przed_Po.md` v1.1, `CC_Wywiad_Robert_Sekula.md`, `CC_Dokumenty_Wypozyczalni.md` v1.0
 
 Ten dokument jest wejściem do pracy z Claude Code. Opisuje, czym jest produkt, co dokładnie ma pokazać makieta, jakie ma mieć ekrany i w jakiej kolejności je zbudować.
 
 **Zmiany w 1.1:** makieta to zestaw statycznych ekranów w czystym HTML + CSS + odrobina JavaScriptu, a nie aplikacja z logiką. Pokazujemy, jak ekrany wyglądają i co na nich jest; nic się naprawdę nie wylicza ani nie zapisuje. Dodane: mapa makiety (`index.html`), ekran „Prośba wysłana", wartości kanoniczne (pkt 4.1), warianty stanów ekranu szczegółów rezerwacji.
+
+**Zmiany w 1.2:** umowa, regulamin, cennik i protokół oparte na prawdziwych dokumentach wypożyczalni (`CC_Dokumenty_Wypozyczalni.md`). Nowy cennik potrąceń, lista wyposażenia i punkty instruktażu; brak kluczyka 300 zł zamiast 60 zł, więc zmieniają się sumy potrąceń i zwrot kaucji; zwrot o 16:00; dodani kolejny kierowca, osoby korzystające, trasa, osoba kontaktowa i dopłata czynszu.
 
 ---
 
@@ -46,7 +48,7 @@ Ten dokument jest wejściem do pracy z Claude Code. Opisuje, czym jest produkt, 
 
 Spójne z `CC_Proces_Przed_Po.md`, żeby makieta i opowieść o procesie mówiły o tym samym najmie.
 
-- **Wypożyczalnia:** „Kamper na Mazury", Giżycko, właściciel Marek Wiśniewski. Ważność wstępnej rezerwacji: 3 dni. Zadatek: 30%.
+- **Wypożyczalnia:** „Kamper na Mazury", Giżycko, właściciel Marek Wiśniewski. Ważność wstępnej rezerwacji: 3 dni. Zadatek: 30% w ciągu 3 dni od potwierdzenia, reszta czynszu 7 dni przed wydaniem, kaucja w dniu wydania. Dane do umowy: `CC_Dokumenty_Wypozyczalni.md`, pkt 2.
 - **Flota (6 pojazdów):**
 
 | Pojazd | Typ | Cena / doba | Kaucja |
@@ -59,9 +61,10 @@ Spójne z `CC_Proces_Przed_Po.md`, żeby makieta i opowieść o procesie mówił
 | Niewiadów N126 | przyczepa | 200 zł | 2 000 zł |
 
 - **Sezon w danych:** czerwiec–sierpień 2027, kilkanaście rezerwacji w różnych statusach na wszystkich pojazdach, żeby kalendarz nie był pusty. Termin 11–21.07.2027 dla Ducato alkowa jest zarezerwowany dla najmu demo.
-- **Cennik potrąceń:** paliwo 8 zł/l + 100 zł opłaty, sprzątanie 150 zł, brak klucza 60 zł, nieopróżniona kaseta 200 zł, klosz lampki 90 zł.
-- **Wyposażenie standardowe:** stolik, 4 krzesła, kabel zasilający, wąż do wody, kliny, 2 komplety kluczy, butla gazowa ×2. Dodatkowe: grill, farelka, wentylator. Materiały eksploatacyjne: butle gazowe (pełne), płyn do toalety.
-- **Punkty szkolenia:** prąd, woda, gaz, kaseta toalety, markiza, lodówka.
+- **Dokumenty wypożyczalni:** treść umowy, regulaminu, cennika i protokołu — `CC_Dokumenty_Wypozyczalni.md` (oparte na prawdziwych dokumentach, bez danych prawdziwej firmy).
+- **Cennik usług dodatkowych i kar:** 30 pozycji — `CC_Dokumenty_Wypozyczalni.md`, pkt 5. Najważniejsze w demo: brak paliwa 8 zł/l + 100 zł (poz. 30), zgubienie kluczyka 300 zł (poz. 24), brudne wnętrze 100 zł (poz. 3), brudna kaseta 100 zł (poz. 5), sprzątanie po zwierzętach 250 zł (poz. 4), palenie 4 000 zł (poz. 11), rysy 150 zł/mb (poz. 19), inne naprawy według faktur (poz. 21).
+- **Wyposażenie:** lista z protokołu zdawczo-odbiorczego w grupach: klucze i dokumenty, na zewnątrz, wnętrze, dodatkowe płatne, materiały eksploatacyjne — `CC_Dokumenty_Wypozyczalni.md`, pkt 6.
+- **Instruktaż:** 12 punktów „rozstawienie i użytkowanie" i 6 punktów „przygotowanie do jazdy" — `CC_Dokumenty_Wypozyczalni.md`, pkt 6.
 
 ### 4.1. Wartości kanoniczne najmu demo
 
@@ -71,21 +74,26 @@ Wszystkie ekrany pokazują dokładnie te wartości.
 |---|---|
 | Numer rezerwacji | R-2027-014 |
 | Klient | Anna Kowalska („Ania K."), tel. 600 123 456, anna.kowalska@example.com |
+| Wynajmujący | Kamper na Mazury Marek Wiśniewski, ul. Jeziorna 5, 11-500 Giżycko, NIP 000-000-00-00 |
 | Wiadomość klienta | „Jedziemy z dwójką dzieci, czy można zabrać psa?" |
 | Pojazd | Ducato alkowa, nr rej. NGI 4K27, bak 88 l |
 | Termin | 11.07.2027 – 21.07.2027, 10 dób |
 | Cena | 10 × 650 zł = 6 500 zł |
-| Zadatek | 1 950 zł (30%), przelew, odnotowany 13.03.2027 |
+| Zadatek | 1 950 zł (30%), przelew, odnotowany 13.03.2027 (termin: 16.03.2027) |
+| Pozostała część czynszu | 4 550 zł, termin 04.07.2027, wpłynęła 02.07.2027 |
 | Kaucja | 5 000 zł, gotówka, przyjęta przy wydaniu |
 | Prośba wysłana | 12.03.2027, 21:40; ważna do 15.03.2027 |
-| Umowa wysłana / podpisana | 13.03.2027 / 14.03.2027 |
-| Dane najemcy | ul. Lipowa 12/4, 02-345 Warszawa; PESEL 85010112345; dowód ABC 123456; prawo jazdy 01234/12/1234 |
+| Umowa wysłana / podpisana | 13.03.2027 / 14.03.2027, 19:12 |
+| Dane najemcy | ul. Lipowa 12/4, 02-345 Warszawa; PESEL 85010112345; dowód ABC 123456; prawo jazdy 01234/12/1234, kat. B od 2012 |
+| Kolejny kierowca | Tomasz Kowalski, prawo jazdy 04567/09/1234, kat. B od 2009 |
+| Osoby korzystające | Tomasz Kowalski, dwoje dzieci (8 i 5 lat), pies |
+| Trasa / kontakt | Mazury: Giżycko – Mikołajki – Ruciane-Nida; kontakt: Ewa Kowalska, 601 222 333 |
 | Wydanie | 11.07.2027, 10:00; przebieg 48 230 km; paliwo 8/8 |
-| Zwrot | 21.07.2027, 18:00; przebieg 49 870 km; paliwo 6/8 |
+| Zwrot | 21.07.2027, 16:00; przebieg 49 870 km; paliwo 6/8 |
 | Ustalenia przy zwrocie | nowa rysa na prawym boku; brak jednego kompletu kluczy; paliwo 6/8 (brakuje 22 l) |
-| Potrącenia automatyczne | paliwo 22 l × 8 zł + 100 zł = 276 zł; brak klucza 60 zł; razem 336 zł |
-| Pozycja „do wyceny" | rysa prawy bok — wycena w rozliczeniu: 400 zł |
-| Rozliczenie | potrącenia 736 zł; zwrot kaucji 4 264 zł; rozliczona 23.07.2027 |
+| Potrącenia automatyczne | paliwo 22 l × 8 zł + 100 zł = 276 zł (cennik poz. 30); brak kompletu kluczyków 300 zł (poz. 24); razem 576 zł; wstępnie do zwrotu 4 424 zł |
+| Pozycja „do wyceny" | rysa prawy bok, ok. 30 cm, do podkładu (poz. 21) — wycena w rozliczeniu: 400 zł |
+| Rozliczenie | potrącenia 976 zł; zwrot kaucji 4 024 zł; rozliczona 23.07.2027 (termin zwrotu kaucji: 28.07.2027) |
 
 ## 5. Statusy rezerwacji
 
@@ -118,6 +126,7 @@ Klient w kalendarzu widzi tylko: wolne / zajęte.
 - Kalendarz miesięczny (lipiec 2027) z dniami wolnymi i zajętymi; zaznaczony zakres 11–21.07.
 - Podsumowanie: 10 dób, 6 500 zł, zadatek 1 950 zł, kaucja 5 000 zł.
 - Formularz: imię i nazwisko, telefon, e-mail, opcjonalna wiadomość; przycisk „Wypełnij przykładowymi danymi".
+- Linia warunków (zadatek 30% w 3 dni od potwierdzenia, reszta 7 dni przed odbiorem, kaucja w dniu odbioru) i link „Regulamin wynajmu" (okno ze skrótem regulaminu).
 - „Wyślij prośbę o termin" prowadzi do K1a. Na ekranie nie ma płatności ani automatycznego potwierdzenia.
 
 **K1a. Prośba wysłana** (`klient/prosba-wyslana.html`)
@@ -126,12 +135,12 @@ Klient w kalendarzu widzi tylko: wolne / zajęte.
 
 **K2. Umowa do podpisu** (`umowa/umowa.html`, link z e-maila, telefon klienta)
 - Podsumowanie najmu: pojazd, daty, cena, zadatek, kaucja.
-- Formularz danych najemcy i kierowcy: imię i nazwisko, adres, PESEL, numer dowodu, numer prawa jazdy. Bez zdjęć dokumentów. Przycisk „Wypełnij przykładowymi danymi".
-- Treść umowy, regulaminu i cennika potrąceń (przewijana), w tym zobowiązania przy zwrocie i zapis o szkodach ponad wypłatę z ubezpieczenia.
-- Pola wyboru „Zapoznałem się…", podpis palcem, przycisk „Podpisuję" prowadzi do K2a.
+- Formularz według rozdziału V umowy: najemca (imię i nazwisko, adres, PESEL, numer dowodu, numer i kategoria prawa jazdy), kolejny kierowca, osoby korzystające z pojazdu, przewidywana trasa, osoba do kontaktu. Bez zdjęć dokumentów. Przycisk „Wypełnij przykładowymi danymi".
+- Trzy przewijane dokumenty, każdy z własnym polem akceptacji: umowa najmu, regulamin wynajmu (zał. 1), cennik usług dodatkowych i kar (zał. 4); OWU jako link. Treść: `CC_Dokumenty_Wypozyczalni.md`, pkt 3–5 i 7.
+- Pięć pól akceptacji, jeden podpis palcem („obejmuje umowę oraz załączniki nr 1 i 4"), przycisk „Podpisuję" prowadzi do K2a.
 
 **K2a. Umowa podpisana** (`umowa/umowa-podpisana.html`)
-- Potwierdzenie „Umowa podpisana, kopia PDF wysłana na e-mail" i podgląd umowy jako widok do druku z danymi, podpisem i datą. Ten sam widok otwierany z panelu (link z P3).
+- Potwierdzenie „Umowa podpisana, kopia PDF wysłana na e-mail" i podgląd umowy jako widok do druku z danymi, podpisem i datą (14.03.2027, 19:12), z regulaminem i cennikiem jako załącznikami. Ten sam widok otwierany z panelu (link z P3).
 - W makiecie link „Wróć do panelu" do P3 w stanie „Umowa podpisana".
 
 ### Panel wypożyczalni (laptop)
@@ -150,7 +159,7 @@ Klient w kalendarzu widzi tylko: wolne / zajęte.
 **P3. Szczegóły rezerwacji** (`panel/rezerwacja.html?stan=…`)
 - Dane klienta i najmu, znaczek statusu.
 - Pasek kroków najmu: prośba → potwierdzenie i zadatek → umowa → wydanie → zwrot → rozliczenie kaucji; zrobione kroki odhaczone, następny krok jako główny przycisk.
-- Sekcje: zadatek (kwota, data, forma); umowa (status, „Wyślij umowę", „Otwórz jako klient", podgląd); protokoły (przyciski „Rozpocznij wydanie", „Rozpocznij zwrot", podglądy); kaucja (przyjęta / do zwrotu / rozliczona, z kwotami); „Wysłane powiadomienia" (lista e-maili i SMS-ów adekwatna do stanu).
+- Sekcje: płatności (zadatek 1 950 zł; pozostała część czynszu 4 550 zł do 04.07.2027 — „oczekuje" do stanu `umowa-podpisana`, od `wydana` „wpłynęła 02.07.2027"; kaucja); umowa (status, „Wyślij umowę", „Otwórz jako klient", podgląd, lista załączników 1–5); protokoły (przyciski „Rozpocznij wydanie", „Rozpocznij zwrot", podglądy); kaucja (przyjęta / do zwrotu / rozliczona, z kwotami); „Wysłane powiadomienia" (lista e-maili i SMS-ów adekwatna do stanu).
 - Warianty `stan`: `wstepna`, `potwierdzona`, `umowa-wyslana`, `umowa-podpisana`, `wydana`, `zwrocona`, `rozliczona`, `wygasla`. Główny przycisk prowadzi do następnego ekranu scenariusza (pkt 8).
 
 **P4. Dodanie rezerwacji ręcznie** (`panel/nowa.html`)
@@ -160,24 +169,24 @@ Klient w kalendarzu widzi tylko: wolne / zajęte.
 ### Panel wypożyczalni (telefon)
 
 **M1. Protokół wydania** (`wydanie/wydanie.html`) — kreator krok po kroku
-1. Wyposażenie: lista standardowa i dodatkowa z odhaczaniem, materiały eksploatacyjne.
+1. Wyposażenie: lista z protokołu w grupach, z ilością i odhaczaniem, materiały eksploatacyjne; oświadczenie „akceptuję listę wydanego wyposażenia".
 2. Zdjęcia: wymagane ujęcia (przód, lewy bok, tył, prawy bok, dach, wnętrze, licznik, paliwo); dodawanie z aparatu lub pliku z podglądem; licznik „x z 8"; „Dalej" nieaktywne poniżej 8; przycisk „Wypełnij przykładowymi zdjęciami".
 3. Stan: przebieg, poziom paliwa.
-4. Szkolenie klienta: punkty do odhaczenia.
-5. Kaucja: kwota, forma, „przyjęta".
-6. Podsumowanie i podpisy palcem obu stron; ekran „Protokół podpisany, PDF wysłany do obu stron" z linkiem do P3 w stanie „Wydana".
+4. Instruktaż: 12 + 6 punktów do odhaczenia; oświadczenie o odbytym instruktażu i otrzymaniu instrukcji — bez niego „Dalej" nieaktywne.
+5. Kaucja i dokumenty: kaucja 5 000 zł, forma, „przyjęta"; czynsz opłacony w całości; „sprawdzono dowód i prawo jazdy" najemcy i kolejnego kierowcy.
+6. Podsumowanie, oświadczenie najemcy o stanie technicznym i podpisy palcem obu stron; ekran „Protokół podpisany, PDF wysłany do obu stron" z linkiem do P3 w stanie „Wydana".
 
-**M1a. Podgląd protokołu wydania** (`wydanie/podglad.html`) — widok do druku ze zdjęciami, listami, podpisami i znacznikiem czasu.
+**M1a. Podgląd protokołu wydania** (`wydanie/podglad.html`) — widok do druku w układzie papierowego protokołu zdawczo-odbiorczego: lista wyposażenia z ilością, instruktaż, oświadczenia, zdjęcia, podpisy i znacznik czasu.
 
 **M2. Protokół zwrotu** (`zwrot/zwrot.html`) — kreator krok po kroku
 1. Zdjęcia: przy każdym ujęciu zdjęcie z wydania obok nowego; przy prawym boku widoczna rysa; przycisk „Nowe uszkodzenie" z opisem.
-2. Wyposażenie: porównanie z listą z wydania, zaznaczony brak kompletu kluczy.
-3. Stan: przebieg, paliwo 6/8, czystość, kaseta.
-4. Potrącenia: pozycje z cennika z kwotami z pkt 4.1, pozycja „do wyceny", suma, kwota kaucji do zwrotu.
+2. Wyposażenie: lista z wydania z ilością wydaną i zwróconą, zaznaczony brak kompletu kluczyków.
+3. Stan: przebieg, paliwo 6/8; kontrola według cennika (czystość, zwierzę, kaseta, dym, zbiornik wody, terminowość) — w demo wszystko w porządku.
+4. Potrącenia: pozycje z numerami z cennika i kwotami z pkt 4.1, pozycja „do wyceny", suma, kwota kaucji do zwrotu.
 5. Podsumowanie i podpisy obu stron; link do P3 w stanie „Zwrócona".
 
 **M3. Rozliczenie kaucji** (`zwrot/rozliczenie.html`, laptop)
-- Zestawienie potrąceń ze zdjęciami przed/po, pole wyceny rysy (400 zł), kwota do zwrotu 4 264 zł, „Kaucja rozliczona" prowadzi do P3 w stanie „Rozliczona".
+- Zestawienie potrąceń z numerami pozycji cennika i zdjęciami przed/po, pole wyceny rysy (400 zł), kwota do zwrotu 4 024 zł, termin zwrotu kaucji 28.07.2027, „Kaucja rozliczona" prowadzi do P3 w stanie „Rozliczona".
 
 ## 7. Czego w makiecie nie ma
 
@@ -252,17 +261,17 @@ Na telefonie rozmówcy można otworzyć dowolny ekran z mapy makiety — każdy 
 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
-| E3-1 | Ekran umowy | Podsumowanie najmu, formularz najemcy z „Wypełnij przykładowymi", treść umowy, regulaminu i cennika potrąceń | `P0` `klient` `mobile` `ui` | M |
-| E3-2 | Podpis | Pola wyboru, podpis palcem, „Podpisuję" prowadzi do K2a | `P0` `klient` `mobile` `ui` | S |
+| E3-1 | Ekran umowy | Podsumowanie najmu, formularz według rozdz. V umowy z „Wypełnij przykładowymi", treść umowy, regulaminu i cennika z `CC_Dokumenty_Wypozyczalni.md` | `P0` `klient` `mobile` `ui` | M |
+| E3-2 | Podpis | Pięć pól akceptacji, podpis palcem, „Podpisuję" prowadzi do K2a | `P0` `klient` `mobile` `ui` | S |
 | E3-3 | Umowa podpisana | K2a z widokiem do druku (dane, podpis, data) | `P1` `klient` `panel` `ui` | S |
 
 ### Epik E4 — Protokół wydania
 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
-| E4-1 | Wyposażenie | Kreator; listy z odhaczaniem; materiały eksploatacyjne | `P0` `mobile` `ui` | S |
+| E4-1 | Wyposażenie | Kreator; lista z protokołu z ilością i odhaczaniem; materiały eksploatacyjne; oświadczenie najemcy | `P0` `mobile` `ui` | S |
 | E4-2 | Zdjęcia | 8 ujęć, aparat lub plik, podgląd, licznik, blokada „Dalej", „Wypełnij przykładowymi" | `P0` `mobile` `ui` `js` | M |
-| E4-3 | Stan, szkolenie, kaucja | Przebieg, paliwo; punkty szkolenia; kaucja | `P0` `mobile` `ui` | S |
+| E4-3 | Stan, instruktaż, kaucja | Przebieg, paliwo; 18 punktów instruktażu z oświadczeniem blokującym „Dalej"; kaucja i dokumenty | `P0` `mobile` `ui` | S |
 | E4-4 | Podsumowanie i podpisy | Podsumowanie, dwa podpisy, ekran „PDF wysłany" z linkiem do P3 `wydana` | `P0` `mobile` `ui` | S |
 | E4-5 | Istniejące uszkodzenia | Miejsce, opis, zdjęcie zbliżenia | `P1` `mobile` `ui` | S |
 | E4-6 | Podgląd protokołu | M1a jako widok do druku | `P1` `panel` `ui` | S |
@@ -273,8 +282,8 @@ Na telefonie rozmówcy można otworzyć dowolny ekran z mapy makiety — każdy 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
 | E5-1 | Zdjęcia przed/po | Każde ujęcie: z wydania obok nowego; rysa na prawym boku; „Nowe uszkodzenie" | `P0` `mobile` `ui` | M |
-| E5-2 | Wyposażenie i stan | Lista z wydania z zaznaczonym brakiem klucza; przebieg, paliwo, czystość, kaseta | `P0` `mobile` `ui` | S |
-| E5-3 | Potrącenia | Pozycje i kwoty z pkt 4.1, „do wyceny", suma, zwrot kaucji | `P0` `mobile` `ui` | S |
+| E5-2 | Wyposażenie i stan | Lista z wydania z zaznaczonym brakiem kluczyków; przebieg, paliwo, kontrola według cennika | `P0` `mobile` `ui` | S |
+| E5-3 | Potrącenia | Pozycje z numerami cennika i kwotami z pkt 4.1, „do wyceny", suma, zwrot kaucji | `P0` `mobile` `ui` | S |
 | E5-4 | Podsumowanie i podpisy | Dwa podpisy, adnotacja „do wyceny", link do P3 `zwrocona` | `P0` `mobile` `ui` | S |
 | E5-5 | Rozliczenie kaucji | M3 z zestawieniem i zdjęciami, „Kaucja rozliczona" prowadzi do P3 `rozliczona` | `P0` `panel` `ui` | S |
 | E5-6 | Zdjęcia z wydania z `localStorage` | Jeśli są zapamiętane — pokazane zamiast przykładowych | `P1` `mobile` `js` | S |
@@ -312,4 +321,5 @@ Jeśli widać opóźnienie, tniemy w tej kolejności: przełączanie miesięcy, 
 - Nie dodajemy funkcji spoza punktu 6. Pomysły w trakcie trafiają do epiku E7.
 - Przy wątpliwości „czy to potrzebne w makiecie" rozstrzyga pytanie: czy bez tego da się przeklikać scenariusz demo.
 - Przy wątpliwości „liczyć czy wpisać" — wpisać na sztywno.
+- Treść umowy, regulaminu, cennika i protokołu — wyłącznie z `CC_Dokumenty_Wypozyczalni.md`; nigdy dane prawdziwej wypożyczalni z oryginalnych PDF-ów.
 - Teksty w interfejsie pisane językiem właścicieli wypożyczalni: „wstępna rezerwacja", „zadatek", „kaucja", „wydanie", „zwrot", „potrącenia"; bez słów „platforma", „KYC", „widget".
