@@ -7,22 +7,133 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <script src="dane.js"></script>
+  <style>
+    .dokument .metryka { text-align: center; font-size: .85rem; color: #555; margin-top: -6px; }
+    .dokument table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    .dokument th, .dokument td { border: 1px solid #bbb; padding: 4px 6px; text-align: left; vertical-align: top; }
+    .dokument th { background: #f2f2f2; }
+    .dokument td.il { text-align: center; white-space: nowrap; width: 1%; }
+    .dokument tr.grupa td { background: #f7f7f7; font-weight: 600; }
+    .dwie-kolumny { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+    .dokument .osw { border: 1px solid #bbb; padding: 6px 10px; margin-top: 8px; font-size: .9rem; }
+    .dokument ol { margin: 4px 0; padding-left: 22px; font-size: .9rem; }
+    .dokument .fotki { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .dokument .fotki figure { margin: 0; font-size: .75rem; text-align: center; }
+    .dokument .fotki img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid #bbb; }
+    @media (max-width: 600px) { .dwie-kolumny { grid-template-columns: 1fr; } .dokument .fotki { grid-template-columns: repeat(2, 1fr); } }
+    @media print { .dokument h2 { break-after: avoid; } .dokument .fotki, .dokument .podpisy { break-inside: avoid; } }
+  </style>
 </head>
 <body class="uklad-panel">
   <header data-cc-naglowek="panel" data-cc-menu="rezerwacje"></header>
 
   <main class="tresc">
-    <div class="naglowek-ekranu">
+    <div class="naglowek-ekranu nie-drukuj">
       <div>
         <h1>Protokół wydania — podgląd</h1>
         <p class="podtytul">R-2027-014 · 11.07.2027, 10:00</p>
       </div>
+      <div class="rzad">
+        <a class="btn btn-drugi" href="../panel/rezerwacja.html?stan=wydana">← Rezerwacja</a>
+        <button class="btn btn-glowny" data-cc-drukuj>Drukuj / PDF</button>
+      </div>
     </div>
 
-    <!-- Treść ekranu M1a — buduje agent 4. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>M1a</b> — ekran w budowie (agent 4)</p>
-    </div>
+    <article class="dokument">
+      <h1>Protokół zdawczo-odbiorczy — wydanie</h1>
+      <p class="metryka">do umowy najmu nr R-2027-014 · Giżycko, 11.07.2027, 10:00</p>
+
+      <h2>Strony i pojazd</h2>
+      <table>
+        <tr><th>Wynajmujący</th><td>Kamper na Mazury Marek Wiśniewski, ul. Jeziorna 5, 11-500 Giżycko, NIP 000-000-00-00</td></tr>
+        <tr><th>Najemca</th><td>Anna Kowalska, ul. Lipowa 12/4, 02-345 Warszawa; dowód osobisty ABC 123456; prawo jazdy 01234/12/1234, kat. B od 2012</td></tr>
+        <tr><th>Kolejny kierowca</th><td>Tomasz Kowalski, prawo jazdy 04567/09/1234, kat. B od 2009</td></tr>
+        <tr><th>Pojazd</th><td>Fiat Ducato alkowa, nr rej. NGI 4K27, VIN ZFA25000000K27014</td></tr>
+        <tr><th>Okres najmu</th><td>od 11.07.2027, godz. 10:00 do 21.07.2027, godz. 16:00</td></tr>
+        <tr><th>Stan przy wydaniu</th><td>przebieg 48 230 km; paliwo 8/8 (bak 88 l)</td></tr>
+        <tr><th>Kaucja</th><td>5 000 zł, gotówka — przyjęta. Czynsz opłacony w całości (zadatek 1 950 zł + 4 550 zł)</td></tr>
+      </table>
+
+      <h2>Przekazanie wyposażenia</h2>
+      <div class="dwie-kolumny" id="wyposazenie"></div>
+      <p class="osw">☑ Oświadczam, iż akceptuję listę wydanego wyposażenia. <i>(najemca)</i></p>
+
+      <h2>Instrukcja użytkowania</h2>
+      <div class="dwie-kolumny">
+        <div><b>Rozstawienie i użytkowanie</b><ol id="rozstawienie"></ol></div>
+        <div><b>Przygotowanie do jazdy</b><ol id="jazda"></ol></div>
+      </div>
+      <p class="osw">☑ Oświadczam, że odbyłem instruktaż użytkowania i otrzymałem Skróconą Instrukcję Obsługi. <i>(najemca)</i></p>
+
+      <h2>Istniejące uszkodzenia</h2>
+      <div id="uszkodzenia"><p>Nie stwierdzono.</p></div>
+
+      <h2>Zdjęcia pojazdu przy wydaniu</h2>
+      <div class="fotki" id="fotki"></div>
+
+      <h2>Oświadczenia</h2>
+      <p class="osw">☑ Sprawdzono dowód osobisty i prawo jazdy: Anna Kowalska, Tomasz Kowalski. <i>(wydający)</i></p>
+      <p class="osw">☑ Oświadczam, że stan techniczny pojazdu jest mi znany i nie zgłaszam zastrzeżeń innych niż wpisane w protokole. <i>(najemca)</i></p>
+
+      <div class="podpisy">
+        <figure><img id="podpis-wydajacy" src="../assets/img/podpis-przyklad-2.svg" alt="Podpis wydającego">Wydający — Marek Wiśniewski · 11.07.2027, 10:00</figure>
+        <figure><img id="podpis-najemca" src="../assets/img/podpis-przyklad.svg" alt="Podpis najemcy">Najemca — Anna Kowalska · 11.07.2027, 10:00</figure>
+      </div>
+      <p class="maly drugi-plan" style="margin-top:16px">Podpisano elektronicznie w CamperConnect · 11.07.2027, 10:00</p>
+    </article>
   </main>
+
+  <script>
+    (function () {
+      var W = window.WYDANIE;
+      function tabela(grupy) {
+        var h = '<table><tr><th>Pozycja</th><th>Ilość</th></tr>';
+        grupy.forEach(function (g) {
+          h += '<tr class="grupa"><td colspan="2">' + g.grupa + '</td></tr>';
+          g.pozycje.forEach(function (p) { h += '<tr><td>' + p[0] + '</td><td class="il">' + p[1] + '</td></tr>'; });
+        });
+        return h + '</table>';
+      }
+      document.getElementById('wyposazenie').innerHTML =
+        '<div>' + tabela(W.wyposazenie.slice(0, 2)) + '</div><div>' + tabela(W.wyposazenie.slice(2)) + '</div>';
+      function lista(id, pkt) { document.getElementById(id).innerHTML = pkt.map(function (t) { return '<li>' + t + ' ☑</li>'; }).join(''); }
+      lista('rozstawienie', W.rozstawienie);
+      lista('jazda', W.jazda);
+    })();
+
+    CC.gotowe(function () {
+      var W = window.WYDANIE;
+      var zap = CC.odczytaj('cc-wydanie-zdjecia', {}) || {};
+      var f = document.getElementById('fotki');
+      W.zdjecia.forEach(function (z) {
+        var fig = document.createElement('figure'), img = document.createElement('img');
+        img.src = zap[z[0]] || '../assets/img/protokol-' + z[0] + '.svg';
+        img.alt = z[1];
+        fig.appendChild(img); fig.appendChild(document.createTextNode(z[1]));
+        f.appendChild(fig);
+      });
+
+      var p = CC.odczytaj('cc-wydanie-podpisy', {}) || {};
+      if (p.wydajacy) document.getElementById('podpis-wydajacy').src = p.wydajacy;
+      if (p.najemca) document.getElementById('podpis-najemca').src = p.najemca;
+
+      var u = CC.odczytaj('cc-wydanie-uszkodzenia', []) || [];
+      if (u.length) {
+        var box = document.getElementById('uszkodzenia');
+        box.innerHTML = '';
+        var t = document.createElement('table');
+        t.innerHTML = '<tr><th>Miejsce</th><th>Opis</th><th>Zbliżenie</th></tr>';
+        u.forEach(function (x) {
+          var tr = document.createElement('tr');
+          ['miejsce', 'opis'].forEach(function (k) { var td = document.createElement('td'); td.textContent = x[k] || '—'; tr.appendChild(td); });
+          var td = document.createElement('td');
+          if (x.zdjecie) { var img = document.createElement('img'); img.src = x.zdjecie; img.alt = 'Zbliżenie'; img.style.width = '120px'; td.appendChild(img); } else td.textContent = '—';
+          tr.appendChild(td); t.appendChild(tr);
+        });
+        box.appendChild(t);
+      }
+    });
+  </script>
 </body>
 </html>
