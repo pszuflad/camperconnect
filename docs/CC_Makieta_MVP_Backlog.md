@@ -1,8 +1,10 @@
 # CamperConnect — makieta MVP 1.1: zakres i backlog
 
-**Wersja:** 1.0 (17.11.2026) · **Termin makiety:** 18.11.2026 (jeden dzień pracy) · **Podstawa:** `CC_MVP_Faza1.md` v1.1, `CC_Proces_Przed_Po.md` v1.1, `CC_Wywiad_Robert_Sekula.md`
+**Wersja:** 1.1 (17.11.2026) · **Termin makiety:** 18.11.2026 (jeden dzień pracy) · **Podstawa:** `CC_MVP_Faza1.md` v1.1, `CC_Proces_Przed_Po.md` v1.1, `CC_Wywiad_Robert_Sekula.md`
 
-Ten dokument jest wejściem do pracy z Claude Code. Opisuje, czym jest produkt, co dokładnie ma pokazać makieta, jakie ma mieć widoki i w jakiej kolejności je zbudować.
+Ten dokument jest wejściem do pracy z Claude Code. Opisuje, czym jest produkt, co dokładnie ma pokazać makieta, jakie ma mieć ekrany i w jakiej kolejności je zbudować.
+
+**Zmiany w 1.1:** makieta to zestaw statycznych ekranów w czystym HTML + CSS + odrobina JavaScriptu, a nie aplikacja z logiką. Pokazujemy, jak ekrany wyglądają i co na nich jest; nic się naprawdę nie wylicza ani nie zapisuje. Dodane: mapa makiety (`index.html`), ekran „Prośba wysłana", wartości kanoniczne (pkt 4.1), warianty stanów ekranu szczegółów rezerwacji.
 
 ---
 
@@ -12,48 +14,82 @@ Ten dokument jest wejściem do pracy z Claude Code. Opisuje, czym jest produkt, 
 - MVP nie jest samoobsługową rezerwacją dla klienta. Wypożyczalnia prowadzi w nim cały najem, a decyzja „komu wynajmuję" zostaje u właściciela.
 - MVP ma trzy elementy: kalendarz z wstępną rezerwacją potwierdzaną przez właściciela, umowa online, checklisty i fotoprotokół wydania i zwrotu.
 - Makieta służy do rozmów z właścicielami wypożyczalni (pierwszy pokaz: środa/czwartek, 18–19.11.2026) i ma doprowadzić do podpisania porozumień pilotażowych.
-- Makieta nie jest produktem: nie ma backendu, prawdziwych płatności, wysyłki e-maili ani logowania.
+- Makieta nie jest produktem: to klikalne ekrany z przykładowymi danymi — bez logiki, backendu, płatności, wysyłki e-maili i logowania.
 
 ## 2. Cel makiety i priorytet: szybkość
 
 **Makieta ma powstać jutro (18.11.2026).** Każda decyzja techniczna ma temu służyć.
 
-- Liczy się klikalna ścieżka jednego najmu od prośby o termin do rozliczenia kaucji, a nie kompletność.
-- Wszystko, co da się zasymulować, symulujemy (powiadomienia, PDF, podpis, wygasanie terminu).
-- Najpierw cała ścieżka „po łebkach", potem dopracowanie. Lepiej siedem prostych ekranów niż trzy dopieszczone.
+- Liczy się klikalna ścieżka jednego najmu od prośby o termin do rozliczenia kaucji: każdy ekran wygląda jak prawdziwy, a przycisk prowadzi do następnego ekranu.
+- Niczego nie liczymy ani nie symulujemy w kodzie. Kwoty, daty, statusy i powiadomienia są wpisane na ekranach na sztywno, spójnie z punktem 4.1.
+- Najpierw wszystkie ekrany „po łebkach", potem dopracowanie. Lepiej czternaście prostych ekranów niż pięć dopieszczonych.
 - Zadania z etykietą `P0` muszą być gotowe jutro. `P1` robimy tylko, jeśli zostanie czas. `P2` to pomysły na później.
 
-**Po czym poznamy, że makieta jest gotowa:** da się bez tłumaczenia „co by tu było" przejść scenariusz demo z punktu 8, na laptopie (panel) i na telefonie (protokoły), pod publicznym adresem.
+**Po czym poznamy, że makieta jest gotowa:** da się bez tłumaczenia „co by tu było" przeklikać scenariusz demo z punktu 8, na laptopie (panel) i na telefonie (protokoły, umowa), pod publicznym adresem. Każdy ekran pokazuje komplet informacji, które będą w produkcie.
 
 ## 3. Założenia techniczne
 
-Propozycja do potwierdzenia z Claude Code na starcie; jeśli jest szybsza droga, wybieramy szybszą.
-
-- **Aplikacja frontendowa bez backendu.** Sugerowany zestaw: Vite + React + TypeScript + Tailwind CSS.
-- **Dane przykładowe** w pliku w repozytorium; zmiany stanu w pamięci przeglądarki z zapisem do `localStorage`, plus przycisk „Resetuj demo".
-- **Jedna aplikacja, dwa tryby:** „Strona wypożyczalni" (widok klienta) i „Panel wypożyczalni". Przełącznik trybu widoczny w nagłówku makiety.
-- **Responsywność:** panel projektowany pod laptop; protokoły wydania i zwrotu oraz podpis umowy projektowane pod telefon (mobile-first).
-- **Zdjęcia:** pole `input type="file"` z `capture`, żeby na telefonie otwierał się aparat; zdjęcia trzymane w pamięci. W danych przykładowych gotowe zdjęcia zastępcze.
-- **Podpis:** rysowanie palcem lub myszką na `canvas`.
-- **Symulacje:** powiadomienia e-mail/SMS jako lista „Wysłane powiadomienia" i komunikat na ekranie; PDF jako widok do druku; upływ czasu jako przycisk „Symuluj upływ terminu".
+- **Czysty HTML + CSS + mały JavaScript.** Bez frameworków, bez npm, bez kroku budowania. Strona działa po otwarciu pliku z dysku i z hostingu statycznego.
+- **Jeden ekran = jeden plik `.html`.** Przejścia między ekranami to zwykłe linki. Warianty stanu jednego ekranu wybiera parametr w adresie (np. `rezerwacja.html?stan=wydana`), a mały skrypt na tej stronie pokazuje odpowiednie elementy.
+- **Wspólne pliki w `assets/`:**
+  - `style.css` — paleta (zmienne CSS, jasna kolorystyka), typografia, przyciski, karty, formularze, tabele, znaczki statusów, kreator krok po kroku, okno modalne, komunikat (toast), widok do druku, układ panelu (laptop) i układ mobilny;
+  - `app.js` — wspólny nagłówek makiety, okno modalne, komunikat, pole podpisu, pole zdjęcia, kreator, odczyt parametru `stan`;
+  - `img/` — zdjęcia zastępcze pojazdów i ujęć do protokołów (proste SVG).
+- **JavaScript tylko tam, gdzie daje wrażenie prawdziwej aplikacji:** podpis palcem lub myszką na `canvas`, aparat przez `input type="file" accept="image/*" capture="environment"` z podglądem, przełączanie kroków kreatora, okna modalne, komunikat „PDF wysłany", przełączanie wariantów stanu, rysowanie siatek kalendarzy z małej tablicy danych.
+- **Bez logiki:** brak wyliczania dostępności, cen i potrąceń, brak walidacji poza atrybutem `required`, brak wykrywania kolizji, wygasania i przejść statusów, brak resetu.
+- **`localStorage` (P1, opcjonalnie):** zdjęcia i podpisy zrobione w protokole wydania zapamiętane, żeby protokół zwrotu pokazał je obok nowych. Gdy pusto — zdjęcia przykładowe.
+- **Responsywność:** panel projektowany pod laptop; strona klienta, umowa i protokoły — mobile-first.
 - **Język interfejsu:** polski. Format dat: `11.07.2027`, kwoty: `1 950 zł`.
-- **Publikacja:** darmowy hosting statyczny (np. GitHub Pages, Vercel lub Netlify) — potrzebny publiczny link do pokazania na telefonie rozmówcy.
+- **Publikacja:** GitHub Pages z gałęzi `main` (publiczne repozytorium). Każdy ekran to plik, więc nie ma problemu z adresami.
 
 ## 4. Dane przykładowe
 
 Spójne z `CC_Proces_Przed_Po.md`, żeby makieta i opowieść o procesie mówiły o tym samym najmie.
 
-- **Wypożyczalnia:** „Kamper na Mazury", właściciel Marek. Ważność wstępnej rezerwacji: 3 dni. Zadatek: 30%.
-- **Flota (6 pojazdów):** 4 kampery (w tym „Ducato alkowa", 650 zł/doba, kaucja 5 000 zł) i 2 przyczepy kempingowe (ok. 200–250 zł/doba, kaucja 2 000 zł).
-- **Sezon w danych:** czerwiec–sierpień 2027, kilkanaście rezerwacji w różnych statusach, żeby kalendarz nie był pusty.
-- **Najem główny do demo:** Ania K., Ducato alkowa, 11–21.07.2027, 10 dób × 650 zł = 6 500 zł, zadatek 1 950 zł, kaucja 5 000 zł.
-- **Cennik potrąceń:** paliwo 8 zł/l + 100 zł, sprzątanie 150 zł, brak klucza 60 zł, nieopróżniona kaseta 200 zł, klosz lampki 90 zł.
-- **Wyposażenie standardowe:** stolik, 4 krzesła, kabel zasilający, wąż do wody, kliny, 2 komplety kluczy, butla gazowa ×2. Dodatkowe: grill, farelka, wentylator.
+- **Wypożyczalnia:** „Kamper na Mazury", Giżycko, właściciel Marek Wiśniewski. Ważność wstępnej rezerwacji: 3 dni. Zadatek: 30%.
+- **Flota (6 pojazdów):**
+
+| Pojazd | Typ | Cena / doba | Kaucja |
+|---|---|---|---|
+| Ducato alkowa | kamper | 650 zł | 5 000 zł |
+| Ducato półintegra | kamper | 600 zł | 5 000 zł |
+| Hymer Exsis | kamper | 700 zł | 5 000 zł |
+| Ford Nugget | kamper | 500 zł | 4 000 zł |
+| Knaus Sport 450 | przyczepa | 250 zł | 2 000 zł |
+| Niewiadów N126 | przyczepa | 200 zł | 2 000 zł |
+
+- **Sezon w danych:** czerwiec–sierpień 2027, kilkanaście rezerwacji w różnych statusach na wszystkich pojazdach, żeby kalendarz nie był pusty. Termin 11–21.07.2027 dla Ducato alkowa jest zarezerwowany dla najmu demo.
+- **Cennik potrąceń:** paliwo 8 zł/l + 100 zł opłaty, sprzątanie 150 zł, brak klucza 60 zł, nieopróżniona kaseta 200 zł, klosz lampki 90 zł.
+- **Wyposażenie standardowe:** stolik, 4 krzesła, kabel zasilający, wąż do wody, kliny, 2 komplety kluczy, butla gazowa ×2. Dodatkowe: grill, farelka, wentylator. Materiały eksploatacyjne: butle gazowe (pełne), płyn do toalety.
 - **Punkty szkolenia:** prąd, woda, gaz, kaseta toalety, markiza, lodówka.
+
+### 4.1. Wartości kanoniczne najmu demo
+
+Wszystkie ekrany pokazują dokładnie te wartości.
+
+| Pole | Wartość |
+|---|---|
+| Numer rezerwacji | R-2027-014 |
+| Klient | Anna Kowalska („Ania K."), tel. 600 123 456, anna.kowalska@example.com |
+| Wiadomość klienta | „Jedziemy z dwójką dzieci, czy można zabrać psa?" |
+| Pojazd | Ducato alkowa, nr rej. NGI 4K27, bak 88 l |
+| Termin | 11.07.2027 – 21.07.2027, 10 dób |
+| Cena | 10 × 650 zł = 6 500 zł |
+| Zadatek | 1 950 zł (30%), przelew, odnotowany 13.03.2027 |
+| Kaucja | 5 000 zł, gotówka, przyjęta przy wydaniu |
+| Prośba wysłana | 12.03.2027, 21:40; ważna do 15.03.2027 |
+| Umowa wysłana / podpisana | 13.03.2027 / 14.03.2027 |
+| Dane najemcy | ul. Lipowa 12/4, 02-345 Warszawa; PESEL 85010112345; dowód ABC 123456; prawo jazdy 01234/12/1234 |
+| Wydanie | 11.07.2027, 10:00; przebieg 48 230 km; paliwo 8/8 |
+| Zwrot | 21.07.2027, 18:00; przebieg 49 870 km; paliwo 6/8 |
+| Ustalenia przy zwrocie | nowa rysa na prawym boku; brak jednego kompletu kluczy; paliwo 6/8 (brakuje 22 l) |
+| Potrącenia automatyczne | paliwo 22 l × 8 zł + 100 zł = 276 zł; brak klucza 60 zł; razem 336 zł |
+| Pozycja „do wyceny" | rysa prawy bok — wycena w rozliczeniu: 400 zł |
+| Rozliczenie | potrącenia 736 zł; zwrot kaucji 4 264 zł; rozliczona 23.07.2027 |
 
 ## 5. Statusy rezerwacji
 
-Jedna rezerwacja przechodzi przez poniższe statusy; widać je na liście, w kalendarzu (kolor) i w szczegółach.
+Statusy są elementem wyglądu: znaczek w kolorze, kolor paska w kalendarzu, legenda. Nie ma kodu, który je przestawia — każdy ekran pokazuje swój stan.
 
 | Status | Kiedy | Kolor w kalendarzu |
 |---|---|---|
@@ -66,74 +102,89 @@ Jedna rezerwacja przechodzi przez poniższe statusy; widać je na liście, w kal
 | Zwrócona | podpisany protokół zwrotu, kaucja do rozliczenia | czerwony |
 | Rozliczona | kaucja rozliczona | szary |
 
-Klient w kalendarzu widzi tylko: wolne / zajęte (wstępna i wszystkie dalsze statusy wyglądają dla niego tak samo, jako zajęte).
+Klient w kalendarzu widzi tylko: wolne / zajęte.
 
-## 6. Widoki makiety
+## 6. Ekrany makiety
+
+**M0. Mapa makiety** (`index.html`)
+- Krótko: czym jest CamperConnect; przycisk „Zacznij scenariusz demo" (prowadzi do K1).
+- Spis wszystkich ekranów pogrupowany: strona klienta, panel (laptop), telefon właściciela; przy szczegółach rezerwacji linki do każdego wariantu stanu.
+- Na każdym ekranie wspólny nagłówek makiety: „Mapa makiety", przełącznik „Strona wypożyczalni / Panel".
 
 ### Strona klienta
 
-**K1. Kalendarz i prośba o termin** (strona wypożyczalni)
-- Lista pojazdów ze zdjęciem, ceną za dobę i kaucją.
-- Kalendarz dostępności wybranego pojazdu: wolne / zajęte.
-- Wybór dat, wyliczenie ceny (doby × stawka), informacja o zadatku i kaucji.
-- Formularz: imię i nazwisko, telefon, e-mail, opcjonalna wiadomość.
-- Po wysłaniu ekran potwierdzenia: „Wstępna rezerwacja przyjęta. Termin zablokowany do [data]. Wypożyczalnia skontaktuje się z Tobą."
-- Na ekranie nie ma płatności ani automatycznego potwierdzenia.
+**K1. Kalendarz i prośba o termin** (`klient/strona.html`)
+- Lista pojazdów ze zdjęciem, ceną za dobę i kaucją; wybrany „Ducato alkowa".
+- Kalendarz miesięczny (lipiec 2027) z dniami wolnymi i zajętymi; zaznaczony zakres 11–21.07.
+- Podsumowanie: 10 dób, 6 500 zł, zadatek 1 950 zł, kaucja 5 000 zł.
+- Formularz: imię i nazwisko, telefon, e-mail, opcjonalna wiadomość; przycisk „Wypełnij przykładowymi danymi".
+- „Wyślij prośbę o termin" prowadzi do K1a. Na ekranie nie ma płatności ani automatycznego potwierdzenia.
 
-**K2. Umowa do podpisu** (link z e-maila, telefon klienta)
+**K1a. Prośba wysłana** (`klient/prosba-wyslana.html`)
+- „Wstępna rezerwacja przyjęta. Termin zablokowany do 15.03.2027. Wypożyczalnia skontaktuje się z Tobą."
+- Podsumowanie prośby. W makiecie link „Zobacz to w panelu wypożyczalni" do P2.
+
+**K2. Umowa do podpisu** (`umowa/umowa.html`, link z e-maila, telefon klienta)
 - Podsumowanie najmu: pojazd, daty, cena, zadatek, kaucja.
-- Formularz danych najemcy i kierowcy: imię i nazwisko, adres, PESEL, numer dowodu, numer prawa jazdy. Bez zdjęć dokumentów.
-- Treść umowy, regulaminu i cennika potrąceń (przewijana), w tym zobowiązania przy zwrocie i zapis o szkodach ponad ubezpieczenie.
-- Pola wyboru „Zapoznałem się…", podpis palcem, przycisk „Podpisuję".
-- Ekran końcowy z podglądem podpisanej umowy (widok do druku jako „PDF").
+- Formularz danych najemcy i kierowcy: imię i nazwisko, adres, PESEL, numer dowodu, numer prawa jazdy. Bez zdjęć dokumentów. Przycisk „Wypełnij przykładowymi danymi".
+- Treść umowy, regulaminu i cennika potrąceń (przewijana), w tym zobowiązania przy zwrocie i zapis o szkodach ponad wypłatę z ubezpieczenia.
+- Pola wyboru „Zapoznałem się…", podpis palcem, przycisk „Podpisuję" prowadzi do K2a.
+
+**K2a. Umowa podpisana** (`umowa/umowa-podpisana.html`)
+- Potwierdzenie „Umowa podpisana, kopia PDF wysłana na e-mail" i podgląd umowy jako widok do druku z danymi, podpisem i datą. Ten sam widok otwierany z panelu (link z P3).
+- W makiecie link „Wróć do panelu" do P3 w stanie „Umowa podpisana".
 
 ### Panel wypożyczalni (laptop)
 
-**P1. Kalendarz floty**
-- Oś czasu: pojazdy w wierszach, dni w kolumnach, rezerwacje jako paski w kolorze statusu z nazwiskiem klienta.
-- Kliknięcie paska otwiera szczegóły rezerwacji (P3).
-- Przycisk „Dodaj rezerwację" (rezerwacja przyjęta przez telefon).
-- Licznik próśb oczekujących na potwierdzenie.
+**P1. Kalendarz floty** (`panel/kalendarz.html`)
+- Oś czasu: 6 pojazdów w wierszach, dni w kolumnach (lipiec 2027, strzałki miesięcy przełączają czerwiec / lipiec / sierpień), rezerwacje jako paski w kolorze statusu z nazwiskiem klienta; legenda statusów.
+- Kliknięcie paska najmu demo otwiera P3.
+- Przycisk „Dodaj rezerwację" (P4) i licznik „1 prośba do potwierdzenia".
+- Warianty: `?stan=wstepna` (żółty pasek Ani K. z „ważna do 15.03") — domyślny, `?stan=potwierdzona` (czerwony), `?stan=wygasla` (pasek znika, termin wolny).
 
-**P2. Lista próśb i rezerwacji**
-- Na górze prośby do rozpatrzenia: klient, telefon, pojazd, daty, „ważna do", przyciski „Potwierdź" i „Odrzuć".
-- Niżej wszystkie rezerwacje z filtrem po statusie i pojeździe.
+**P2. Lista próśb i rezerwacji** (`panel/rezerwacje.html`)
+- Na górze „Do potwierdzenia": klient, telefon, pojazd, daty, „ważna do", przyciski „Potwierdź" i „Odrzuć".
+- „Potwierdź" otwiera okno: kwota zadatku (1 950 zł), data, forma (przelew / gotówka); „Zapisz" prowadzi do P3 w stanie „Potwierdzona".
+- Niżej wszystkie rezerwacje sezonu z filtrem po statusie i pojeździe (filtr wizualny).
 
-**P3. Szczegóły rezerwacji**
-- Dane klienta i najmu, aktualny status.
+**P3. Szczegóły rezerwacji** (`panel/rezerwacja.html?stan=…`)
+- Dane klienta i najmu, znaczek statusu.
 - Pasek kroków najmu: prośba → potwierdzenie i zadatek → umowa → wydanie → zwrot → rozliczenie kaucji; zrobione kroki odhaczone, następny krok jako główny przycisk.
-- Potwierdzenie z odnotowaniem zadatku: kwota, data, forma (przelew / gotówka).
-- Umowa: „Wyślij umowę", status (wysłana / podpisana), podgląd.
-- Protokoły: przyciski „Rozpocznij wydanie" i „Rozpocznij zwrot", podgląd podpisanych protokołów.
-- Kaucja: przyjęta / do zwrotu / rozliczona, z kwotami.
-- Lista wysłanych powiadomień (symulacja).
+- Sekcje: zadatek (kwota, data, forma); umowa (status, „Wyślij umowę", „Otwórz jako klient", podgląd); protokoły (przyciski „Rozpocznij wydanie", „Rozpocznij zwrot", podglądy); kaucja (przyjęta / do zwrotu / rozliczona, z kwotami); „Wysłane powiadomienia" (lista e-maili i SMS-ów adekwatna do stanu).
+- Warianty `stan`: `wstepna`, `potwierdzona`, `umowa-wyslana`, `umowa-podpisana`, `wydana`, `zwrocona`, `rozliczona`, `wygasla`. Główny przycisk prowadzi do następnego ekranu scenariusza (pkt 8).
 
-**P4. Dodanie rezerwacji ręcznie**
+**P4. Dodanie rezerwacji ręcznie** (`panel/nowa.html`)
 - Formularz: pojazd, daty, dane klienta, od razu jako wstępna lub potwierdzona.
-- Ostrzeżenie przy kolizji terminów.
+- Widoczne przykładowe ostrzeżenie o kolizji terminów („Ducato alkowa jest zajęty 11–21.07.2027 — Anna Kowalska").
 
 ### Panel wypożyczalni (telefon)
 
-**M1. Protokół wydania** — kreator krok po kroku
-1. Wyposażenie: lista standardowa i dodatkowa, odhaczanie wydanych pozycji, materiały eksploatacyjne (butle, płyn do toalety).
-2. Zdjęcia: wymagane ujęcia (przód, lewy bok, tył, prawy bok, dach, wnętrze, licznik, paliwo), minimum 8 zdjęć; oznaczenie istniejących uszkodzeń z opisem i zbliżeniem.
+**M1. Protokół wydania** (`wydanie/wydanie.html`) — kreator krok po kroku
+1. Wyposażenie: lista standardowa i dodatkowa z odhaczaniem, materiały eksploatacyjne.
+2. Zdjęcia: wymagane ujęcia (przód, lewy bok, tył, prawy bok, dach, wnętrze, licznik, paliwo); dodawanie z aparatu lub pliku z podglądem; licznik „x z 8"; „Dalej" nieaktywne poniżej 8; przycisk „Wypełnij przykładowymi zdjęciami".
 3. Stan: przebieg, poziom paliwa.
 4. Szkolenie klienta: punkty do odhaczenia.
 5. Kaucja: kwota, forma, „przyjęta".
-6. Podsumowanie i podpisy palcem obu stron; komunikat „PDF wysłany do obu stron"; status rezerwacji „Wydana".
+6. Podsumowanie i podpisy palcem obu stron; ekran „Protokół podpisany, PDF wysłany do obu stron" z linkiem do P3 w stanie „Wydana".
 
-**M2. Protokół zwrotu** — kreator krok po kroku
-1. Zdjęcia: przy każdym ujęciu zdjęcie z wydania obok nowego; przycisk „Nowe uszkodzenie" z opisem.
-2. Wyposażenie: porównanie z listą z wydania, zaznaczenie braków.
-3. Stan: przebieg, paliwo, czystość, kaseta.
-4. Potrącenia: pozycje z cennika wyliczone automatycznie (np. paliwo: litry × stawka + opłata), pozycja „do wyceny" z polem na kwotę, suma, kwota kaucji do zwrotu.
-5. Podsumowanie i podpisy obu stron; status „Zwrócona".
-6. Rozliczenie kaucji w szczegółach rezerwacji: uzupełnienie wyceny, „Kaucja rozliczona", status „Rozliczona".
+**M1a. Podgląd protokołu wydania** (`wydanie/podglad.html`) — widok do druku ze zdjęciami, listami, podpisami i znacznikiem czasu.
+
+**M2. Protokół zwrotu** (`zwrot/zwrot.html`) — kreator krok po kroku
+1. Zdjęcia: przy każdym ujęciu zdjęcie z wydania obok nowego; przy prawym boku widoczna rysa; przycisk „Nowe uszkodzenie" z opisem.
+2. Wyposażenie: porównanie z listą z wydania, zaznaczony brak kompletu kluczy.
+3. Stan: przebieg, paliwo 6/8, czystość, kaseta.
+4. Potrącenia: pozycje z cennika z kwotami z pkt 4.1, pozycja „do wyceny", suma, kwota kaucji do zwrotu.
+5. Podsumowanie i podpisy obu stron; link do P3 w stanie „Zwrócona".
+
+**M3. Rozliczenie kaucji** (`zwrot/rozliczenie.html`, laptop)
+- Zestawienie potrąceń ze zdjęciami przed/po, pole wyceny rysy (400 zł), kwota do zwrotu 4 264 zł, „Kaucja rozliczona" prowadzi do P3 w stanie „Rozliczona".
 
 ## 7. Czego w makiecie nie ma
 
 Świadomie poza zakresem — nie budować, nawet jeśli wydaje się proste:
 
+- jakakolwiek logika: wyliczanie dostępności, cen, potrąceń, walidacja danych, wykrywanie kolizji, wygasanie, przejścia statusów, zapis stanu i reset,
+- frameworki, npm, krok budowania,
 - płatności online i automatyczne potwierdzanie rezerwacji,
 - przesyłanie zdjęć dokumentów, weryfikacja kierowcy, integracje CEPiK/KYC,
 - kaucja w depozycie, preautoryzacja kart,
@@ -143,16 +194,20 @@ Klient w kalendarzu widzi tylko: wolne / zajęte (wstępna i wszystkie dalsze st
 - edytor wzorów umów, konfiguracja floty i cenników z poziomu panelu,
 - marketplace, ubezpieczenia, wersje językowe.
 
-## 8. Scenariusz demo (ścieżka do odegrania przed rozmówcą)
+## 8. Scenariusz demo (ścieżka do przeklikania przed rozmówcą)
 
-1. **Klient, wieczór:** na stronie wypożyczalni wybiera Ducato, 11–21.07, wysyła prośbę o termin (K1).
-2. **Właściciel, rano:** w panelu widzi nową prośbę i żółty pasek w kalendarzu z datą ważności (P1, P2).
-3. **Po rozmowie telefonicznej:** odnotowuje zadatek 1 950 zł i klika „Potwierdź"; pasek robi się czerwony (P3).
-4. **Umowa:** klika „Wyślij umowę"; przełączamy się na telefon klienta, który uzupełnia dane, czyta cennik potrąceń i podpisuje (K2); w panelu status „Umowa podpisana".
-5. **Wydanie:** na telefonie właściciela protokół wydania — wyposażenie, zdjęcia, szkolenie, kaucja, dwa podpisy (M1).
-6. **Zwrot:** protokół zwrotu — zdjęcie prawego boku z wydania obok dzisiejszego z rysą, brak kompletu kluczy, paliwo 6/8; potrącenia wyliczone z cennika (M2).
-7. **Rozliczenie:** dopisanie wyceny rysy, kaucja rozliczona (P3).
-8. **Na koniec:** kalendarz floty z całym sezonem i pokaz, jak niepotwierdzona prośba wygasa i zwalnia termin.
+| # | Kto, kiedy | Ekrany | Przejście |
+|---|---|---|---|
+| 1 | Klient, wieczór | M0 → K1 → K1a | „Zacznij scenariusz demo", „Wyślij prośbę o termin" |
+| 2 | Właściciel, rano | P1 `?stan=wstepna` → P2 | żółty pasek z datą ważności, licznik próśb |
+| 3 | Po rozmowie telefonicznej | P2 (okno zadatku) → P3 `potwierdzona` → P1 `?stan=potwierdzona` | „Potwierdź", „Zapisz"; pasek czerwony |
+| 4 | Umowa | P3 `umowa-wyslana` → K2 → K2a → P3 `umowa-podpisana` | „Wyślij umowę", „Otwórz jako klient", „Podpisuję" |
+| 5 | Wydanie (telefon) | M1 → P3 `wydana` | „Rozpocznij wydanie", dwa podpisy |
+| 6 | Zwrot (telefon) | M2 → P3 `zwrocona` | „Rozpocznij zwrot"; rysa, brak klucza, paliwo 6/8 |
+| 7 | Rozliczenie | M3 → P3 `rozliczona` | „Rozlicz kaucję", wycena 400 zł, „Kaucja rozliczona" |
+| 8 | Na koniec | P1 → P3 `wygasla` → P1 `?stan=wygasla` | cały sezon; niepotwierdzona prośba wygasa i zwalnia termin |
+
+Na telefonie rozmówcy można otworzyć dowolny ekran z mapy makiety — każdy ekran jest samodzielny.
 
 ## 9. Backlog
 
@@ -160,79 +215,77 @@ Klient w kalendarzu widzi tylko: wolne / zajęte (wstępna i wszystkie dalsze st
 
 - **Priorytet:** `P0` — musi być jutro; `P1` — jeśli zostanie czas; `P2` — później.
 - **Widok:** `klient`, `panel`, `mobile`.
-- **Typ:** `setup`, `ui`, `logika`, `dane`, `demo`.
+- **Typ:** `setup`, `ui`, `js`, `dane`, `demo`.
 - **Szacunek:** S (do 30 min), M (30–60 min), L (1–2 h) — czas pracy z Claude Code.
 
 ### Epik E0 — Fundament
 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
-| E0-1 | Projekt i publikacja | Repozytorium z aplikacją startową; automatyczna publikacja pod publicznym adresem; działa na telefonie | `P0` `setup` | S |
-| E0-2 | Szkielet aplikacji i nawigacja | Przełącznik „Strona wypożyczalni / Panel"; menu panelu (Kalendarz, Rezerwacje); trasy dla wszystkich widoków z punktu 6, na razie puste | `P0` `setup` `ui` | S |
-| E0-3 | Model danych i dane przykładowe | Typy: pojazd, rezerwacja, klient, umowa, protokół, cennik; dane z punktu 4; kilkanaście rezerwacji w różnych statusach | `P0` `dane` | M |
-| E0-4 | Stan aplikacji i reset | Zmiany zapisują się w `localStorage`; przycisk „Resetuj demo" przywraca dane początkowe | `P0` `logika` | S |
-| E0-5 | Statusy rezerwacji | Przejścia statusów z punktu 5 w jednym miejscu kodu; kolory i etykiety statusów współdzielone przez wszystkie widoki | `P0` `logika` | S |
-| E0-6 | Symulacja powiadomień | Każda zmiana statusu dopisuje wpis „wysłano e-mail/SMS do…" i pokazuje krótki komunikat | `P1` `logika` `ui` | S |
+| E0-1 | Projekt i publikacja | Struktura katalogów z pkt 3; publiczne repozytorium; GitHub Pages z `main`; strona otwiera się na telefonie | `P0` `setup` | S |
+| E0-2 | Wspólny styl | `assets/style.css`: paleta, typografia, przyciski, karty, formularze, tabele, znaczki 8 statusów, kreator, modal, toast, widok do druku, układ panelu i mobilny | `P0` `ui` | M |
+| E0-3 | Wspólne skrypty | `assets/app.js`: nagłówek makiety, modal, toast, podpis, zdjęcie, kreator, odczyt `stan` | `P0` `js` | M |
+| E0-4 | Szkielet ekranów i mapa | Wszystkie pliki z pkt 6 z nagłówkiem i nazwą ekranu; `index.html` z mapą makiety; wzorcowy ekran do kopiowania | `P0` `setup` `ui` | S |
+| E0-5 | Zdjęcia zastępcze i kontrakt | SVG pojazdów i 8 ujęć (plus prawy bok z rysą); `docs/KONTRAKT.md` | `P0` `dane` | S |
 
-### Epik E1 — Kalendarz i prośba o termin (klient)
-
-| ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
-|---|---|---|---|---|
-| E1-1 | Lista pojazdów | Karty 6 pojazdów ze zdjęciem zastępczym, ceną za dobę i kaucją; wybór pojazdu | `P0` `klient` `ui` | S |
-| E1-2 | Kalendarz dostępności | Widok miesiąca z dniami wolnymi i zajętymi dla wybranego pojazdu; wybór zakresu dat; zajętych dni nie da się wybrać | `P0` `klient` `ui` `logika` | M |
-| E1-3 | Wyliczenie i formularz prośby | Po wyborze dat: liczba dób, cena, zadatek 30%, kaucja; formularz z walidacją wymaganych pól | `P0` `klient` `ui` | S |
-| E1-4 | Wysłanie prośby | Powstaje rezerwacja „Wstępna" z datą ważności (dziś + 3 dni); ekran potwierdzenia z tą datą; termin od razu widoczny jako zajęty | `P0` `klient` `logika` | S |
-
-### Epik E2 — Panel: kalendarz floty i rezerwacje
+### Epik E1 — Strona klienta
 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
-| E2-1 | Kalendarz floty | Oś czasu pojazdy × dni; paski rezerwacji w kolorach statusów z nazwiskiem; przewijanie po miesiącach; klik otwiera szczegóły | `P0` `panel` `ui` | L |
-| E2-2 | Lista próśb i rezerwacji | Sekcja „Do potwierdzenia" z datą ważności; lista wszystkich rezerwacji; filtr po statusie | `P0` `panel` `ui` | M |
-| E2-3 | Szczegóły rezerwacji z paskiem kroków | Dane najmu i klienta; pasek kroków z punktu 6 (P3); następny krok jako główny przycisk | `P0` `panel` `ui` | M |
-| E2-4 | Potwierdzenie i zadatek | „Potwierdź" otwiera okno: kwota zadatku, data, forma; po zapisie status „Potwierdzona"; „Odrzuć" zwalnia termin | `P0` `panel` `logika` | S |
-| E2-5 | Wygasanie prośby | Przycisk „Symuluj upływ terminu" zmienia niepotwierdzoną prośbę na „Wygasła" i zwalnia termin w obu kalendarzach | `P1` `panel` `logika` `demo` | S |
-| E2-6 | Ręczne dodanie rezerwacji | Formularz z punktu 6 (P4); ostrzeżenie przy kolizji terminów | `P1` `panel` `ui` `logika` | M |
-| E2-7 | Ustawienia wypożyczalni | Liczba dni ważności prośby i procent zadatku do zmiany w prostym oknie | `P2` `panel` `ui` | S |
+| E1-1 | Lista pojazdów | Karty 6 pojazdów ze zdjęciem, ceną i kaucją; Ducato alkowa wybrany | `P0` `klient` `ui` | S |
+| E1-2 | Kalendarz dostępności | Lipiec 2027, dni wolne / zajęte, zaznaczony zakres 11–21.07 | `P0` `klient` `ui` | S |
+| E1-3 | Podsumowanie i formularz | Doby, cena, zadatek, kaucja; formularz z „Wypełnij przykładowymi danymi" | `P0` `klient` `ui` | S |
+| E1-4 | Prośba wysłana | Ekran K1a z datą ważności i linkiem do panelu | `P0` `klient` `ui` | S |
+
+### Epik E2 — Panel
+
+| ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
+|---|---|---|---|---|
+| E2-1 | Lista próśb i rezerwacji | Sekcja „Do potwierdzenia", lista sezonu, filtry wizualne | `P0` `panel` `ui` | S |
+| E2-2 | Okno zadatku | Modal z kwotą, datą i formą; „Zapisz" prowadzi do P3 `potwierdzona` | `P0` `panel` `ui` | S |
+| E2-3 | Szczegóły rezerwacji | Wszystkie sekcje P3; pasek kroków; 8 wariantów `stan` z właściwym głównym przyciskiem i powiadomieniami | `P0` `panel` `ui` `js` | M |
+| E2-4 | Kalendarz floty | Oś czasu 6 pojazdów × dni lipca, kilkanaście pasków, legenda, licznik próśb; warianty `stan` | `P0` `panel` `ui` | M |
+| E2-5 | Przełączanie miesięcy | Czerwiec / lipiec / sierpień w kalendarzu floty | `P1` `panel` `js` | S |
+| E2-6 | Ręczne dodanie rezerwacji | Formularz P4 z widocznym ostrzeżeniem o kolizji | `P1` `panel` `ui` | S |
 
 ### Epik E3 — Umowa online
 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
-| E3-1 | Wysłanie umowy z panelu | Przycisk „Wyślij umowę"; status „Umowa wysłana"; w makiecie przycisk „Otwórz jako klient" prowadzi do K2 | `P0` `panel` `logika` | S |
-| E3-2 | Treść umowy z danych rezerwacji | Wzór umowy, regulaminu i cennika potrąceń wypełniony danymi najmu; zawiera zobowiązania przy zwrocie i zapis o szkodach ponad ubezpieczenie | `P0` `klient` `dane` `ui` | M |
-| E3-3 | Dane najemcy i podpis | Formularz danych najemcy i kierowcy; pola wyboru; podpis palcem; „Podpisuję" ustawia status „Umowa podpisana" | `P0` `klient` `mobile` `ui` | M |
-| E3-4 | Podgląd podpisanej umowy | Widok do druku z danymi, podpisem i datą; dostępny z K2 i ze szczegółów rezerwacji | `P1` `klient` `panel` `ui` | S |
+| E3-1 | Ekran umowy | Podsumowanie najmu, formularz najemcy z „Wypełnij przykładowymi", treść umowy, regulaminu i cennika potrąceń | `P0` `klient` `mobile` `ui` | M |
+| E3-2 | Podpis | Pola wyboru, podpis palcem, „Podpisuję" prowadzi do K2a | `P0` `klient` `mobile` `ui` | S |
+| E3-3 | Umowa podpisana | K2a z widokiem do druku (dane, podpis, data) | `P1` `klient` `panel` `ui` | S |
 
-### Epik E4 — Protokół wydania (telefon)
-
-| ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
-|---|---|---|---|---|
-| E4-1 | Kreator i krok „Wyposażenie" | Kreator z paskiem postępu; lista standardowa i dodatkowa z odhaczaniem; materiały eksploatacyjne | `P0` `mobile` `ui` | M |
-| E4-2 | Krok „Zdjęcia" | Lista wymaganych ujęć; dodanie zdjęcia z aparatu lub pliku; licznik „x z 8"; nie da się przejść dalej poniżej 8 (w demo przycisk „Wypełnij przykładowymi") | `P0` `mobile` `ui` `logika` | L |
-| E4-3 | Istniejące uszkodzenia | Dodanie uszkodzenia: miejsce, opis, zdjęcie zbliżenia; lista uszkodzeń w podsumowaniu | `P1` `mobile` `ui` | M |
-| E4-4 | Kroki „Stan", „Szkolenie", „Kaucja" | Przebieg i paliwo; punkty szkolenia do odhaczenia; kaucja: kwota, forma, przyjęta | `P0` `mobile` `ui` | M |
-| E4-5 | Podsumowanie i podpisy | Podsumowanie całego protokołu; dwa podpisy palcem; status „Wydana"; komunikat o wysłaniu PDF | `P0` `mobile` `ui` `logika` | M |
-| E4-6 | Podgląd protokołu wydania | Widok do druku ze zdjęciami, listami i podpisami, ze znacznikiem czasu | `P1` `panel` `ui` | S |
-
-### Epik E5 — Protokół zwrotu i rozliczenie kaucji (telefon)
+### Epik E4 — Protokół wydania
 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
-| E5-1 | Krok „Zdjęcia przed/po" | Dla każdego ujęcia zdjęcie z wydania obok nowego; „Nowe uszkodzenie" z opisem | `P0` `mobile` `ui` | L |
-| E5-2 | Kroki „Wyposażenie" i „Stan" | Lista z wydania z zaznaczaniem braków; przebieg, paliwo, czystość, kaseta | `P0` `mobile` `ui` | M |
-| E5-3 | Potrącenia z cennika | Automatyczne pozycje: brakujące paliwo, braki wyposażenia, sprzątanie, kaseta; pozycja „do wyceny"; suma i kwota do zwrotu | `P0` `mobile` `logika` | M |
-| E5-4 | Podsumowanie i podpisy | Dwa podpisy; status „Zwrócona"; adnotacja „do wyceny", jeśli jest taka pozycja | `P0` `mobile` `ui` `logika` | S |
-| E5-5 | Rozliczenie kaucji w panelu | Uzupełnienie kwoty wyceny; zestawienie potrąceń ze zdjęciami; „Kaucja rozliczona" ustawia status „Rozliczona" | `P0` `panel` `ui` `logika` | M |
+| E4-1 | Wyposażenie | Kreator; listy z odhaczaniem; materiały eksploatacyjne | `P0` `mobile` `ui` | S |
+| E4-2 | Zdjęcia | 8 ujęć, aparat lub plik, podgląd, licznik, blokada „Dalej", „Wypełnij przykładowymi" | `P0` `mobile` `ui` `js` | M |
+| E4-3 | Stan, szkolenie, kaucja | Przebieg, paliwo; punkty szkolenia; kaucja | `P0` `mobile` `ui` | S |
+| E4-4 | Podsumowanie i podpisy | Podsumowanie, dwa podpisy, ekran „PDF wysłany" z linkiem do P3 `wydana` | `P0` `mobile` `ui` | S |
+| E4-5 | Istniejące uszkodzenia | Miejsce, opis, zdjęcie zbliżenia | `P1` `mobile` `ui` | S |
+| E4-6 | Podgląd protokołu | M1a jako widok do druku | `P1` `panel` `ui` | S |
+| E4-7 | Zapamiętanie zdjęć i podpisów | Zdjęcia (pomniejszone) i podpisy w `localStorage` do pokazania w zwrocie | `P1` `mobile` `js` | S |
+
+### Epik E5 — Protokół zwrotu i rozliczenie
+
+| ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
+|---|---|---|---|---|
+| E5-1 | Zdjęcia przed/po | Każde ujęcie: z wydania obok nowego; rysa na prawym boku; „Nowe uszkodzenie" | `P0` `mobile` `ui` | M |
+| E5-2 | Wyposażenie i stan | Lista z wydania z zaznaczonym brakiem klucza; przebieg, paliwo, czystość, kaseta | `P0` `mobile` `ui` | S |
+| E5-3 | Potrącenia | Pozycje i kwoty z pkt 4.1, „do wyceny", suma, zwrot kaucji | `P0` `mobile` `ui` | S |
+| E5-4 | Podsumowanie i podpisy | Dwa podpisy, adnotacja „do wyceny", link do P3 `zwrocona` | `P0` `mobile` `ui` | S |
+| E5-5 | Rozliczenie kaucji | M3 z zestawieniem i zdjęciami, „Kaucja rozliczona" prowadzi do P3 `rozliczona` | `P0` `panel` `ui` | S |
+| E5-6 | Zdjęcia z wydania z `localStorage` | Jeśli są zapamiętane — pokazane zamiast przykładowych | `P1` `mobile` `js` | S |
 
 ### Epik E6 — Demo i wykończenie
 
 | ID | Zadanie | Kryteria akceptacji | Etykiety | Szac. |
 |---|---|---|---|---|
-| E6-1 | Przejście scenariusza demo | Scenariusz z punktu 8 przechodzi od początku do końca bez błędów po „Resetuj demo" | `P0` `demo` | M |
-| E6-2 | Test na telefonie | K1, K2, M1, M2 wygodne na ekranie telefonu; aparat i podpis palcem działają | `P0` `demo` `mobile` | S |
-| E6-3 | Spójny wygląd | Jedna paleta, czytelne statusy, polskie teksty bez pozostałości po szablonie | `P1` `ui` | M |
-| E6-4 | Gotowe stany do pokazu | Przyciski w trybie demo: „Przejdź do stanu: umowa podpisana / wydana / zwrócona", żeby nie klikać całości przy każdym pokazie | `P1` `demo` `logika` | S |
+| E6-1 | Przejście scenariusza | Każde przejście z pkt 8 prowadzi do właściwego ekranu; brak martwych linków | `P0` `demo` | S |
+| E6-2 | Test na telefonie | K1, K2, M1, M2 wygodne na telefonie; aparat i podpis działają | `P0` `demo` `mobile` | S |
+| E6-3 | Spójny wygląd | Jedna paleta, czytelne statusy, polskie teksty, wartości zgodne z pkt 4.1 | `P1` `ui` | S |
 
 ### Epik E7 — Po makiecie (nie na jutro)
 
@@ -244,23 +297,19 @@ Klient w kalendarzu widzi tylko: wolne / zajęte (wstępna i wszystkie dalsze st
 
 ## 10. Plan na jutro
 
-Kolejność prowadzi najkrótszą drogą do pełnej ścieżki demo. Godziny są orientacyjne.
+Praca równoległa według `CC_Makieta_Prompty_Agenci.md`.
 
-| Blok | Zadania | Wynik |
-|---|---|---|
-| 1. Start (ok. 1 h) | E0-1 – E0-5 | pusta aplikacja z danymi pod publicznym adresem |
-| 2. Rezerwacja (ok. 2,5 h) | E1-1 – E1-4, E2-1 – E2-4 | klient wysyła prośbę, właściciel ją potwierdza, widać to w kalendarzu |
-| 3. Umowa (ok. 1,5 h) | E3-1 – E3-3 | umowa wysłana i podpisana na telefonie |
-| 4. Wydanie (ok. 2 h) | E4-1, E4-2, E4-4, E4-5 | podpisany protokół wydania |
-| 5. Zwrot (ok. 2 h) | E5-1 – E5-5 | podpisany protokół zwrotu i rozliczona kaucja |
-| 6. Domknięcie (ok. 1 h) | E6-1, E6-2 | scenariusz demo przechodzi na laptopie i telefonie |
-| 7. Jeśli zostanie czas | E0-6, E2-5, E4-3, E6-4, E3-4, E4-6, E2-6, E6-3 | w tej kolejności |
+| Etap | Zadania | Wynik | Czas |
+|---|---|---|---|
+| 0. Fundament | E0-1 – E0-5 | szkielet wszystkich ekranów pod publicznym adresem | 30–40 min |
+| 1. Ekrany równolegle | E1, E2, E3, E4, E5 (P0, potem P1) | wszystkie ekrany zbudowane | 45–75 min |
+| 2. Domknięcie | E6-1 – E6-3 | scenariusz przeklikuje się na laptopie i telefonie | 30–45 min |
 
-Suma zadań `P0`: ok. 10 godzin pracy. Jeśli w połowie dnia widać opóźnienie, tniemy w tej kolejności: uproszczony kalendarz floty (lista zamiast osi czasu), zdjęcia tylko przykładowe bez aparatu, umowa bez formularza danych najemcy.
+Jeśli widać opóźnienie, tniemy w tej kolejności: przełączanie miesięcy, P4, podgląd protokołu wydania, `localStorage`, aparat (zostają przykładowe zdjęcia).
 
 ## 11. Zasady pracy z backlogiem
 
-- Jedno zadanie = jedna zmiana w repozytorium, od razu opublikowana, żeby postęp było widać pod linkiem.
 - Nie dodajemy funkcji spoza punktu 6. Pomysły w trakcie trafiają do epiku E7.
-- Przy wątpliwości „czy to potrzebne w makiecie" rozstrzyga pytanie: czy bez tego da się odegrać scenariusz demo.
+- Przy wątpliwości „czy to potrzebne w makiecie" rozstrzyga pytanie: czy bez tego da się przeklikać scenariusz demo.
+- Przy wątpliwości „liczyć czy wpisać" — wpisać na sztywno.
 - Teksty w interfejsie pisane językiem właścicieli wypożyczalni: „wstępna rezerwacja", „zadatek", „kaucja", „wydanie", „zwrot", „potrącenia"; bez słów „platforma", „KYC", „widget".
