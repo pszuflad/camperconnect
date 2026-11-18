@@ -7,30 +7,325 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <link rel="stylesheet" href="panel.css">
 </head>
 <body class="uklad-panel" data-stan-domyslny="wstepna">
   <header data-cc-naglowek="panel" data-cc-menu="rezerwacje"></header>
 
   <main class="tresc">
-    <div class="naglowek-ekranu">
+    <p class="maly" style="margin:0 0 6px"><a href="rezerwacje.html">← Rezerwacje</a></p>
+    <div class="naglowek-ekranu p3-naglowek">
       <div>
-        <h1>Rezerwacja R-2027-014</h1>
-        <p class="podtytul">Anna Kowalska · Ducato alkowa · 11.07.2027 – 21.07.2027</p>
+        <h1>Rezerwacja R-2027-014
+          <span data-stan="wstepna" data-cc-znaczek="wstepna"></span>
+          <span data-stan="potwierdzona" data-cc-znaczek="potwierdzona"></span>
+          <span data-stan="umowa-wyslana" data-cc-znaczek="umowa-wyslana"></span>
+          <span data-stan="umowa-podpisana" data-cc-znaczek="umowa-podpisana"></span>
+          <span data-stan="wydana" data-cc-znaczek="wydana"></span>
+          <span data-stan="zwrocona" data-cc-znaczek="zwrocona"></span>
+          <span data-stan="rozliczona" data-cc-znaczek="rozliczona"></span>
+          <span data-stan="wygasla" data-cc-znaczek="wygasla"></span>
+        </h1>
+        <p class="podtytul">Anna Kowalska · Ducato alkowa (NGI 4K27) · 11.07.2027 – 21.07.2027 · 10 dób</p>
+      </div>
+      <div class="rzad">
+        <!-- główne przyciski według stanu (backlog pkt 8) -->
+        <a data-stan="wstepna" class="btn btn-tekst" href="rezerwacja.html?stan=wygasla" data-cc-toast="Minął 15.03.2027 — prośba wygasła, termin wolny">Symuluj upływ terminu</a>
+        <button data-stan="wstepna" type="button" class="btn btn-drugi" data-cc-modal="odrzuc">Odrzuć</button>
+        <button data-stan="wstepna" type="button" class="btn btn-glowny" data-cc-modal="zadatek">Potwierdź i odnotuj zadatek</button>
+
+        <a data-stan="potwierdzona" class="btn btn-drugi" href="kalendarz.html?stan=potwierdzona">Pokaż w kalendarzu</a>
+        <a data-stan="potwierdzona" class="btn btn-glowny" href="rezerwacja.html?stan=umowa-wyslana" data-cc-toast="Umowa wysłana do klienta (e-mail i SMS)">Wyślij umowę</a>
+
+        <button data-stan="umowa-wyslana" type="button" class="btn btn-drugi" data-cc-toast="Przypomnienie o podpisie wysłane (SMS)">Wyślij przypomnienie</button>
+        <a data-stan="umowa-wyslana" class="btn btn-glowny" href="../umowa/umowa.html">Otwórz jako klient</a>
+
+        <a data-stan="umowa-podpisana" class="btn btn-drugi" href="../umowa/umowa-podpisana.html">Podgląd umowy</a>
+        <a data-stan="umowa-podpisana" class="btn btn-glowny" href="../wydanie/wydanie.html">Rozpocznij wydanie</a>
+
+        <a data-stan="wydana" class="btn btn-drugi" href="../wydanie/podglad.html">Protokół wydania</a>
+        <a data-stan="wydana" class="btn btn-glowny" href="../zwrot/zwrot.html">Rozpocznij zwrot</a>
+
+        <a data-stan="zwrocona" class="btn btn-glowny" href="../zwrot/rozliczenie.html">Rozlicz kaucję</a>
+
+        <a data-stan="rozliczona" class="btn btn-drugi" href="../zwrot/rozliczenie.html">Rozliczenie kaucji</a>
+        <a data-stan="rozliczona" class="btn btn-glowny" href="kalendarz.html">Kalendarz floty</a>
+
+        <a data-stan="wygasla" class="btn btn-glowny" href="kalendarz.html?stan=wygasla">Zobacz w kalendarzu</a>
       </div>
     </div>
 
-    <!-- Treść ekranu P3 — buduje agent 2. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>P3</b> — ekran w budowie (agent 2)</p>
-      <p data-stan="wstepna">Wariant stanu: <span data-cc-znaczek="wstepna"></span></p>
-      <p data-stan="potwierdzona">Wariant stanu: <span data-cc-znaczek="potwierdzona"></span></p>
-      <p data-stan="umowa-wyslana">Wariant stanu: <span data-cc-znaczek="umowa-wyslana"></span></p>
-      <p data-stan="umowa-podpisana">Wariant stanu: <span data-cc-znaczek="umowa-podpisana"></span></p>
-      <p data-stan="wydana">Wariant stanu: <span data-cc-znaczek="wydana"></span></p>
-      <p data-stan="zwrocona">Wariant stanu: <span data-cc-znaczek="zwrocona"></span></p>
-      <p data-stan="rozliczona">Wariant stanu: <span data-cc-znaczek="rozliczona"></span></p>
-      <p data-stan="wygasla">Wariant stanu: <span data-cc-znaczek="wygasla"></span></p>
+    <div class="stos">
+      <div class="karta">
+        <ol data-stan="wstepna" data-cc-kroki="1"></ol>
+        <ol data-stan="potwierdzona umowa-wyslana" data-cc-kroki="2"></ol>
+        <ol data-stan="umowa-podpisana" data-cc-kroki="3"></ol>
+        <ol data-stan="wydana" data-cc-kroki="4"></ol>
+        <ol data-stan="zwrocona" data-cc-kroki="5"></ol>
+        <ol data-stan="rozliczona" data-cc-kroki="6"></ol>
+        <ol data-stan="wygasla" data-cc-kroki="1" data-cc-kroki-przerwane></ol>
+      </div>
+
+      <div data-stan="wstepna" class="komunikat komunikat-ostrzezenie"><b>Prośba czeka na potwierdzenie.</b> Termin zablokowany do 15.03.2027. Zadzwoń do klienta, potwierdź rezerwację i odnotuj zadatek — albo odrzuć prośbę.</div>
+      <div data-stan="potwierdzona" class="komunikat komunikat-sukces"><b>Rezerwacja potwierdzona, zadatek odnotowany.</b> Następny krok: wyślij klientowi umowę do podpisu online.</div>
+      <div data-stan="umowa-wyslana" class="komunikat"><b>Umowa wysłana 13.03.2027.</b> Czeka na podpis klienta — link w e-mailu i SMS-ie.</div>
+      <div data-stan="umowa-podpisana" class="komunikat komunikat-sukces"><b>Umowa podpisana 14.03.2027, 19:12.</b> Następny krok: wydanie pojazdu 11.07.2027, 10:00. Pozostała część czynszu 4 550 zł — do 04.07.2027.</div>
+      <div data-stan="wydana" class="komunikat"><b>Pojazd wydany 11.07.2027, 10:00.</b> Kaucja 5 000 zł przyjęta. Zwrot: 21.07.2027, 16:00.</div>
+      <div data-stan="zwrocona" class="komunikat komunikat-ostrzezenie"><b>Pojazd zwrócony 21.07.2027, 16:00.</b> Kaucja do rozliczenia: potrącenia wstępne 576 zł, rysa na prawym boku do wyceny. Termin zwrotu kaucji: 28.07.2027.</div>
+      <div data-stan="rozliczona" class="komunikat komunikat-sukces"><b>Najem zakończony.</b> Kaucja rozliczona 23.07.2027: potrącenia 976 zł, zwrot 4 024 zł (termin 28.07.2027).</div>
+      <div data-stan="wygasla" class="komunikat komunikat-blad"><b>Prośba wygasła 15.03.2027</b> bez potwierdzenia. Termin 11.07.2027 – 21.07.2027 wrócił w kalendarzu jako wolny; klient dostał powiadomienie.</div>
+
+      <div class="kolumny-panel">
+        <!-- lewa kolumna -->
+        <div class="stos">
+          <section class="karta">
+            <div class="karta-naglowek"><h2>Najem</h2></div>
+            <dl class="dane">
+              <dt>Pojazd</dt><dd>Ducato alkowa · nr rej. NGI 4K27 · bak 88 l</dd>
+              <dt>Wydanie</dt><dd>11.07.2027, 10:00 · Giżycko, ul. Jeziorna 5</dd>
+              <dt>Zwrot</dt><dd>21.07.2027, 16:00</dd>
+              <dt>Czynsz</dt><dd><span class="kwota">10 × 650 zł = 6 500 zł</span></dd>
+              <dt>Zadatek</dt><dd><span class="kwota">1 950 zł</span> (30%)</dd>
+              <dt>Kaucja</dt><dd><span class="kwota">5 000 zł</span>, w dniu wydania</dd>
+              <dt>Trasa</dt>
+              <dd data-stan="umowa-podpisana wydana zwrocona rozliczona">Mazury: Giżycko – Mikołajki – Ruciane-Nida; bez wyjazdu za granicę</dd>
+              <dd data-stan="wstepna potwierdzona umowa-wyslana wygasla" class="drugi-plan">uzupełni klient w umowie</dd>
+              <dt>Źródło</dt><dd>prośba ze strony wypożyczalni, 12.03.2027, 21:40</dd>
+            </dl>
+            <p class="prosba-wiadomosc" style="margin-top:12px">Wiadomość klienta: „Jedziemy z dwójką dzieci, czy można zabrać psa?"</p>
+          </section>
+
+          <section class="karta">
+            <div class="karta-naglowek"><h2>Płatności</h2></div>
+            <div class="tabela-ramka">
+              <table class="tabela">
+                <thead><tr><th>Pozycja</th><th>Termin</th><th>Status</th><th class="kwota">Kwota</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>Zadatek (opłata rezerwacyjna, 30%)</td>
+                    <td>3 dni od potwierdzenia<span data-stan="potwierdzona umowa-wyslana umowa-podpisana wydana zwrocona rozliczona"> (16.03.2027)</span></td>
+                    <td>
+                      <span data-stan="wstepna" class="znaczek znaczek-neutralny">po potwierdzeniu</span>
+                      <span data-stan="potwierdzona umowa-wyslana umowa-podpisana wydana zwrocona rozliczona" class="znaczek znaczek-ok">wpłynął 13.03.2027 · przelew</span>
+                      <span data-stan="wygasla" class="znaczek znaczek-neutralny">nie pobrano</span>
+                    </td>
+                    <td class="kwota">1 950 zł</td>
+                  </tr>
+                  <tr>
+                    <td>Pozostała część czynszu</td>
+                    <td>04.07.2027 (7 dni przed wydaniem)</td>
+                    <td>
+                      <span data-stan="wstepna wygasla" class="drugi-plan">—</span>
+                      <span data-stan="potwierdzona umowa-wyslana umowa-podpisana" class="znaczek znaczek-wstepna">oczekuje</span>
+                      <span data-stan="wydana zwrocona rozliczona" class="znaczek znaczek-ok">wpłynęła 02.07.2027</span>
+                    </td>
+                    <td class="kwota">4 550 zł</td>
+                  </tr>
+                  <tr class="suma"><td colspan="3">Czynsz razem (10 dób × 650 zł)</td><td class="kwota">6 500 zł</td></tr>
+                  <tr>
+                    <td>Kaucja (zwrotna)</td>
+                    <td>
+                      <span data-stan="wstepna potwierdzona umowa-wyslana umowa-podpisana wygasla">w dniu wydania, 11.07.2027</span>
+                      <span data-stan="wydana">przyjęta 11.07.2027</span>
+                      <span data-stan="zwrocona rozliczona">zwrot do 28.07.2027</span>
+                    </td>
+                    <td>
+                      <span data-stan="wstepna potwierdzona umowa-wyslana umowa-podpisana wygasla" class="drugi-plan">—</span>
+                      <span data-stan="wydana" class="znaczek znaczek-ok">przyjęta · gotówka</span>
+                      <span data-stan="zwrocona" class="znaczek znaczek-wstepna">do rozliczenia</span>
+                      <span data-stan="rozliczona" class="znaczek znaczek-rozliczona">rozliczona 23.07.2027</span>
+                    </td>
+                    <td class="kwota">5 000 zł</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="maly drugi-plan" style="margin:8px 0 0">Wpłaty na rachunek 00 1020 0000 0000 0000 0000 0000, tytuł: R-2027-014.</p>
+          </section>
+
+          <section class="karta">
+            <div class="karta-naglowek">
+              <h2>Umowa najmu</h2>
+              <span data-stan="wstepna potwierdzona" class="znaczek znaczek-neutralny">nie wysłana</span>
+              <span data-stan="umowa-wyslana" data-cc-znaczek="umowa-wyslana"></span>
+              <span data-stan="umowa-podpisana wydana zwrocona rozliczona" data-cc-znaczek="umowa-podpisana"></span>
+              <span data-stan="wygasla" class="znaczek znaczek-neutralny">nie dotyczy</span>
+            </div>
+            <p data-stan="wstepna" class="drugi-plan">Umowę wyślesz po potwierdzeniu rezerwacji. Klient wypełni dane, zaakceptuje regulamin i cennik i podpisze palcem na telefonie.</p>
+            <p data-stan="potwierdzona">Umowa gotowa do wysłania — wzór „Umowa najmu kampera" z danymi rezerwacji. Klient dostanie link e-mailem i SMS-em.</p>
+            <p data-stan="umowa-wyslana">Wysłana 13.03.2027, 10:20 na anna.kowalska@example.com i SMS 600 123 456. Czeka na podpis klienta.</p>
+            <p data-stan="umowa-podpisana wydana zwrocona rozliczona">Podpisana elektronicznie przez Annę Kowalską <b>14.03.2027, 19:12</b>. Kopia PDF wysłana do klienta i do wypożyczalni. Podpis obejmuje umowę oraz załączniki nr 1 i 4.</p>
+            <p data-stan="wygasla" class="drugi-plan">Prośba wygasła przed potwierdzeniem — umowa nie została wysłana.</p>
+            <b class="maly">Załączniki do umowy</b>
+            <ol class="zalaczniki maly">
+              <li>Regulamin wynajmu</li>
+              <li>Ogólne Warunki Ubezpieczenia <span class="drugi-plan">(PDF ubezpieczyciela)</span></li>
+              <li>Skrócona Instrukcja Obsługi <span class="drugi-plan">(wręczana przy wydaniu)</span></li>
+              <li>Cennik usług dodatkowych i kar</li>
+              <li>Protokół wydania i zwrotu</li>
+            </ol>
+            <div class="sekcja-akcje">
+              <a data-stan="potwierdzona" class="btn btn-glowny btn-maly" href="rezerwacja.html?stan=umowa-wyslana" data-cc-toast="Umowa wysłana do klienta (e-mail i SMS)">Wyślij umowę</a>
+              <a data-stan="umowa-wyslana" class="btn btn-glowny btn-maly" href="../umowa/umowa.html">Otwórz jako klient</a>
+              <a data-stan="umowa-podpisana wydana zwrocona rozliczona" class="btn btn-drugi btn-maly" href="../umowa/umowa-podpisana.html">Podgląd umowy</a>
+            </div>
+          </section>
+
+          <section class="karta">
+            <div class="karta-naglowek"><h2>Protokoły</h2></div>
+            <div class="protokol-wiersz">
+              <div>
+                <b>Protokół wydania</b>
+                <div data-stan="wstepna potwierdzona umowa-wyslana" class="maly drugi-plan">zaplanowane 11.07.2027, 10:00 · po podpisaniu umowy</div>
+                <div data-stan="umowa-podpisana" class="maly drugi-plan">zaplanowane 11.07.2027, 10:00 · na telefonie, krok po kroku</div>
+                <div data-stan="wydana zwrocona rozliczona" class="maly drugi-plan">podpisany 11.07.2027 · przebieg 48 230 km · paliwo 8/8 · 8 zdjęć · instruktaż odbyty</div>
+                <div data-stan="wygasla" class="maly drugi-plan">nie dotyczy</div>
+              </div>
+              <div class="rzad">
+                <span data-stan="wstepna potwierdzona umowa-wyslana" class="znaczek znaczek-neutralny">oczekuje</span>
+                <a data-stan="umowa-podpisana" class="btn btn-glowny btn-maly" href="../wydanie/wydanie.html">Rozpocznij wydanie</a>
+                <a data-stan="wydana zwrocona rozliczona" class="btn btn-drugi btn-maly" href="../wydanie/podglad.html">Podgląd</a>
+              </div>
+            </div>
+            <div class="protokol-wiersz">
+              <div>
+                <b>Protokół zwrotu</b>
+                <div data-stan="wstepna potwierdzona umowa-wyslana umowa-podpisana wydana" class="maly drugi-plan">zaplanowany 21.07.2027, 16:00</div>
+                <div data-stan="zwrocona rozliczona" class="maly drugi-plan">podpisany 21.07.2027 · przebieg 49 870 km · paliwo 6/8 · nowa rysa na prawym boku · brak jednego kompletu kluczy</div>
+                <div data-stan="wygasla" class="maly drugi-plan">nie dotyczy</div>
+              </div>
+              <div class="rzad">
+                <span data-stan="wstepna potwierdzona umowa-wyslana umowa-podpisana" class="znaczek znaczek-neutralny">oczekuje</span>
+                <a data-stan="wydana" class="btn btn-glowny btn-maly" href="../zwrot/zwrot.html">Rozpocznij zwrot</a>
+                <a data-stan="zwrocona rozliczona" class="btn btn-drugi btn-maly" href="../zwrot/rozliczenie.html">Rozliczenie</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="karta">
+            <div class="karta-naglowek">
+              <h2>Kaucja</h2>
+              <span data-stan="wstepna potwierdzona umowa-wyslana umowa-podpisana" class="znaczek znaczek-neutralny">w dniu wydania</span>
+              <span data-stan="wydana" class="znaczek znaczek-ok">przyjęta</span>
+              <span data-stan="zwrocona" class="znaczek znaczek-wstepna">do rozliczenia</span>
+              <span data-stan="rozliczona" data-cc-znaczek="rozliczona"></span>
+              <span data-stan="wygasla" class="znaczek znaczek-neutralny">nie dotyczy</span>
+            </div>
+            <p data-stan="wstepna potwierdzona umowa-wyslana umowa-podpisana">5 000 zł, płatna w dniu wydania (11.07.2027). Zwrot do 7 dni od zwrotu pojazdu, po potrąceniu należności według cennika.</p>
+            <p data-stan="wygasla" class="drugi-plan">Prośba wygasła — kaucja nie dotyczy.</p>
+            <dl data-stan="wydana" class="dane">
+              <dt>Przyjęta</dt><dd><span class="kwota">5 000 zł</span> · gotówka · 11.07.2027, 10:00</dd>
+              <dt>Zwrot</dt><dd>do 7 dni od zwrotu pojazdu (planowany zwrot 21.07.2027)</dd>
+            </dl>
+            <div data-stan="zwrocona rozliczona" class="tabela-ramka">
+              <table class="tabela">
+                <tbody>
+                  <tr><td>Kaucja przyjęta 11.07.2027 (gotówka)</td><td class="kwota">5 000 zł</td></tr>
+                  <tr><td>Brak paliwa: 22 l × 8 zł + 100 zł <span class="drugi-plan">(cennik poz. 30)</span></td><td class="kwota">− 276 zł</td></tr>
+                  <tr><td>Brak kompletu kluczyków <span class="drugi-plan">(cennik poz. 24)</span></td><td class="kwota">− 300 zł</td></tr>
+                  <tr data-stan="zwrocona"><td>Rysa prawy bok, ok. 30 cm, do podkładu <span class="drugi-plan">(poz. 21)</span></td><td class="kwota"><span class="znaczek znaczek-wstepna">do wyceny</span></td></tr>
+                  <tr data-stan="rozliczona"><td>Rysa prawy bok — lakierowanie miejscowe według wyceny <span class="drugi-plan">(poz. 21)</span></td><td class="kwota">− 400 zł</td></tr>
+                  <tr data-stan="zwrocona"><td>Potrącenia (bez pozycji do wyceny)</td><td class="kwota">576 zł</td></tr>
+                  <tr data-stan="rozliczona"><td>Potrącenia razem</td><td class="kwota">976 zł</td></tr>
+                  <tr data-stan="zwrocona" class="suma"><td>Wstępnie do zwrotu · termin 28.07.2027</td><td class="kwota">4 424 zł</td></tr>
+                  <tr data-stan="rozliczona" class="suma"><td>Zwrócono 23.07.2027 · termin 28.07.2027</td><td class="kwota">4 024 zł</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <!-- prawa kolumna -->
+        <div class="stos">
+          <section class="karta">
+            <div class="karta-naglowek"><h2>Klient i kierowcy</h2></div>
+            <dl class="dane">
+              <dt>Najemca</dt><dd>Anna Kowalska</dd>
+              <dt>Telefon</dt><dd><a href="tel:600123456">600 123 456</a></dd>
+              <dt>E-mail</dt><dd>anna.kowalska@example.com</dd>
+            </dl>
+            <div data-stan="umowa-podpisana wydana zwrocona rozliczona" class="stos-maly" style="margin-top:12px">
+              <dl class="dane maly">
+                <dt>Adres</dt><dd>ul. Lipowa 12/4, 02-345 Warszawa</dd>
+                <dt>PESEL</dt><dd>85010112345</dd>
+                <dt>Dowód</dt><dd>ABC 123456</dd>
+                <dt>Prawo jazdy</dt><dd>01234/12/1234, kat. B od 2012</dd>
+              </dl>
+              <hr style="border:0;border-top:1px solid var(--ramka);margin:8px 0">
+              <dl class="dane maly">
+                <dt>Kolejny kierowca</dt><dd>Tomasz Kowalski</dd>
+                <dt>Prawo jazdy</dt><dd>04567/09/1234, kat. B od 2009</dd>
+                <dt>Korzystają</dt><dd>Tomasz Kowalski, dwoje dzieci (8 i 5 lat), pies (zgoda wypożyczalni)</dd>
+                <dt>Kontakt</dt><dd>Ewa Kowalska, 601 222 333</dd>
+              </dl>
+              <p data-stan="wydana zwrocona rozliczona" class="maly"><span class="znaczek znaczek-ok">sprawdzono przy wydaniu</span> dowód i prawo jazdy najemcy i kolejnego kierowcy</p>
+            </div>
+            <p data-stan="wstepna potwierdzona umowa-wyslana wygasla" class="maly drugi-plan" style="margin-top:12px">Adres, PESEL, dokumenty, kolejnego kierowcę, osoby korzystające i osobę do kontaktu klient uzupełni w umowie online.</p>
+          </section>
+
+          <section class="karta">
+            <div class="karta-naglowek"><h2>Wysłane powiadomienia</h2></div>
+            <ul class="powiadomienia">
+              <li data-stan="rozliczona"><span class="kanal">E-mail</span><span>Do klienta: rozliczenie kaucji — potrącenia 976 zł, zwrot 4 024 zł</span><span class="kiedy">23.07.2027, 12:05</span></li>
+              <li data-stan="zwrocona rozliczona"><span class="kanal">E-mail</span><span>Do obu stron: protokół zwrotu (PDF) — potrącenia wstępne 576 zł, rysa do wyceny</span><span class="kiedy">21.07.2027, 16:40</span></li>
+              <li data-stan="zwrocona rozliczona"><span class="kanal sms">SMS</span><span>Do klienta: jutro zwrot pojazdu do 16:00, Giżycko</span><span class="kiedy">20.07.2027, 18:00</span></li>
+              <li data-stan="wydana zwrocona rozliczona"><span class="kanal">E-mail</span><span>Do obu stron: protokół wydania (PDF) ze zdjęciami i podpisami</span><span class="kiedy">11.07.2027, 10:52</span></li>
+              <li data-stan="wydana zwrocona rozliczona"><span class="kanal sms">SMS</span><span>Do klienta: jutro odbiór o 10:00, ul. Jeziorna 5, Giżycko — zabierz dowód i prawo jazdy</span><span class="kiedy">10.07.2027, 18:00</span></li>
+              <li data-stan="wydana zwrocona rozliczona"><span class="kanal">E-mail</span><span>Do klienta: wpłata 4 550 zł zaksięgowana — czynsz opłacony w całości</span><span class="kiedy">02.07.2027, 14:10</span></li>
+              <li data-stan="wydana zwrocona rozliczona"><span class="kanal">E-mail</span><span>Do klienta: przypomnienie — pozostała część czynszu 4 550 zł do 04.07.2027</span><span class="kiedy">27.06.2027, 09:00</span></li>
+              <li data-stan="umowa-podpisana wydana zwrocona rozliczona"><span class="kanal">E-mail</span><span>Do obu stron: umowa podpisana — kopia PDF z załącznikami</span><span class="kiedy">14.03.2027, 19:12</span></li>
+              <li data-stan="umowa-wyslana umowa-podpisana wydana zwrocona rozliczona"><span class="kanal sms">SMS</span><span>Do klienta: link do umowy najmu do podpisu</span><span class="kiedy">13.03.2027, 10:20</span></li>
+              <li data-stan="umowa-wyslana umowa-podpisana wydana zwrocona rozliczona"><span class="kanal">E-mail</span><span>Do klienta: umowa najmu R-2027-014 do podpisu online</span><span class="kiedy">13.03.2027, 10:20</span></li>
+              <li data-stan="potwierdzona umowa-wyslana umowa-podpisana wydana zwrocona rozliczona"><span class="kanal">E-mail</span><span>Do klienta: rezerwacja potwierdzona, zadatek 1 950 zł odnotowany</span><span class="kiedy">13.03.2027, 10:15</span></li>
+              <li data-stan="potwierdzona umowa-wyslana umowa-podpisana wydana zwrocona rozliczona"><span class="kanal sms">SMS</span><span>Do klienta: rezerwacja 11–21.07.2027 potwierdzona</span><span class="kiedy">13.03.2027, 10:15</span></li>
+              <li data-stan="wygasla"><span class="kanal">E-mail</span><span>Do klienta: wstępna rezerwacja wygasła — termin zwolniony</span><span class="kiedy">15.03.2027, 23:59</span></li>
+              <li data-stan="wygasla"><span class="kanal sms">SMS</span><span>Do wypożyczalni: prośba R-2027-014 wygasa jutro — potwierdź lub odrzuć</span><span class="kiedy">14.03.2027, 09:00</span></li>
+              <li><span class="kanal">E-mail</span><span>Do wypożyczalni: nowa prośba o termin — Ducato alkowa, 11–21.07.2027</span><span class="kiedy">12.03.2027, 21:40</span></li>
+              <li><span class="kanal">E-mail</span><span>Do klienta: prośba przyjęta, termin zablokowany do 15.03.2027</span><span class="kiedy">12.03.2027, 21:40</span></li>
+            </ul>
+            <p class="maly drugi-plan" style="margin:10px 0 0">W makiecie powiadomienia nie są naprawdę wysyłane.</p>
+          </section>
+        </div>
+      </div>
     </div>
+
+    <!-- Okno zadatku (jak w P2) -->
+    <div class="modal" id="zadatek"><div class="modal-okno">
+      <h2>Potwierdź rezerwację i odnotuj zadatek</h2>
+      <p class="drugi-plan">R-2027-014 · Anna Kowalska · Ducato alkowa · 11.07.2027 – 21.07.2027</p>
+      <label class="pole"><span>Kwota zadatku</span><input type="text" value="1 950 zł"><span class="pomoc">30% czynszu 6 500 zł</span></label>
+      <label class="pole"><span>Data wpłaty</span><input type="text" value="13.03.2027"></label>
+      <div class="pole"><span>Forma</span>
+        <div class="przelaczniki">
+          <label><input type="radio" name="forma" checked> Przelew</label>
+          <label><input type="radio" name="forma"> Gotówka</label>
+        </div>
+      </div>
+      <div class="komunikat">Termin wpłaty: 3 dni od potwierdzenia (do 16.03.2027)</div>
+      <label class="pole-wyboru"><input type="checkbox" checked> <span>Wyślij klientowi potwierdzenie rezerwacji (e-mail i SMS)</span></label>
+      <div class="modal-przyciski">
+        <button type="button" class="btn btn-drugi" data-cc-zamknij>Anuluj</button>
+        <a class="btn btn-glowny" href="rezerwacja.html?stan=potwierdzona" data-cc-toast="Rezerwacja potwierdzona, zadatek odnotowany">Zapisz</a>
+      </div>
+    </div></div>
+
+    <!-- Okno odrzucenia -->
+    <div class="modal" id="odrzuc"><div class="modal-okno">
+      <h2>Odrzucić prośbę?</h2>
+      <p>Anna Kowalska dostanie e-mail, że termin 11.07.2027 – 21.07.2027 jest niedostępny. Termin wróci w kalendarzu jako wolny.</p>
+      <label class="pole"><span>Wiadomość do klienta (opcjonalnie)</span><textarea rows="3" placeholder="np. propozycja innego terminu"></textarea></label>
+      <div class="modal-przyciski">
+        <button type="button" class="btn btn-drugi" data-cc-zamknij>Anuluj</button>
+        <a class="btn btn-niebezpieczny" href="kalendarz.html?stan=wygasla" data-cc-toast="Prośba odrzucona, klient powiadomiony, termin zwolniony">Odrzuć prośbę</a>
+      </div>
+    </div></div>
   </main>
+
+  <script>
+    CC.gotowe(function () {
+      var stan = CC.stan();
+      if (CC.STATUSY[stan]) document.title = 'P3 · R-2027-014 · ' + CC.STATUSY[stan] + ' — CamperConnect';
+    });
+  </script>
 </body>
 </html>

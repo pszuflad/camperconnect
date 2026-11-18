@@ -1,0 +1,74 @@
+/* Style lokalne panelu (P1–P4) — agent 2. Wspólne klasy: assets/style.css, opis: docs/KONTRAKT.md */
+
+/* ---------- P1: oś czasu floty ---------- */
+.os-pasek { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.os-miesiac { display: inline-flex; align-items: center; gap: 6px; }
+.os-miesiac b { min-width: 130px; text-align: center; font-size: 1.05rem; }
+.os-ramka { overflow-x: auto; border: 1px solid var(--ramka); border-radius: var(--promien); background: var(--powierzchnia); }
+.os {
+  display: grid;
+  grid-template-columns: 200px repeat(var(--dni, 31), minmax(30px, 1fr));
+  grid-auto-rows: 58px;
+  min-width: 1100px;
+  position: relative;
+}
+.os-glowa { grid-auto-rows: auto; }
+.os > div { border-bottom: 1px solid var(--ramka); }
+.os-dzien { border-left: 1px solid var(--ramka); font-size: .75rem; color: var(--tekst-2); text-align: center; padding: 6px 0; background: var(--powierzchnia-2); line-height: 1.25; }
+.os-dzien b { display: block; font-size: .85rem; color: var(--tekst); }
+.os-dzien.weekend { background: #e8ebe6; }
+.os-komorka { border-left: 1px solid var(--ramka); }
+.os-komorka.weekend { background: #f7f8f5; }
+.os-pojazd { padding: 8px 12px; display: flex; flex-direction: column; justify-content: center; background: var(--powierzchnia); position: sticky; left: 0; z-index: 3; border-right: 1px solid var(--ramka); }
+.os-pojazd b { font-size: .92rem; }
+.os-pojazd span { font-size: .72rem; white-space: nowrap; color: var(--tekst-2); }
+.os-naroznik { background: var(--powierzchnia-2); position: sticky; left: 0; z-index: 3; border-right: 1px solid var(--ramka); padding: 6px 12px; font-size: .75rem; color: var(--tekst-2); display: flex; align-items: flex-end; }
+.os .os-pasek-rez {
+  z-index: 2; align-self: center; margin: 0 2px; height: 34px; border-radius: 6px; border-bottom: 0;
+  font-size: .78rem; font-weight: 600; padding: 0 8px; display: flex; align-items: center; gap: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+}
+.os .os-pasek-rez:hover { filter: brightness(.95); text-decoration: none; }
+.os .os-pasek-rez.ucieta-l { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 0; }
+.os .os-pasek-rez.ucieta-p { border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0; }
+.os .os-pasek-rez.demo { outline: 2px solid var(--tekst); outline-offset: 1px; }
+.os .os-pasek-rez.tlo-wstepna.demo { outline-color: var(--st-wstepna-tekst); animation: puls 1.8s ease-in-out 3; }
+.os .os-pasek-rez small { font-weight: 500; opacity: .85; }
+@keyframes puls { 50% { box-shadow: 0 0 0 6px rgba(242, 201, 76, .45); } }
+
+.licznik-prosb { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: var(--st-wstepna-tlo); color: var(--st-wstepna-tekst); border: 1px solid var(--st-wstepna); font-weight: 600; font-size: .9rem; text-decoration: none; }
+.licznik-prosb b { background: var(--st-wstepna); color: #4a3800; border-radius: 999px; min-width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: .8rem; }
+a.licznik-prosb:hover { text-decoration: none; filter: brightness(.97); }
+.licznik-prosb.pusty { background: var(--powierzchnia-2); color: var(--tekst-2); border-color: var(--ramka); }
+.licznik-prosb.pusty b { background: var(--ramka); color: var(--tekst-2); }
+
+/* ---------- P2: prośby i lista ---------- */
+.prosba { border-left: 4px solid var(--st-wstepna); }
+.prosba-wiadomosc { background: var(--powierzchnia-2); border-radius: var(--promien-maly); padding: 10px 14px; font-style: italic; margin: 0; }
+.filtry { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+.filtry .pole { margin-bottom: 0; min-width: 200px; }
+.tabela tr.demo td { background: var(--st-wstepna-tlo); }
+.tabela tr.klikalny { cursor: pointer; }
+.kafle-liczby { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--odstep); }
+.kafle-liczby .karta { padding: 14px 18px; }
+.kafle-liczby b { display: block; font-size: 1.6rem; line-height: 1.2; }
+@media (max-width: 760px) { .kafle-liczby { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- P3: szczegóły ---------- */
+.p3-naglowek h1 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.p3-naglowek h1 .znaczek { font-size: .85rem; }
+.sekcja-akcje { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.powiadomienia { list-style: none; margin: 0; padding: 0; }
+.powiadomienia li { padding: 10px 0; border-top: 1px solid var(--ramka); display: grid; grid-template-columns: 52px 1fr; gap: 2px 10px; font-size: .9rem; }
+.powiadomienia li:first-child { border-top: 0; padding-top: 0; }
+.powiadomienia .kanal { grid-row: span 2; font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--glowny-ciemny); background: var(--glowny-jasny); border-radius: 6px; height: 22px; display: inline-flex; align-items: center; justify-content: center; }
+.powiadomienia .kanal.sms { background: #efe8f7; color: #5b3a8a; }
+.powiadomienia .kiedy { color: var(--tekst-2); font-size: .8rem; }
+.zalaczniki { margin: 8px 0 0; padding-left: 20px; }
+.zalaczniki li { margin: 2px 0; }
+.protokol-wiersz { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--ramka); flex-wrap: wrap; }
+.karta-naglowek + .protokol-wiersz { border-top: 0; padding-top: 0; }
+
+/* ---------- P4 ---------- */
+.p4-formularz { max-width: 860px; }
