@@ -6,6 +6,7 @@
   <title>K2 · Umowa najmu do podpisu — CamperConnect</title>
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="umowa.css">
   <script src="../assets/app.js"></script>
 </head>
 <body class="uklad-mobile">
@@ -19,10 +20,172 @@
       </div>
     </div>
 
-    <!-- Treść ekranu K2 — buduje agent 3. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>K2</b> — ekran w budowie (agent 3)</p>
-    </div>
+    <form id="umowa" class="stos" data-cc-przejdz="umowa-podpisana.html" data-cc-toast="Umowa podpisana — wysyłamy kopię PDF">
+
+      <p class="drugi-plan">Dzień dobry, Pani Anno! Wypożyczalnia Kamper na Mazury przygotowała umowę najmu. Uzupełnij dane, przeczytaj dokumenty i podpisz palcem — zajmie to kilka minut.</p>
+
+      <!-- Podsumowanie najmu -->
+      <section class="karta">
+        <div class="karta-naglowek"><h2>Twój najem</h2><span data-cc-znaczek="umowa-wyslana"></span></div>
+        <dl class="dane dok-podsumowanie">
+          <dt>Pojazd</dt><dd>Fiat Ducato alkowa · NGI 4K27</dd>
+          <dt>Odbiór</dt><dd>11.07.2027, godz. 10:00</dd>
+          <dt>Zwrot</dt><dd>21.07.2027, godz. 16:00</dd>
+          <dt>Czynsz</dt><dd><span class="kwota">6 500 zł</span> <span class="drugi-plan maly">(10 dób × 650 zł)</span></dd>
+          <dt>Zadatek</dt><dd><span class="kwota">1 950 zł</span> <span class="znaczek znaczek-ok">wpłacony 13.03.2027</span></dd>
+          <dt>Pozostała część czynszu</dt><dd><span class="kwota">4 550 zł</span> do 04.07.2027</dd>
+          <dt>Kaucja</dt><dd><span class="kwota">5 000 zł</span> w dniu odbioru · zwrot do 7 dni od zwrotu pojazdu</dd>
+        </dl>
+      </section>
+
+      <!-- 1. Dane do umowy (rozdział V) -->
+      <div class="dok-krok-naglowek"><span class="dok-krok">1</span><h2>Dane do umowy</h2></div>
+      <section class="karta stos" id="dane">
+        <div class="rzad-rozsuniety">
+          <span class="drugi-plan maly">Według rozdziału V umowy. Bez zdjęć dokumentów.</span>
+          <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij="#dane">Wypełnij przykładowymi danymi</button>
+        </div>
+
+        <fieldset class="dok-grupa stos-maly">
+          <legend>Najemca (kierowca główny)</legend>
+          <label class="pole"><span>Imię i nazwisko</span>
+            <input type="text" name="najemca" required autocomplete="name" data-przyklad="Anna Kowalska"></label>
+          <label class="pole"><span>Adres zamieszkania</span>
+            <input type="text" name="adres" required autocomplete="street-address" data-przyklad="ul. Lipowa 12/4, 02-345 Warszawa"></label>
+          <label class="pole"><span>PESEL</span>
+            <input type="text" name="pesel" required inputmode="numeric" maxlength="11" data-przyklad="85010112345"></label>
+          <label class="pole"><span>Seria i numer dowodu osobistego</span>
+            <input type="text" name="dowod" required data-przyklad="ABC 123456"></label>
+          <div class="siatka-2">
+            <label class="pole"><span>Numer prawa jazdy</span>
+              <input type="text" name="prawo-jazdy" required data-przyklad="01234/12/1234"></label>
+            <label class="pole"><span>Kategoria i rok uzyskania</span>
+              <input type="text" name="kategoria" required data-przyklad="kat. B od 2012"></label>
+          </div>
+        </fieldset>
+
+        <hr>
+        <fieldset class="dok-grupa stos-maly">
+          <legend>Kolejny kierowca</legend>
+          <label class="pole"><span>Imię i nazwisko</span>
+            <input type="text" name="kierowca" data-przyklad="Tomasz Kowalski"></label>
+          <label class="pole"><span>Numer prawa jazdy</span>
+            <input type="text" name="kierowca-prawo-jazdy" data-przyklad="04567/09/1234"></label>
+        </fieldset>
+
+        <hr>
+        <fieldset class="dok-grupa stos-maly">
+          <legend>Podróż</legend>
+          <label class="pole"><span>Osoby korzystające z pojazdu</span>
+            <textarea name="osoby" rows="2" data-przyklad="Tomasz Kowalski, dwoje dzieci (8 i 5 lat); pies (zgoda wypożyczalni)"></textarea></label>
+          <label class="pole"><span>Przewidywana trasa i miejsce pobytu</span>
+            <input type="text" name="trasa" required data-przyklad="Mazury: Giżycko – Mikołajki – Ruciane-Nida; bez wyjazdu za granicę"></label>
+        </fieldset>
+
+        <hr>
+        <fieldset class="dok-grupa stos-maly">
+          <legend>Osoba do kontaktu w czasie najmu</legend>
+          <div class="siatka-2">
+            <label class="pole"><span>Imię i nazwisko</span>
+              <input type="text" name="kontakt" required data-przyklad="Ewa Kowalska"></label>
+            <label class="pole"><span>Telefon</span>
+              <input type="tel" name="kontakt-telefon" required data-przyklad="601 222 333"></label>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- 2. Dokumenty -->
+      <div class="dok-krok-naglowek"><span class="dok-krok">2</span><h2>Dokumenty</h2></div>
+      <p class="drugi-plan maly">Rozwiń dokument, aby go przeczytać. Każdy wymaga osobnej akceptacji.</p>
+
+      <section class="dok-sekcja">
+        <details data-rozwin>
+          <summary><span><span class="dok-tytul">Umowa najmu pojazdu nr R-2027-014</span><span class="dok-opis">7 rozdziałów · zawarta 14.03.2027 w Giżycku</span></span></summary>
+          <div class="tresc-przewijana"><div data-dokument="umowa"></div></div>
+        </details>
+        <div class="dok-akceptacja">
+          <label class="pole-wyboru"><input type="checkbox" name="akc-umowa" required>
+            <span>Zapoznałem się z umową najmu nr R-2027-014 i akceptuję jej warunki.</span></label>
+        </div>
+      </section>
+
+      <section class="dok-sekcja">
+        <details data-rozwin>
+          <summary><span><span class="dok-tytul">Regulamin wynajmu — zał. nr 1</span><span class="dok-opis">Regulamin wynajmu kamperów i przyczep kempingowych · 12 rozdziałów</span></span></summary>
+          <div class="tresc-przewijana"><div data-dokument="regulamin"></div></div>
+        </details>
+        <div class="dok-akceptacja">
+          <label class="pole-wyboru"><input type="checkbox" name="akc-regulamin" required>
+            <span>Zapoznałem się z Regulaminem wynajmu (zał. nr 1), akceptuję go w całości i poinstruuję pozostałych użytkowników.</span></label>
+        </div>
+      </section>
+
+      <section class="dok-sekcja">
+        <details data-rozwin>
+          <summary><span><span class="dok-tytul">Cennik usług dodatkowych i kar — zał. nr 4</span><span class="dok-opis">30 pozycji · kwoty brutto</span></span></summary>
+          <div class="tresc-przewijana"><div data-dokument="cennik"></div></div>
+        </details>
+        <div class="dok-akceptacja">
+          <label class="pole-wyboru"><input type="checkbox" name="akc-cennik" required>
+            <span>Zapoznałem się z Cennikiem usług dodatkowych i kar (zał. nr 4) i akceptuję jego warunki.</span></label>
+        </div>
+      </section>
+
+      <section class="dok-sekcja">
+        <div class="rzad-rozsuniety dok-owu">
+          <span><span class="dok-tytul">Ogólne Warunki Ubezpieczenia — zał. nr 2</span><span class="dok-opis">PDF ubezpieczyciela · OC i AC</span></span>
+          <button type="button" class="btn btn-drugi btn-maly" data-cc-toast="W makiecie bez pliku">Otwórz PDF</button>
+        </div>
+        <div class="dok-akceptacja dok-akceptacja-bez-odstepu">
+          <label class="pole-wyboru"><input type="checkbox" name="akc-owu" required>
+            <span>Otrzymałem Ogólne Warunki Ubezpieczenia (zał. nr 2) i zapoznałem się z nimi.</span></label>
+        </div>
+      </section>
+
+      <p class="drugi-plan maly">Pozostałe załączniki: nr 3 Skrócona Instrukcja Obsługi (wręczana przy wydaniu), nr 5 Protokół wydania i zwrotu (sporządzany przy wydaniu i zwrocie).</p>
+
+      <!-- 3. Podpis -->
+      <div class="dok-krok-naglowek"><span class="dok-krok">3</span><h2>Podpis</h2></div>
+      <section class="karta stos">
+        <label class="pole-wyboru"><input type="checkbox" name="akc-dane" required>
+          <span>Potwierdzam, że dane w umowie są zgodne z moimi dokumentami.</span></label>
+        <div>
+          <div data-cc-podpis="najemca" data-etykieta="Podpis najemcy — Anna Kowalska"></div>
+          <p class="dok-podpis-pomoc">Podpis obejmuje umowę oraz załączniki nr 1 i 4.</p>
+        </div>
+        <div class="komunikat komunikat-blad" id="brak-podpisu" hidden>Złóż podpis w polu powyżej.</div>
+        <button class="btn btn-glowny btn-duzy btn-blok">Podpisuję</button>
+        <p class="drugi-plan maly wysrodkowany">Po podpisaniu kopia umowy w PDF trafi na anna.kowalska@example.com.</p>
+      </section>
+    </form>
   </main>
+
+  <script src="dokumenty.js"></script>
+  <script>
+    CC.gotowe(function () {
+      // Na szerszym ekranie dokumenty od razu rozwinięte; na telefonie zwinięte.
+      if (window.matchMedia('(min-width: 760px)').matches) {
+        document.querySelectorAll('details[data-rozwin]').forEach(function (d) { d.open = true; });
+      }
+
+      var form = document.getElementById('umowa'), brak = document.getElementById('brak-podpisu');
+      document.querySelector('[data-cc-podpis="najemca"]').addEventListener('cc:podpis', function (ev) {
+        if (!ev.detail.pusty) brak.hidden = true;
+      });
+      // Bez podpisu nie przechodzimy dalej; z podpisem — zapis do localStorage dla K2a.
+      form.addEventListener('submit', function (ev) {
+        var p = CC.podpis('najemca');
+        if (!p || p.pusty()) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          brak.hidden = false;
+          brak.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          CC.toast('Brakuje podpisu');
+          return;
+        }
+        CC.zapisz('cc-umowa-podpis', p.obraz());
+      });
+    });
+  </script>
 </body>
 </html>

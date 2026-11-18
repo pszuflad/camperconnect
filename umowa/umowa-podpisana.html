@@ -6,23 +6,82 @@
   <title>K2a · Umowa podpisana — CamperConnect</title>
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="umowa.css">
   <script src="../assets/app.js"></script>
 </head>
 <body class="uklad-klient">
   <header data-cc-naglowek="klient"></header>
 
   <main class="tresc">
-    <div class="naglowek-ekranu">
-      <div>
-        <h1>Umowa podpisana</h1>
-        <p class="podtytul">Kopia PDF wysłana na e-mail</p>
+    <div class="nie-drukuj stos">
+      <div class="karta potwierdzenie">
+        <div class="potwierdzenie-ikona">✓</div>
+        <h2>Umowa podpisana, kopia PDF wysłana na e-mail</h2>
+        <p class="drugi-plan">Umowa najmu nr R-2027-014 wraz z regulaminem (zał. nr 1) i cennikiem (zał. nr 4) trafiła na anna.kowalska@example.com i do wypożyczalni Kamper na Mazury.</p>
+        <p class="drugi-plan maly">Pozostała część czynszu 4 550 zł — do 04.07.2027. Kaucja 5 000 zł — w dniu odbioru, 11.07.2027.</p>
+      </div>
+
+      <div class="naglowek-ekranu">
+        <div>
+          <h1>Umowa podpisana</h1>
+          <p class="podtytul">Podgląd dokumentu · podpisano elektronicznie 14.03.2027, 19:12</p>
+        </div>
+        <div class="rzad">
+          <button type="button" class="btn btn-drugi" data-cc-drukuj>Drukuj / PDF</button>
+          <a class="btn btn-glowny" href="../panel/rezerwacja.html?stan=umowa-podpisana">Wróć do panelu</a>
+        </div>
       </div>
     </div>
 
-    <!-- Treść ekranu K2a — buduje agent 3. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>K2a</b> — ekran w budowie (agent 3)</p>
+    <div class="dok-strony">
+      <!-- Umowa -->
+      <article class="dokument">
+        <h1>Umowa najmu pojazdu nr R-2027-014</h1>
+        <div data-dokument="umowa"></div>
+        <div class="podpisy">
+          <figure><img src="../assets/img/podpis-przyklad-2.svg" alt="Podpis wynajmującego">Wynajmujący<small>Marek Wiśniewski</small></figure>
+          <figure><img data-podpis-najemcy src="../assets/img/podpis-przyklad.svg" alt="Podpis najemcy">Najemca<small>Anna Kowalska · 14.03.2027</small></figure>
+        </div>
+        <p class="dok-adnotacja">Podpisano elektronicznie 14.03.2027, 19:12 · Anna Kowalska (najemca) · podpis obejmuje umowę oraz załączniki nr 1 i 4.</p>
+      </article>
+
+      <!-- Załącznik nr 1 -->
+      <article class="dokument">
+        <p class="dok-zalacznik-znak">Załącznik nr 1 do umowy najmu nr R-2027-014</p>
+        <h1>Regulamin wynajmu kamperów i przyczep kempingowych</h1>
+        <div data-dokument="regulamin"></div>
+        <div class="podpisy">
+          <figure><img src="../assets/img/podpis-przyklad-2.svg" alt="Podpis wynajmującego">Wynajmujący<small>Marek Wiśniewski</small></figure>
+          <figure><img data-podpis-najemcy src="../assets/img/podpis-przyklad.svg" alt="Podpis najemcy">Najemca<small>Anna Kowalska · 14.03.2027</small></figure>
+        </div>
+        <p class="dok-adnotacja">Zaakceptowano i podpisano elektronicznie 14.03.2027, 19:12 · Anna Kowalska (najemca).</p>
+      </article>
+
+      <!-- Załącznik nr 4 -->
+      <article class="dokument">
+        <p class="dok-zalacznik-znak">Załącznik nr 4 do umowy najmu nr R-2027-014</p>
+        <h1>Cennik usług dodatkowych i kar</h1>
+        <div data-dokument="cennik"></div>
+        <div class="podpisy">
+          <figure><img src="../assets/img/podpis-przyklad-2.svg" alt="Podpis wynajmującego">Wynajmujący<small>Marek Wiśniewski</small></figure>
+          <figure><img data-podpis-najemcy src="../assets/img/podpis-przyklad.svg" alt="Podpis najemcy">Najemca<small>Anna Kowalska · 14.03.2027</small></figure>
+        </div>
+        <p class="dok-adnotacja">Zaakceptowano i podpisano elektronicznie 14.03.2027, 19:12 · Anna Kowalska (najemca).</p>
+      </article>
+    </div>
+
+    <div class="rzad nie-drukuj" style="justify-content: center; margin-top: 24px;">
+      <a class="btn btn-glowny" href="../panel/rezerwacja.html?stan=umowa-podpisana">Wróć do panelu</a>
     </div>
   </main>
+
+  <script src="dokumenty.js"></script>
+  <script>
+    CC.gotowe(function () {
+      // Podpis złożony w K2 (jeśli jest) zamiast przykładowego.
+      var p = CC.odczytaj('cc-umowa-podpis');
+      if (p) document.querySelectorAll('[data-podpis-najemcy]').forEach(function (img) { img.src = p; });
+    });
+  </script>
 </body>
 </html>
