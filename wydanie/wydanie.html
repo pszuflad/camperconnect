@@ -7,6 +7,16 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <script src="dane.js"></script>
+  <style>
+    .poz { align-items: center; }
+    .poz > span:not(.ilosc) { flex: 1; }
+    .ilosc { color: var(--tekst-2); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: .9rem; }
+    .grupa-tytul { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--tekst-2); margin: 18px 0 6px; }
+    .poz-brak { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--ramka); }
+    .poz-brak:first-child { border-top: 0; }
+    .oswiadczenie { background: var(--glowny-jasny); border-radius: var(--promien); padding: 4px 14px; }
+  </style>
 </head>
 <body class="uklad-mobile">
   <header data-cc-naglowek="mobile" data-cc-menu="rezerwacje"></header>
@@ -19,10 +29,228 @@
       </div>
     </div>
 
-    <!-- Treść ekranu M1 — buduje agent 4. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>M1</b> — ekran w budowie (agent 4)</p>
+    <div data-cc-kreator id="protokol">
+
+      <!-- 1. Wyposażenie -->
+      <section data-krok="Wyposażenie">
+        <div class="stos">
+          <div class="rzad-rozsuniety">
+            <p class="drugi-plan maly">Przekazanie wyposażenia — odhacz wydane pozycje.</p>
+            <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij>Odhacz wszystko</button>
+          </div>
+          <div id="lista-wyposazenia"></div>
+          <div class="oswiadczenie">
+            <label class="pole-wyboru"><input type="checkbox" data-przyklad> <span><b>Najemca:</b> Oświadczam, iż akceptuję listę wydanego wyposażenia.</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Zdjęcia -->
+      <section data-krok="Zdjęcia">
+        <div class="stos">
+          <div data-cc-zdjecia data-wymagaj id="zdjecia-wydania">
+            <div class="rzad-rozsuniety" style="margin-bottom:12px">
+              <b>Zdjęcia: <span data-cc-licznik></span></b>
+              <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij="#zdjecia-wydania">Wypełnij przykładowymi zdjęciami</button>
+            </div>
+            <div class="zdjecia" id="kafle-zdjec"></div>
+          </div>
+          <p class="maly drugi-plan">Zrób zdjęcie aparatem albo wybierz plik. „Dalej” odblokuje się po dodaniu wszystkich 8 ujęć.</p>
+        </div>
+      </section>
+
+      <!-- 3. Stan -->
+      <section data-krok="Stan">
+        <div class="stos">
+          <div class="karta stos">
+            <label class="pole"><span>Przebieg (km)</span><input type="text" inputmode="numeric" value="48 230"></label>
+            <label class="pole"><span>Poziom paliwa</span>
+              <select>
+                <option>0/8</option><option>1/8</option><option>2/8</option><option>3/8</option><option>4/8</option>
+                <option>5/8</option><option>6/8</option><option>7/8</option><option selected>8/8</option>
+              </select>
+              <span class="pomoc">Bak 88 l</span>
+            </label>
+          </div>
+
+          <div class="karta stos">
+            <div class="karta-naglowek"><h2>Istniejące uszkodzenia</h2></div>
+            <p class="drugi-plan maly" id="brak-uszkodzen">Nie stwierdzono istniejących uszkodzeń.</p>
+            <div id="uszkodzenie" class="stos" hidden>
+              <label class="pole"><span>Miejsce</span>
+                <select id="usz-miejsce">
+                  <option>Przód</option><option>Lewy bok</option><option>Tył</option><option>Prawy bok</option>
+                  <option>Dach</option><option>Wnętrze</option>
+                </select>
+              </label>
+              <label class="pole"><span>Opis</span><textarea id="usz-opis" rows="2" placeholder="np. odprysk lakieru ok. 2 cm nad nadkolem"></textarea></label>
+              <div class="zdjecia">
+                <div data-cc-zdjecie="uszkodzenie-1" data-etykieta="Zbliżenie"></div>
+              </div>
+              <button type="button" class="btn btn-tekst btn-maly" id="usz-usun">Usuń uszkodzenie</button>
+            </div>
+            <button type="button" class="btn btn-drugi btn-blok" id="usz-dodaj">+ Dodaj istniejące uszkodzenie</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Instruktaż -->
+      <section data-krok="Instruktaż" data-blokuj-dalej id="krok-instruktaz">
+        <div class="stos">
+          <div class="rzad-rozsuniety">
+            <p class="drugi-plan maly">Instrukcja użytkowania — odhacz omówione punkty.</p>
+            <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij="#instruktaz-punkty">Odhacz wszystko</button>
+          </div>
+          <div id="instruktaz-punkty">
+            <h3 class="grupa-tytul">Rozstawienie i użytkowanie</h3>
+            <div class="lista-wyboru" id="lista-rozstawienie"></div>
+            <h3 class="grupa-tytul">Przygotowanie do jazdy</h3>
+            <div class="lista-wyboru" id="lista-jazda"></div>
+          </div>
+          <div class="oswiadczenie">
+            <label class="pole-wyboru"><input type="checkbox" id="osw-instruktaz"> <span><b>Najemca:</b> Oświadczam, że odbyłem instruktaż użytkowania i otrzymałem Skróconą Instrukcję Obsługi.</span></label>
+          </div>
+          <p class="maly drugi-plan">Regulamin IX: pojazd wydajemy wyłącznie po instruktażu — bez oświadczenia nie przejdziesz dalej.</p>
+        </div>
+      </section>
+
+      <!-- 5. Kaucja i dokumenty -->
+      <section data-krok="Kaucja i dokumenty">
+        <div class="stos">
+          <div class="karta stos">
+            <div class="karta-naglowek"><h2>Kaucja</h2><span class="znaczek znaczek-ok">przyjęta</span></div>
+            <dl class="dane">
+              <dt>Kwota</dt><dd class="kwota">5 000 zł</dd>
+              <dt>Zwrot</dt><dd>do 7 dni od zwrotu pojazdu (do 28.07.2027)</dd>
+            </dl>
+            <div class="stos-maly">
+              <span class="maly drugi-plan">Forma</span>
+              <div class="przelaczniki">
+                <label><input type="radio" name="forma" checked> Gotówka</label>
+                <label><input type="radio" name="forma"> Przelew</label>
+              </div>
+            </div>
+            <label class="pole-wyboru"><input type="checkbox" checked> <span>Kaucja przyjęta</span></label>
+          </div>
+          <div class="komunikat komunikat-sukces">Czynsz opłacony w całości (zadatek 1 950 zł + 4 550 zł)</div>
+          <div class="karta stos-maly">
+            <div class="karta-naglowek"><h2>Dokumenty</h2></div>
+            <label class="pole-wyboru"><input type="checkbox" checked> <span><b>Wydający:</b> Sprawdzono dowód osobisty i prawo jazdy: Anna Kowalska, Tomasz Kowalski</span></label>
+            <p class="maly drugi-plan">Anna Kowalska — dowód ABC 123456, prawo jazdy 01234/12/1234, kat. B od 2012<br>
+              Tomasz Kowalski — prawo jazdy 04567/09/1234, kat. B od 2009</p>
+            <p class="maly wyszarzony">Bez zdjęć dokumentów.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Podsumowanie i podpisy -->
+      <section data-krok="Podsumowanie i podpisy" data-dalej-tekst="Zatwierdź protokół" data-blokuj-dalej id="krok-podpisy">
+        <div class="stos">
+          <div class="karta">
+            <dl class="dane">
+              <dt>Rezerwacja</dt><dd>R-2027-014</dd>
+              <dt>Najemca</dt><dd>Anna Kowalska</dd>
+              <dt>Pojazd</dt><dd>Fiat Ducato alkowa, NGI 4K27</dd>
+              <dt>Wydanie</dt><dd>11.07.2027, 10:00</dd>
+              <dt>Zwrot</dt><dd>21.07.2027, 16:00</dd>
+              <dt>Przebieg</dt><dd>48 230 km</dd>
+              <dt>Paliwo</dt><dd>8/8</dd>
+              <dt>Wyposażenie</dt><dd>zgodnie z listą, zaakceptowane</dd>
+              <dt>Zdjęcia</dt><dd>8 z 8</dd>
+              <dt>Uszkodzenia</dt><dd id="pods-uszkodzenia">brak</dd>
+              <dt>Instruktaż</dt><dd>12 + 6 punktów, odbyty</dd>
+              <dt>Kaucja</dt><dd>5 000 zł, gotówka, przyjęta</dd>
+              <dt>Czynsz</dt><dd>opłacony w całości</dd>
+            </dl>
+          </div>
+          <div class="oswiadczenie">
+            <label class="pole-wyboru"><input type="checkbox" id="osw-stan"> <span><b>Najemca:</b> Oświadczam, że stan techniczny pojazdu jest mi znany i nie zgłaszam zastrzeżeń innych niż wpisane w protokole.</span></label>
+          </div>
+          <div data-cc-podpis="wydajacy" data-etykieta="Podpis wydającego — Marek Wiśniewski"></div>
+          <div data-cc-podpis="najemca" data-etykieta="Podpis najemcy — Anna Kowalska"></div>
+          <p class="maly drugi-plan">„Zatwierdź protokół” odblokuje się po oświadczeniu i obu podpisach.</p>
+        </div>
+      </section>
+
+      <section data-krok-koniec>
+        <div class="potwierdzenie">
+          <div class="potwierdzenie-ikona">✓</div>
+          <h2>Protokół podpisany, PDF wysłany do obu stron</h2>
+          <p class="drugi-plan">R-2027-014 · wydanie 11.07.2027, 10:00 · do wypożyczalni i na anna.kowalska@example.com</p>
+          <div class="stos-maly">
+            <a class="btn btn-glowny btn-blok" href="../panel/rezerwacja.html?stan=wydana">Wróć do rezerwacji</a>
+            <a class="btn btn-drugi btn-blok" href="podglad.html">Podgląd protokołu (PDF)</a>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
+
+  <script>
+    // Listy z dane.js rysowane przed inicjalizacją komponentów (skrypt na końcu body, przed DOMContentLoaded).
+    (function () {
+      var W = window.WYDANIE, h = '';
+      W.wyposazenie.forEach(function (g) {
+        h += '<h3 class="grupa-tytul">' + g.grupa + '</h3><div class="lista-wyboru">';
+        g.pozycje.forEach(function (p) {
+          if (g.niezamowione) h += '<div class="poz-brak"><span class="wyszarzony">' + p[0] + '</span><span class="znaczek znaczek-neutralny">' + p[1] + '</span></div>';
+          else h += '<label class="pole-wyboru poz"><input type="checkbox" data-przyklad> <span>' + p[0] + '</span><span class="ilosc">' + p[1] + '</span></label>';
+        });
+        h += '</div>';
+      });
+      document.getElementById('lista-wyposazenia').innerHTML = h;
+      function lista(id, pkt) {
+        document.getElementById(id).innerHTML = pkt.map(function (t, i) {
+          return '<label class="pole-wyboru"><input type="checkbox" data-przyklad> <span>' + (i + 1) + '. ' + t + '</span></label>';
+        }).join('');
+      }
+      lista('lista-rozstawienie', W.rozstawienie);
+      lista('lista-jazda', W.jazda);
+      document.getElementById('kafle-zdjec').innerHTML = W.zdjecia.map(function (z) {
+        return '<div data-cc-zdjecie="' + z[0] + '" data-etykieta="' + z[1] + '" data-przyklad="../assets/img/protokol-' + z[0] + '.svg"></div>';
+      }).join('');
+    })();
+
+    CC.gotowe(function () {
+      function $(id) { return document.getElementById(id); }
+      var k = $('protokol'), kr = CC.kreator('protokol');
+
+      // Instruktaż: „Dalej” dopiero po oświadczeniu (Regulamin IX).
+      $('osw-instruktaz').addEventListener('change', function () { CC.blokujDalej(!this.checked, 'protokol'); });
+
+      // Podpisy: „Zatwierdź protokół” po oświadczeniu o stanie i obu podpisach.
+      function sprawdzPodpisy() {
+        var ok = $('osw-stan').checked && !CC.podpis('wydajacy').pusty() && !CC.podpis('najemca').pusty();
+        $('krok-podpisy').toggleAttribute('data-blokuj-dalej', !ok);
+        kr.odswiez();
+      }
+      $('osw-stan').addEventListener('change', sprawdzPodpisy);
+      $('krok-podpisy').addEventListener('cc:podpis', sprawdzPodpisy);
+
+      // Istniejące uszkodzenia (E4-5).
+      function pokazUsz(v) {
+        $('uszkodzenie').hidden = !v; $('brak-uszkodzen').hidden = v; $('usz-dodaj').hidden = v;
+        if (!v) { $('usz-opis').value = ''; CC.zdjecie('uszkodzenie-1').usun(); }
+      }
+      $('usz-dodaj').addEventListener('click', function () { pokazUsz(true); });
+      $('usz-usun').addEventListener('click', function () { pokazUsz(false); });
+
+      k.addEventListener('cc:krok', function (e) {
+        if (e.detail.sekcja.id !== 'krok-podpisy') return;
+        var opis = $('usz-opis').value.trim();
+        $('pods-uszkodzenia').textContent = $('uszkodzenie').hidden ? 'brak' : ($('usz-miejsce').value + (opis ? ' — ' + opis : ''));
+      });
+
+      // Zapamiętanie zdjęć i podpisów (E4-7), klucze z docs/KONTRAKT.md.
+      k.addEventListener('cc:koniec', function () {
+        var ok = CC.zapisz('cc-wydanie-zdjecia', CC.zdjecia('zdjecia-wydania'));
+        ok = CC.zapisz('cc-wydanie-podpisy', { wydajacy: CC.podpis('wydajacy').obraz(), najemca: CC.podpis('najemca').obraz() }) && ok;
+        if (!$('uszkodzenie').hidden) {
+          CC.zapisz('cc-wydanie-uszkodzenia', [{ miejsce: $('usz-miejsce').value, opis: $('usz-opis').value.trim(), zdjecie: CC.zdjecie('uszkodzenie-1').obraz() }]);
+        } else CC.usun('cc-wydanie-uszkodzenia');
+        if (!ok) CC.toast('Nie udało się zapamiętać zdjęć w przeglądarce — podgląd pokaże przykładowe.');
+      });
+    });
+  </script>
 </body>
 </html>
