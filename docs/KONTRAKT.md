@@ -70,7 +70,7 @@ Szkielet każdego pliku już istnieje — **zachowaj** `<head>`, klasę `body`, 
 | Układ | `uklad-klient` (1040 px), `uklad-panel` (1280 px, laptop), `uklad-mobile` (520 px, szare tło, telefon) — na `body`; `tresc` — na `main` |
 | Nagłówek ekranu | `naglowek-ekranu` > `h1` + `p.podtytul` |
 | Rozmieszczenie | `stos` (odstępy pionowe 16 px), `stos-maly` (8 px), `rzad`, `rzad-rozsuniety`, `siatka-2`, `siatka-3`, `siatka-auto` (kafle ≥220 px), `kolumny-panel` (2:1, np. treść + bok). Poniżej 760 px wszystko w jednej kolumnie |
-| Tekst | `drugi-plan`, `wyszarzony`, `maly`, `pogrubiony`, `kwota` (cyfry tabelaryczne, bez łamania), `do-prawej`, `wysrodkowany` |
+| Tekst | `drugi-plan`, `wyszarzony`, `maly`, `pogrubiony`, `kwota` (cyfry tabelaryczne, bez łamania), `kwota-duza` (kwota końcowa: razem, do zwrotu), `do-prawej`, `wysrodkowany` |
 | Przyciski | `btn` + `btn-glowny` \| `btn-drugi` \| `btn-niebezpieczny` \| `btn-tekst`; rozmiar `btn-maly`, `btn-duzy`, `btn-blok` (100%); `disabled` lub `wylaczony`. Działa na `<a>` i `<button>` |
 | Karty | `karta`, `karta-naglowek` (tytuł + akcja), `karta-zdjecie` (zdjęcie 16:10 u góry), `karta-wybrana`, `karta-klikalna`, `karta-plaska` |
 | Dane | `dl.dane` > `dt`/`dd` (etykieta: wartość) |

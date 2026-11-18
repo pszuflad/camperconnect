@@ -34,7 +34,6 @@
 
 /* Podsumowanie — przyklejone obok formularza na laptopie */
 @media (min-width: 761px) { .podsumowanie { position: sticky; top: 16px; } }
-.podsumowanie .suma-kwota { font-size: 1.35rem; font-weight: 700; }
 .warunki { font-size: .85rem; color: var(--tekst-2); line-height: 1.45; }
 
 /* Skrót regulaminu w modalu */

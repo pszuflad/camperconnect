@@ -59,6 +59,7 @@ small, .maly { font-size: .875rem; }
 .drugi-plan { color: var(--tekst-2); }
 .wyszarzony { color: var(--tekst-3); }
 .kwota { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kwota-duza { font-size: 1.5rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .pogrubiony { font-weight: 650; }
 .ukryty, [hidden] { display: none !important; }
 .do-prawej { text-align: right; }
@@ -156,9 +157,9 @@ small, .maly { font-size: .875rem; }
 .karta-plaska { box-shadow: none; }
 
 /* lista „etykieta: wartość” */
-.dane { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+.dane { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; margin: 0; }
 .dane dt { color: var(--tekst-2); }
-.dane dd { margin: 0; font-weight: 550; }
+.dane dd { margin: 0; font-weight: 550; min-width: 0; overflow-wrap: anywhere; }
 
 /* komunikaty w treści */
 .komunikat { border-radius: var(--promien-maly); padding: 12px 14px; background: var(--glowny-jasny); color: var(--glowny-ciemny); border-left: 4px solid var(--glowny); }
