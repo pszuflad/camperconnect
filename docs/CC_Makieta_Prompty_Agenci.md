@@ -1,12 +1,14 @@
 # CamperConnect — makieta MVP w jeden wieczór: prompty dla agentów
 
-**Wersja:** 1.2 (17.11.2026) · **Uzupełnia:** `CC_Makieta_MVP_Backlog.md` v1.2 (zakres, ekrany, dane, statusy, scenariusz demo) i `CC_Dokumenty_Wypozyczalni.md` v1.0 (treść umowy, regulaminu, cennika, protokołu)
+**Wersja:** 1.3 (17.11.2026) · **Uzupełnia:** `CC_Makieta_MVP_Backlog.md` v1.2 (zakres, ekrany, dane, statusy, scenariusz demo) i `CC_Dokumenty_Wypozyczalni.md` v1.0 (treść umowy, regulaminu, cennika, protokołu)
 
 Backlog opisuje, *co* ma powstać. Ten dokument opisuje, *jak* to zrobić w 2–3 godziny: jeden prompt przygotowujący wspólny fundament, pięć promptów uruchamianych równolegle i jeden prompt domykający.
 
 **Zmiany w 1.1:** czysty HTML + CSS + mały JavaScript zamiast Vite/React; brak wspólnego stanu i funkcji store'u; każdy ekran to osobny plik; agenci pracują w osobnych git worktree i nie zadają pytań.
 
 **Zmiany w 1.2:** prompty 1–6 korzystają z prawdziwych dokumentów wypożyczalni przeniesionych do `docs/CC_Dokumenty_Wypozyczalni.md` (oryginalne PDF-y są w `.gitignore` i nie trafiają do worktree). Umowa, regulamin i cennik do akceptacji w K2, lista wyposażenia i instruktaż z protokołu w M1/M2, potrącenia z numerami pozycji cennika; nowe kwoty potrąceń i zwrotu kaucji (backlog, pkt 4.1).
+
+**Zmiany w 1.3:** worktree agentów powstają w `camperconnect/.worktrees/<obszar>` (w `.gitignore`) zamiast w katalogach obok projektu `../cc-*`; prompt 6 usuwa je z tej lokalizacji. Nic z pracy agentów nie powstaje poza `camperconnect/`.
 
 ---
 
@@ -26,14 +28,15 @@ Backlog opisuje, *co* ma powstać. Ten dokument opisuje, *jak* to zrobić w 2–
 ### Przed startem
 
 1. Uruchom prompt 0 w katalogu projektu (`camperconnect/`, gałąź `main`) i poczekaj, aż skończy. Commit ma trafić do `main`.
-   **Zacommituj też aktualne `docs/`** (backlog 1.2, prompty 1.2, `CC_Dokumenty_Wypozyczalni.md`, `KONTRAKT.md`) — worktree powstają z `main`, więc agenci widzą tylko to, co jest w commicie.
+   **Zacommituj też aktualne `docs/`** (backlog 1.2, prompty 1.3, `CC_Dokumenty_Wypozyczalni.md`, `KONTRAKT.md`) — worktree powstają z `main`, więc agenci widzą tylko to, co jest w commicie.
 2. W katalogu projektu utwórz pięć worktree — każdy agent dostaje osobny katalog roboczy i gałąź:
    ```bash
    for o in klient panel umowa wydanie zwrot; do
-     git worktree add ../cc-$o -b feature/$o
+     git worktree add .worktrees/$o -b feature/$o
    done
    ```
-3. Otwórz pięć terminali i w każdym uruchom Claude Code w jego katalogu (`cd ../cc-klient && claude`, `cd ../cc-panel && claude` itd.). Wklej odpowiedni prompt 1–5.
+   **Wszystko powstaje wewnątrz `camperconnect/`.** Worktree trafiają do `camperconnect/.worktrees/<obszar>` (katalog jest w `.gitignore`), nigdy obok projektu (`../cc-*`). Żaden agent nie tworzy plików ani katalogów poza `camperconnect/`.
+3. Otwórz pięć terminali i w każdym uruchom Claude Code w jego katalogu (`cd .worktrees/klient && claude`, `cd .worktrees/panel && claude` itd.). Wklej odpowiedni prompt 1–5.
 4. Gdy wszystkie skończą, wróć do `camperconnect/` i uruchom prompt 6.
 
 ### Czy agenci będą o coś pytać?
@@ -131,7 +134,7 @@ commit jest w main. W podsumowaniu podaj adres publikacji i wszystko, co odbiega
 
 Wspólna końcówka każdego promptu jest już w nim wklejona — kopiujesz cały blok.
 
-### Prompt 1 — Strona klienta (`../cc-klient`)
+### Prompt 1 — Strona klienta (`.worktrees/klient`)
 
 ```text
 Pracujesz nad makietą MVP CamperConnect (czysty HTML + CSS + mały JS) razem z czterema innymi
@@ -165,7 +168,7 @@ zmiany zacommitowane na feature/klient. W podsumowaniu: co zrobione, co pominię
 przyjąłeś i czego brakowało we wspólnych plikach.
 ```
 
-### Prompt 2 — Panel: kalendarz floty, rezerwacje, szczegóły (`../cc-panel`)
+### Prompt 2 — Panel: kalendarz floty, rezerwacje, szczegóły (`.worktrees/panel`)
 
 ```text
 Pracujesz nad makietą MVP CamperConnect (czysty HTML + CSS + mały JS) razem z czterema innymi
@@ -213,7 +216,7 @@ zmiany zacommitowane na feature/panel. W podsumowaniu: co zrobione, co pominięt
 przyjąłeś i czego brakowało we wspólnych plikach.
 ```
 
-### Prompt 3 — Umowa online (`../cc-umowa`)
+### Prompt 3 — Umowa online (`.worktrees/umowa`)
 
 ```text
 Pracujesz nad makietą MVP CamperConnect (czysty HTML + CSS + mały JS) razem z czterema innymi
@@ -256,7 +259,7 @@ tam, gdzie mówi pkt 8 backlogu, zmiany zacommitowane na feature/umowa. W podsum
 co pominięte, jakie założenia przyjąłeś i czego brakowało we wspólnych plikach.
 ```
 
-### Prompt 4 — Protokół wydania (`../cc-wydanie`)
+### Prompt 4 — Protokół wydania (`.worktrees/wydanie`)
 
 ```text
 Pracujesz nad makietą MVP CamperConnect (czysty HTML + CSS + mały JS) razem z czterema innymi
@@ -307,7 +310,7 @@ W podsumowaniu: co zrobione, co pominięte, jakie założenia przyjąłeś i cze
 we wspólnych plikach.
 ```
 
-### Prompt 5 — Protokół zwrotu i rozliczenie kaucji (`../cc-zwrot`)
+### Prompt 5 — Protokół zwrotu i rozliczenie kaucji (`.worktrees/zwrot`)
 
 ```text
 Pracujesz nad makietą MVP CamperConnect (czysty HTML + CSS + mały JS) razem z czterema innymi
@@ -361,7 +364,7 @@ we wspólnych plikach.
 
 ```text
 Pięciu agentów zbudowało ekrany makiety MVP CamperConnect (czysty HTML + CSS + mały JS) na gałęziach
-feature/klient, feature/panel, feature/umowa, feature/wydanie, feature/zwrot (worktree ../cc-*).
+feature/klient, feature/panel, feature/umowa, feature/wydanie, feature/zwrot (worktree .worktrees/*).
 Przeczytaj docs/CC_Makieta_MVP_Backlog.md, docs/KONTRAKT.md i docs/CC_Dokumenty_Wypozyczalni.md.
 Nie zadawaj mi pytań — przy
 wątpliwości przyjmij rozsądne założenie i opisz je w podsumowaniu.
@@ -384,7 +387,8 @@ Twoje zadanie:
    powtarzają się w kilku obszarach, przenieś do assets/style.css.
 5. Uzupełnij index.html, jeśli agenci dodali coś, czego mapa nie pokazuje.
 6. Wypchnij main i sprawdź, że publiczny adres GitHub Pages pokazuje nową wersję.
-   Usuń worktree (git worktree remove ../cc-*), gałęzie feature/* zostaw.
+   Usuń worktree (dla każdego obszaru: git worktree remove .worktrees/<obszar>; potem git worktree prune),
+   gałęzie feature/* zostaw. Poza katalogiem camperconnect/ nie może zostać nic z tej pracy.
 
 Nie dodawaj nowych funkcji. Na koniec podaj: adres publikacji, listę kroków scenariusza
 ze statusem działa / nie działa oraz listę znanych braków wobec backlogu.

@@ -1,5 +1,7 @@
 node_modules/
 dist/
+# worktree agentów (git worktree add .worktrees/<obszar>) — tylko lokalnie
+.worktrees/
 .env*
 .DS_Store
 *.log
