@@ -7,21 +7,60 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <link rel="stylesheet" href="klient.css">
 </head>
 <body class="uklad-klient">
   <header data-cc-naglowek="klient"></header>
 
   <main class="tresc">
-    <div class="naglowek-ekranu">
-      <div>
-        <h1>Prośba wysłana</h1>
-        <p class="podtytul">Potwierdzenie wstępnej rezerwacji dla klienta</p>
-      </div>
-    </div>
+    <div class="k1a stos">
+      <section class="karta potwierdzenie">
+        <div class="potwierdzenie-ikona">✓</div>
+        <h2>Wstępna rezerwacja przyjęta</h2>
+        <p>Termin zablokowany do <b>15.03.2027</b>. Wypożyczalnia skontaktuje się z Tobą.</p>
+        <p class="drugi-plan maly">Potwierdzenie wysłaliśmy na adres anna.kowalska@example.com.</p>
+      </section>
 
-    <!-- Treść ekranu K1a — buduje agent 1. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>K1a</b> — ekran w budowie (agent 1)</p>
+      <section class="karta stos-maly">
+        <div class="karta-naglowek">
+          <h2>Twoja prośba</h2>
+          <span class="znaczek znaczek-wstepna">Wstępna</span>
+        </div>
+        <div class="rzad">
+          <img src="../assets/img/pojazd-ducato-alkowa.svg" alt="" style="width:96px;border-radius:8px">
+          <div><b>Ducato alkowa</b><br><span class="drugi-plan maly">Kamper · 6 osób · Kamper na Mazury, Giżycko</span></div>
+        </div>
+        <dl class="dane">
+          <dt>Termin</dt><dd>11.07.2027, 10:00 – 21.07.2027, 16:00</dd>
+          <dt>Liczba dób</dt><dd>10</dd>
+          <dt>Cena</dt><dd class="kwota">6 500 zł</dd>
+          <dt>Zadatek (30%)</dt><dd class="kwota">1 950 zł</dd>
+          <dt>Kaucja</dt><dd class="kwota">5 000 zł</dd>
+          <dt>Imię i nazwisko</dt><dd>Anna Kowalska</dd>
+          <dt>Telefon</dt><dd>600 123 456</dd>
+          <dt>E-mail</dt><dd>anna.kowalska@example.com</dd>
+          <dt>Wiadomość</dt><dd>„Jedziemy z dwójką dzieci, czy można zabrać psa?”</dd>
+          <dt>Wysłana</dt><dd>12.03.2027, 21:40</dd>
+        </dl>
+      </section>
+
+      <section class="karta stos-maly">
+        <h2>Co dalej?</h2>
+        <ol class="kroki-dalej">
+          <li>Wypożyczalnia zadzwoni, żeby potwierdzić termin i odpowiedzieć na pytania.</li>
+          <li>Po potwierdzeniu wpłacasz zadatek 1 950 zł w ciągu 3 dni.</li>
+          <li>Umowę najmu dostaniesz e-mailem — podpiszesz ją na telefonie.</li>
+          <li>Pozostałą część czynszu wpłacasz do 7 dni przed odbiorem, kaucję w dniu odbioru.</li>
+        </ol>
+        <p class="warunki">Jeśli do 15.03.2027 rezerwacja nie zostanie potwierdzona, termin wróci do puli wolnych.</p>
+      </section>
+
+      <div class="komunikat nie-drukuj">
+        <div class="rzad-rozsuniety">
+          <span><b>Makieta:</b> zobacz, jak tę prośbę widzi właściciel wypożyczalni.</span>
+          <a class="btn btn-glowny" href="../panel/kalendarz.html">Zobacz to w panelu wypożyczalni</a>
+        </div>
+      </div>
     </div>
   </main>
 </body>

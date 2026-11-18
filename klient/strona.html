@@ -7,101 +7,208 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <link rel="stylesheet" href="klient.css">
 </head>
-<!--
-  WZORZEC EKRANU — kopiuj ten plik jako punkt wyjścia.
-  1. <body class="uklad-klient | uklad-panel | uklad-mobile">
-  2. <header data-cc-naglowek="klient | panel | mobile" data-cc-menu="kalendarz | rezerwacje"></header>
-  3. <main class="tresc"> … </main>
-  4. ścieżki do assets zawsze względne: ../assets/…
-  Agent 1 zastępuje treść poniżej prawdziwym ekranem K1. Pełna lista klas i atrybutów: docs/KONTRAKT.md
--->
 <body class="uklad-klient">
   <header data-cc-naglowek="klient"></header>
 
   <main class="tresc">
     <div class="naglowek-ekranu">
       <div>
-        <h1>Zarezerwuj kampera</h1>
-        <p class="podtytul">Wybierz pojazd i termin — wypożyczalnia potwierdzi rezerwację telefonicznie.</p>
+        <h1>Zarezerwuj kampera na Mazury</h1>
+        <p class="podtytul">Wybierz pojazd i termin, wyślij prośbę — oddzwonimy i potwierdzimy rezerwację. Odbiór i zwrot w Giżycku.</p>
       </div>
     </div>
 
     <div class="kolumny-panel">
       <div class="stos">
-        <!-- Karty pojazdów -->
-        <section>
-          <h2>Pojazdy</h2>
-          <div class="siatka-auto">
-            <article class="karta karta-klikalna karta-wybrana">
+        <!-- E1-1: pojazdy -->
+        <section class="stos-maly">
+          <h2>1. Wybierz pojazd</h2>
+          <div class="pojazdy">
+            <article class="karta karta-klikalna karta-wybrana" aria-current="true">
               <div class="karta-zdjecie"><img src="../assets/img/pojazd-ducato-alkowa.svg" alt="Ducato alkowa"></div>
               <div class="karta-naglowek"><h3>Ducato alkowa</h3><span class="znaczek znaczek-ok">Wybrany</span></div>
               <p class="drugi-plan maly">Kamper · 6 osób</p>
-              <p><span class="kwota pogrubiony">650 zł</span> / doba · kaucja <span class="kwota">5 000 zł</span></p>
+              <p><span class="kwota pogrubiony">650 zł</span> / doba</p>
+              <p class="drugi-plan maly">kaucja <span class="kwota">5 000 zł</span></p>
             </article>
-            <article class="karta karta-klikalna">
+            <article class="karta karta-klikalna" data-inny-pojazd>
+              <div class="karta-zdjecie"><img src="../assets/img/pojazd-ducato-polintegra.svg" alt="Ducato półintegra"></div>
+              <div class="karta-naglowek"><h3>Ducato półintegra</h3></div>
+              <p class="drugi-plan maly">Kamper · 4 osoby</p>
+              <p><span class="kwota pogrubiony">600 zł</span> / doba</p>
+              <p class="drugi-plan maly">kaucja <span class="kwota">5 000 zł</span></p>
+            </article>
+            <article class="karta karta-klikalna" data-inny-pojazd>
+              <div class="karta-zdjecie"><img src="../assets/img/pojazd-hymer-exsis.svg" alt="Hymer Exsis"></div>
+              <div class="karta-naglowek"><h3>Hymer Exsis</h3></div>
+              <p class="drugi-plan maly">Kamper · 4 osoby</p>
+              <p><span class="kwota pogrubiony">700 zł</span> / doba</p>
+              <p class="drugi-plan maly">kaucja <span class="kwota">5 000 zł</span></p>
+            </article>
+            <article class="karta karta-klikalna" data-inny-pojazd>
               <div class="karta-zdjecie"><img src="../assets/img/pojazd-ford-nugget.svg" alt="Ford Nugget"></div>
               <div class="karta-naglowek"><h3>Ford Nugget</h3></div>
               <p class="drugi-plan maly">Kamper · 4 osoby</p>
-              <p><span class="kwota pogrubiony">500 zł</span> / doba · kaucja <span class="kwota">4 000 zł</span></p>
+              <p><span class="kwota pogrubiony">500 zł</span> / doba</p>
+              <p class="drugi-plan maly">kaucja <span class="kwota">4 000 zł</span></p>
+            </article>
+            <article class="karta karta-klikalna" data-inny-pojazd>
+              <div class="karta-zdjecie"><img src="../assets/img/pojazd-knaus-sport-450.svg" alt="Knaus Sport 450"></div>
+              <div class="karta-naglowek"><h3>Knaus Sport 450</h3></div>
+              <p class="drugi-plan maly">Przyczepa · 4 osoby</p>
+              <p><span class="kwota pogrubiony">250 zł</span> / doba</p>
+              <p class="drugi-plan maly">kaucja <span class="kwota">2 000 zł</span></p>
+            </article>
+            <article class="karta karta-klikalna" data-inny-pojazd>
+              <div class="karta-zdjecie"><img src="../assets/img/pojazd-niewiadow-n126.svg" alt="Niewiadów N126"></div>
+              <div class="karta-naglowek"><h3>Niewiadów N126</h3></div>
+              <p class="drugi-plan maly">Przyczepa · 3 osoby</p>
+              <p><span class="kwota pogrubiony">200 zł</span> / doba</p>
+              <p class="drugi-plan maly">kaucja <span class="kwota">2 000 zł</span></p>
             </article>
           </div>
         </section>
 
-        <!-- Formularz -->
+        <!-- E1-2: kalendarz -->
+        <section class="karta">
+          <div class="kal-naglowek">
+            <button type="button" class="btn btn-drugi btn-maly" data-cc-toast="W makiecie pokazujemy lipiec 2027" aria-label="Poprzedni miesiąc">‹</button>
+            <h3>2. Termin · lipiec 2027</h3>
+            <button type="button" class="btn btn-drugi btn-maly" data-cc-toast="W makiecie pokazujemy lipiec 2027" aria-label="Następny miesiąc">›</button>
+          </div>
+          <div class="kal" id="kalendarz">
+            <span class="dzien-tyg">Pn</span><span class="dzien-tyg">Wt</span><span class="dzien-tyg">Śr</span><span class="dzien-tyg">Cz</span><span class="dzien-tyg">Pt</span><span class="dzien-tyg">So</span><span class="dzien-tyg">Nd</span>
+            <span class="dzien pusty"></span><span class="dzien pusty"></span><span class="dzien pusty"></span><span class="dzien zajety" title="01.07.2027 — zajęte">1</span><span class="dzien zajety" title="02.07.2027 — zajęte">2</span><span class="dzien zajety" title="03.07.2027 — zajęte">3</span><span class="dzien zajety" title="04.07.2027 — zajęte">4</span>
+            <span class="dzien zajety" title="05.07.2027 — zajęte">5</span><span class="dzien zajety" title="06.07.2027 — zajęte">6</span><span class="dzien wolny" title="07.07.2027 — wolne">7</span><span class="dzien wolny" title="08.07.2027 — wolne">8</span><span class="dzien wolny" title="09.07.2027 — wolne">9</span><span class="dzien wolny" title="10.07.2027 — wolne">10</span><span class="dzien wybrany poczatek" title="11.07.2027 — odbiór, 10:00">11<small>odbiór</small></span>
+            <span class="dzien wybrany">12</span><span class="dzien wybrany">13</span><span class="dzien wybrany">14</span><span class="dzien wybrany">15</span><span class="dzien wybrany">16</span><span class="dzien wybrany">17</span><span class="dzien wybrany">18</span>
+            <span class="dzien wybrany">19</span><span class="dzien wybrany">20</span><span class="dzien wybrany koniec" title="21.07.2027 — zwrot, 16:00">21<small>zwrot</small></span><span class="dzien wolny" title="22.07.2027 — wolne">22</span><span class="dzien wolny" title="23.07.2027 — wolne">23</span><span class="dzien zajety" title="24.07.2027 — zajęte">24</span><span class="dzien zajety" title="25.07.2027 — zajęte">25</span>
+            <span class="dzien zajety" title="26.07.2027 — zajęte">26</span><span class="dzien zajety" title="27.07.2027 — zajęte">27</span><span class="dzien zajety" title="28.07.2027 — zajęte">28</span><span class="dzien zajety" title="29.07.2027 — zajęte">29</span><span class="dzien zajety" title="30.07.2027 — zajęte">30</span><span class="dzien zajety" title="31.07.2027 — zajęte">31</span>
+          </div>
+          <div class="rzad-rozsuniety" style="margin-top:12px">
+            <div class="legenda">
+              <span><i class="tlo-wolne"></i>wolne</span>
+              <span><i class="l-zajety"></i>zajęte</span>
+              <span><i class="l-wybrany"></i>Twój termin</span>
+            </div>
+            <p class="maly pogrubiony" style="margin:0">Ducato alkowa · 11.07.2027 – 21.07.2027 · 10 dób</p>
+          </div>
+        </section>
+
+        <!-- E1-3: formularz -->
         <section class="karta">
           <div class="karta-naglowek">
-            <h2>Twoje dane</h2>
+            <h2>3. Twoje dane</h2>
             <button type="button" class="btn btn-tekst btn-maly" data-cc-wypelnij="#prosba">Wypełnij przykładowymi danymi</button>
           </div>
-          <form id="prosba" data-cc-przejdz="prosba-wyslana.html">
+          <form id="prosba" data-cc-przejdz="prosba-wyslana.html" class="stos-maly">
             <label class="pole"><span>Imię i nazwisko</span>
-              <input type="text" name="imie" required data-przyklad="Anna Kowalska"></label>
+              <input type="text" name="imie" required autocomplete="name" data-przyklad="Anna Kowalska"></label>
             <div class="siatka-2">
               <label class="pole"><span>Telefon</span>
-                <input type="tel" name="telefon" required data-przyklad="600 123 456"></label>
+                <input type="tel" name="telefon" required autocomplete="tel" data-przyklad="600 123 456"></label>
               <label class="pole"><span>E-mail</span>
-                <input type="email" name="email" required data-przyklad="anna.kowalska@example.com"></label>
+                <input type="email" name="email" required autocomplete="email" data-przyklad="anna.kowalska@example.com"></label>
             </div>
             <label class="pole"><span>Wiadomość (opcjonalnie)</span>
-              <textarea name="wiadomosc" data-przyklad="Jedziemy z dwójką dzieci, czy można zabrać psa?"></textarea>
+              <textarea name="wiadomosc" rows="3" data-przyklad="Jedziemy z dwójką dzieci, czy można zabrać psa?"></textarea>
               <span class="pomoc">Np. liczba osób, zwierzęta, pytania o wyposażenie.</span></label>
-            <label class="pole-wyboru"><input type="checkbox" required data-przyklad> <span>Akceptuję regulamin wypożyczalni</span></label>
-            <div class="rzad" style="margin-top:12px">
-              <button type="submit" class="btn btn-glowny">Wyślij prośbę o termin</button>
-              <button type="button" class="btn btn-drugi" data-cc-toast="Przykładowy komunikat">Przycisk drugorzędny</button>
-              <button type="button" class="btn btn-niebezpieczny" data-cc-modal="przyklad-modal">Przycisk niebezpieczny</button>
-            </div>
+            <label class="pole-wyboru"><input type="checkbox" required data-przyklad>
+              <span>Zapoznałem się z <a href="#regulamin" data-cc-modal="regulamin">Regulaminem wynajmu</a>.</span></label>
+            <div class="komunikat podsumowanie-krotkie"><b>Ducato alkowa · 11–21.07.2027 · 10 dób</b><br>Razem <b class="kwota">6 500 zł</b> · zadatek <span class="kwota">1 950 zł</span> · kaucja <span class="kwota">5 000 zł</span></div>
+            <button type="submit" class="btn btn-glowny btn-duzy btn-blok">Wyślij prośbę o termin</button>
+            <p class="drugi-plan maly wysrodkowany" style="margin:0">To nie jest płatność. Termin zablokujemy dla Ciebie na 3 dni, a wypożyczalnia zadzwoni, żeby potwierdzić rezerwację.</p>
           </form>
         </section>
       </div>
 
-      <!-- Podsumowanie -->
-      <aside class="karta stos-maly">
+      <!-- E1-3: podsumowanie -->
+      <aside class="karta stos-maly podsumowanie">
         <h2>Podsumowanie</h2>
+        <div class="rzad">
+          <img src="../assets/img/pojazd-ducato-alkowa.svg" alt="" style="width:88px;border-radius:8px">
+          <div><b>Ducato alkowa</b><br><span class="drugi-plan maly">Kamper · 6 osób</span></div>
+        </div>
         <dl class="dane">
-          <dt>Pojazd</dt><dd>Ducato alkowa</dd>
-          <dt>Termin</dt><dd>11.07.2027 – 21.07.2027</dd>
+          <dt>Odbiór</dt><dd>11.07.2027, 10:00</dd>
+          <dt>Zwrot</dt><dd>21.07.2027, 16:00</dd>
           <dt>Liczba dób</dt><dd>10</dd>
-          <dt>Cena</dt><dd class="kwota">6 500 zł</dd>
-          <dt>Zadatek (30%)</dt><dd class="kwota">1 950 zł</dd>
-          <dt>Kaucja</dt><dd class="kwota">5 000 zł</dd>
+          <dt>Cena za dobę</dt><dd class="kwota">650 zł</dd>
         </dl>
-        <div class="komunikat">To prośba o termin, nie płatność. Termin blokujemy na 3 dni.</div>
+        <hr>
+        <dl class="dane">
+          <dt>Razem za najem</dt><dd class="kwota suma-kwota">6 500 zł</dd>
+          <dt>Zadatek (30%)</dt><dd class="kwota">1 950 zł</dd>
+          <dt>Kaucja zwrotna</dt><dd class="kwota">5 000 zł</dd>
+        </dl>
+        <p class="warunki">Zadatek 30% w ciągu 3 dni od potwierdzenia, reszta do 7 dni przed odbiorem, kaucja w dniu odbioru.</p>
+        <p class="maly" style="margin:0"><a href="#regulamin" data-cc-modal="regulamin">Regulamin wynajmu</a></p>
+        <div class="komunikat">Rezerwację potwierdza wypożyczalnia — po rozmowie telefonicznej.</div>
       </aside>
     </div>
   </main>
 
-  <!-- Okno modalne: otwiera je data-cc-modal="przyklad-modal" albo CC.modal('przyklad-modal') -->
-  <div class="modal" id="przyklad-modal">
+  <!-- Skrót regulaminu: docs/CC_Dokumenty_Wypozyczalni.md, pkt 4 (rozdz. I, III, V, VI, VIII, IX) -->
+  <div class="modal modal-szerokie" id="regulamin">
     <div class="modal-okno">
-      <h2>Przykładowe okno</h2>
-      <p>Treść okna modalnego. Zamyka je ×, Esc, klik w tło albo przycisk z data-cc-zamknij.</p>
+      <h2>Regulamin wynajmu — najważniejsze zasady</h2>
+      <p class="drugi-plan maly">Regulamin wynajmu kamperów i przyczep kempingowych „Kamper na Mazury”. Pełna treść jest załącznikiem nr 1 do umowy najmu, którą otrzymasz do podpisu po potwierdzeniu rezerwacji.</p>
+      <div class="tresc-przewijana regulamin">
+        <h3>I. Przedmiot najmu i warunki zawarcia umowy</h3>
+        <ol>
+          <li>Pojazd wynajmowany jest wyłącznie w celach rekreacyjnych; opis pojazdu, wyposażenia i stanu zawiera protokół wydania podpisany przez Strony.</li>
+          <li>Najemcą może być osoba, która ukończyła 23 lata, ma prawo jazdy kat. B od co najmniej 2 lat i ważny dowód osobisty lub paszport.</li>
+          <li>Kierować może tylko Najemca lub Kolejny Kierowca wskazany w umowie; w dniu podpisania umowy przedstawiają dokument tożsamości i prawo jazdy.</li>
+        </ol>
+        <h3>III. Obowiązki Najemcy</h3>
+        <ol>
+          <li>Korzystanie z pojazdu zgodnie z umową, Regulaminem i instrukcją; zabezpieczenie przed kradzieżą; przechowywanie dokumentów i kluczy poza pojazdem.</li>
+          <li>Zakaz kierowania po alkoholu lub środkach odurzających oraz <b>palenia tytoniu i e-papierosów w pojeździe</b>; wyjazd poza UE wyłącznie za pisemną zgodą Wynajmującego.</li>
+          <li>W czasie jazdy zawór butli gazowej zakręcony.</li>
+        </ol>
+        <h3>V. Rezerwacja, zawarcie umowy i płatności</h3>
+        <ol>
+          <li>Rezerwacja osobiście, telefonicznie lub elektronicznie; Wynajmujący potwierdza ją e-mailem. Rezerwacja nie jest zawarciem umowy.</li>
+          <li>Opłata rezerwacyjna (zadatek) — 30% czynszu w ciągu 3 dni od potwierdzenia; brak wpłaty oznacza rezygnację z rezerwacji.</li>
+          <li>Pozostała część czynszu — na 7 dni przed rozpoczęciem najmu; brak wpłaty oznacza rezygnację, a opłata rezerwacyjna nie podlega zwrotowi.</li>
+        </ol>
+        <h3>VI. Kaucja</h3>
+        <ol>
+          <li>Kaucja w wysokości zależnej od pojazdu, płatna najpóźniej w dniu wydania.</li>
+          <li>Wynajmujący potrąca z kaucji należności nieuregulowane w dniu zwrotu — według Cennika usług dodatkowych i kar (załącznik nr 4). Złamanie zakazu palenia — utrata całej kaucji.</li>
+          <li>Gdy stan przy zwrocie zgodny z protokołem wydania — zwrot kaucji w ciągu 7 dni.</li>
+        </ol>
+        <h3>VIII. Rozwiązanie umowy przez Najemcę</h3>
+        <ol>
+          <li>Na piśmie. Ponad 90 dni przed najmem — Wynajmujący zatrzymuje 50% opłaty rezerwacyjnej; później — całą.</li>
+          <li>Bez potrąceń, jeśli Najemca wskaże klienta na swoje miejsce.</li>
+        </ol>
+        <h3>IX. Wydanie i zwrot pojazdu</h3>
+        <ol>
+          <li>Wydanie na podstawie protokołu, <b>wyłącznie po instruktażu</b> prowadzonym przez Wynajmującego.</li>
+          <li>Zwrot w terminie i miejscu z umowy, na podstawie protokołu zwrotu podpisanego przez obie Strony; pojazd wyczyszczony wewnątrz i z zewnątrz.</li>
+          <li>Zwrot w dzień wolny od pracy lub w godz. 17:00–20:00 — za zgodą Wynajmującego, opłata 100 zł.</li>
+        </ol>
+      </div>
       <div class="modal-przyciski">
-        <button type="button" class="btn btn-drugi" data-cc-zamknij>Anuluj</button>
-        <button type="button" class="btn btn-glowny" data-cc-zamknij data-cc-toast="Zapisano">Zapisz</button>
+        <button type="button" class="btn btn-glowny" data-cc-zamknij>Rozumiem</button>
       </div>
     </div>
   </div>
+
+  <script>
+    CC.gotowe(function () {
+      // W makiecie wybór pojazdu i terminu jest ustalony — pozostałe elementy tylko informują.
+      document.querySelectorAll('[data-inny-pojazd]').forEach(function (k) {
+        k.addEventListener('click', function () { CC.toast('W makiecie pokazujemy Ducato alkowa'); });
+      });
+      document.querySelectorAll('#kalendarz .wolny, #kalendarz .zajety').forEach(function (d) {
+        d.addEventListener('click', function () {
+          CC.toast(d.classList.contains('zajety') ? 'Ten dzień jest zajęty' : 'W makiecie termin to 11–21.07.2027');
+        });
+      });
+    });
+  </script>
 </body>
 </html>
