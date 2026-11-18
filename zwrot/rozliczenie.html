@@ -7,6 +7,7 @@
   <link rel="icon" href="../assets/img/ikona.svg">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/app.js"></script>
+  <link rel="stylesheet" href="zwrot.css">
 </head>
 <body class="uklad-panel">
   <header data-cc-naglowek="panel" data-cc-menu="rezerwacje"></header>
@@ -15,14 +16,135 @@
     <div class="naglowek-ekranu">
       <div>
         <h1>Rozliczenie kaucji</h1>
-        <p class="podtytul">R-2027-014 · Anna Kowalska · kaucja 5 000 zł</p>
+        <p class="podtytul">R-2027-014 · Anna Kowalska · Ducato alkowa, NGI 4K27 · kaucja 5 000 zł</p>
+      </div>
+      <div class="rzad">
+        <span data-cc-znaczek="zwrocona"></span>
+        <a class="btn btn-drugi btn-maly" href="../panel/rezerwacja.html?stan=zwrocona">← Rezerwacja</a>
+        <a class="btn btn-drugi btn-maly" href="zwrot.html">Protokół zwrotu</a>
       </div>
     </div>
 
-    <!-- Treść ekranu M3 — buduje agent 5. Wzorzec: klient/strona.html, kontrakt: docs/KONTRAKT.md -->
-    <div class="w-budowie">
-      <p><b>M3</b> — ekran w budowie (agent 5)</p>
+    <div class="stos">
+      <div class="karta"><ol data-cc-kroki="5"></ol></div>
+
+      <div class="kolumny-panel">
+        <!-- lewa kolumna: potrącenia -->
+        <div class="stos">
+          <section class="karta">
+            <div class="karta-naglowek">
+              <h2>Potrącenia z kaucji</h2>
+              <span class="maly drugi-plan">według Cennika usług dodatkowych i kar (zał. nr 4)</span>
+            </div>
+            <div class="tabela-ramka"><table class="tabela tabela-rozliczenie">
+              <thead><tr><th>Pozycja</th><th>Wydanie / zwrot</th><th>Cennik</th><th class="kwota">Kwota</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><b>Brak paliwa</b><br><span class="maly drugi-plan">8/8 przy wydaniu, 6/8 przy zwrocie — brakuje 22 l (bak 88 l)<br>22 l × 8 zł + 100 zł za tankowanie</span></td>
+                  <td><div class="przed-po">
+                    <figure><img class="miniatura" data-wydanie="paliwo" src="../assets/img/protokol-paliwo.svg" alt="Paliwo — wydanie"><figcaption>Wydanie 11.07.2027</figcaption></figure>
+                    <figure><img class="miniatura" data-zwrot="paliwo" src="../assets/img/protokol-paliwo-zwrot.svg" alt="Paliwo — zwrot"><figcaption>Zwrot 21.07.2027</figcaption></figure>
+                  </div></td>
+                  <td class="maly">poz. 30</td>
+                  <td class="kwota">276 zł</td>
+                </tr>
+                <tr>
+                  <td><b>Brak kompletu kluczyków</b><br><span class="maly drugi-plan">kluczyk do pojazdu: wydano 2 komplety, zwrócono 1</span></td>
+                  <td class="maly drugi-plan">lista wyposażenia z protokołu</td>
+                  <td class="maly">poz. 24</td>
+                  <td class="kwota">300 zł</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Rysa prawy bok</b><br><span class="maly drugi-plan">ok. 30 cm, do podkładu, wysokość drzwi — polerowanie (poz. 19) nie wystarczy</span>
+                    <label class="pole"><span>Wycena naprawy</span><input type="text" value="400 zł"></label>
+                    <label class="pole"><span>Opis</span><input type="text" value="Lakierowanie miejscowe według wyceny — poz. 21"><span class="pomoc">Faktura lub wycena lakiernika w załączniku do rozliczenia</span></label>
+                  </td>
+                  <td><div class="przed-po">
+                    <figure><img class="miniatura" data-wydanie="prawy-bok" src="../assets/img/protokol-prawy-bok.svg" alt="Prawy bok — wydanie"><figcaption>Wydanie 11.07.2027</figcaption></figure>
+                    <figure><img class="miniatura" data-zwrot="prawy-bok" src="../assets/img/protokol-prawy-bok-rysa.svg" alt="Prawy bok — zwrot"><figcaption>Zwrot 21.07.2027</figcaption></figure>
+                  </div></td>
+                  <td class="maly">poz. 21</td>
+                  <td class="kwota">400 zł</td>
+                </tr>
+                <tr class="suma"><td colspan="3">Potrącenia razem</td><td class="kwota">976 zł</td></tr>
+              </tbody>
+            </table></div>
+            <p class="maly drugi-plan" style="margin-top:12px">Potrącenia automatyczne z protokołu zwrotu: 576 zł (poz. 30 i 24). Pozycja „do wyceny”: 400 zł (poz. 21).</p>
+          </section>
+
+          <section class="karta">
+            <h2>Stan przy zwrocie</h2>
+            <dl class="dane">
+              <dt>Zwrot</dt><dd>21.07.2027, 16:00 — w terminie</dd>
+              <dt>Przebieg</dt><dd>49 870 km (przy wydaniu 48 230 km)</dd>
+              <dt>Paliwo</dt><dd>6/8 (przy wydaniu 8/8)</dd>
+              <dt>Kontrola według cennika</dt><dd>czystość wnętrza, zwierzę, kaseta toalety, dym, zbiornik wody, terminowość — <span class="znaczek znaczek-ok">bez uwag</span></dd>
+              <dt>Protokół zwrotu</dt><dd>podpisany 21.07.2027 przez obie strony · <a href="zwrot.html">otwórz</a></dd>
+            </dl>
+          </section>
+        </div>
+
+        <!-- prawa kolumna: kaucja -->
+        <div class="stos">
+          <section class="karta">
+            <h2>Kaucja</h2>
+            <dl class="dane dane-kwoty">
+              <dt>Kaucja przyjęta (gotówka, 11.07.2027)</dt><dd>5 000 zł</dd>
+              <dt>Brak paliwa (poz. 30)</dt><dd>− 276 zł</dd>
+              <dt>Brak kompletu kluczyków (poz. 24)</dt><dd>− 300 zł</dd>
+              <dt>Rysa prawy bok (poz. 21)</dt><dd>− 400 zł</dd>
+              <dt class="razem">Potrącenia razem</dt><dd class="razem">976 zł</dd>
+              <dt class="razem">Do zwrotu</dt><dd class="razem"><span class="kwota-duza">4 024 zł</span></dd>
+            </dl>
+            <hr>
+            <dl class="dane">
+              <dt>Termin zwrotu kaucji</dt><dd>28.07.2027 (7 dni od zwrotu)</dd>
+              <dt>Data rozliczenia</dt><dd>23.07.2027</dd>
+            </dl>
+            <div class="pole" style="margin-top:14px">
+              <span>Forma zwrotu kaucji</span>
+              <div class="przelaczniki">
+                <label><input type="radio" name="forma" checked> Przelew</label>
+                <label><input type="radio" name="forma"> Gotówka</label>
+              </div>
+            </div>
+            <label class="pole-wyboru"><input type="checkbox" checked> <span>Wyślij klientowi rozliczenie e-mailem (PDF ze zdjęciami przed / po)</span></label>
+            <a class="btn btn-glowny btn-duzy btn-blok" style="margin-top:12px" href="../panel/rezerwacja.html?stan=rozliczona" data-cc-toast="Kaucja rozliczona — rozliczenie wysłane do klienta">Kaucja rozliczona</a>
+          </section>
+
+          <div class="komunikat komunikat-ostrzezenie maly">
+            Najemca odpowiada też za szkody z okresu najmu ujawnione po zwrocie (Regulamin, rozdz. IX). Gdy kaucja nie pokrywa szkód — dopłata w ciągu 14 dni od zawiadomienia (Regulamin, rozdz. VI).
+          </div>
+
+          <section class="karta">
+            <h3>Wiadomość do klienta</h3>
+            <p class="maly drugi-plan">E-mail do anna.kowalska@example.com</p>
+            <div class="wiadomosc">Dzień dobry,
+dziękujemy za wspólny urlop z Ducato alkowa. Rozliczyliśmy kaucję za najem R-2027-014:
+kaucja 5 000 zł, potrącenia 976 zł (paliwo 276 zł, kluczyk 300 zł, naprawa rysy 400 zł).
+Zwracamy 4 024 zł przelewem do 28.07.2027. Zestawienie ze zdjęciami w załączniku.
+Kamper na Mazury, Marek Wiśniewski</div>
+          </section>
+        </div>
+      </div>
     </div>
   </main>
+
+  <script>
+    CC.gotowe(function () {
+      // E5-6: zdjęcia z protokołów (localStorage), gdy są zapamiętane — inaczej przykładowe
+      function podmien(klucz, atr) {
+        var z = CC.odczytaj(klucz);
+        if (!z || typeof z !== 'object') return;
+        document.querySelectorAll('img[' + atr + ']').forEach(function (img) {
+          var src = z[img.getAttribute(atr)];
+          if (src) img.src = src;
+        });
+      }
+      podmien('cc-wydanie-zdjecia', 'data-wydanie');
+      podmien('cc-zwrot-zdjecia', 'data-zwrot');
+    });
+  </script>
 </body>
 </html>
